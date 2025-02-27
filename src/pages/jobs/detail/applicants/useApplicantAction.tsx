@@ -1,18 +1,11 @@
-import { Cell, ColumnDef, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, getCoreRowModel, Getter, useReactTable } from '@tanstack/react-table';
 import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Applicant,
-  ApplicantsRes,
-  jobApplicants,
-  rejectApplicant,
-  rejectMultipleApplicants,
-  search,
-  User,
-} from 'src/core/api';
+import { Applicant, ApplicantsRes, jobApplicants, rejectApplicant, rejectMultipleApplicants, User } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
+import translate from 'src/translations';
 
 export const useApplicantAction = (
   jobId: string,
@@ -61,10 +54,8 @@ export const useApplicantAction = (
     try {
       const currentPage = pages.find(item => item.tab === currentTab);
       const status = statusObj[currentTab];
-      const res = await search(
-        { type: 'applicants', q: searchTerm, filter: { project_id: jobId, status: status } },
-        { page: currentPage?.page, limit: PER_PAGE },
-      );
+      const res = await jobApplicants(jobId, { page: currentPage?.page, limit: PER_PAGE, status });
+
       setApplicantsList(res.items);
       setTotalCounts(totalCounts =>
         totalCounts.map(item => (item.tab === currentTab ? { ...item, count: res.total_count } : item)),
@@ -248,7 +239,7 @@ export const useApplicantAction = (
                 onClick={() => onMessage(getValue())}
                 className="text-Gray-light-mode-600 font-semibold leading-5 text-sm cursor-pointer"
               >
-                Message
+                {translate('jobs-applicants-message')}
               </p>
 
               {['applicants'].includes(currentTab) && (
@@ -256,7 +247,7 @@ export const useApplicantAction = (
                   onClick={() => onReject(getValue())}
                   className="text-Gray-light-mode-600 font-semibold leading-5 text-sm cursor-pointer"
                 >
-                  Reject
+                  {translate('jobs-applicants-reject')}
                 </p>
               )}
               <p
