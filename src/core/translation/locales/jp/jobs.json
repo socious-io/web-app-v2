@@ -52,5 +52,7 @@
   "job-list-title": "{{number}}のインパクト求人",
   "job-applied": "応募済みの求人",
   "job-my-applied": "私の応募済みの求人",
-  "job-card-posted-on": "投稿日"
+  "job-card-posted-on": "投稿日",
+  "jobs-applicants-message": "メッセージ",
+  "jobs-applicants-reject": "拒否"
 }
