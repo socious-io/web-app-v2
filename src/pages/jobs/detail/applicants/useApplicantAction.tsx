@@ -3,9 +3,9 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from '
 import { useNavigate } from 'react-router-dom';
 import { Applicant, ApplicantsRes, jobApplicants, rejectApplicant, rejectMultipleApplicants, User } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
+import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
-import translate from 'src/translations';
 
 export const useApplicantAction = (
   jobId: string,
