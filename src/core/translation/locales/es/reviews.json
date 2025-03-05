@@ -1,5 +1,7 @@
 {
   "review-title": "Reseñas",
   "review-counts": "{{count}} reseñas",
-  "review-job": "Trabajo: "
+  "review-job": "Trabajo: ",
+  "review-empty-title": "Lo sentimos, aún no hay reseñas",
+  "review-empty-subtitle": "¡Vuelve más tarde!"
 }
