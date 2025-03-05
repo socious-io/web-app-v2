@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
-import { ReviewsRes, ServicesRes } from 'src/core/adaptors';
+import { ServicesRes } from 'src/core/adaptors';
 import { CurrentIdentity, UserProfile } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import ReviewsList from 'src/modules/Reviews/containers/ReviewsList';
@@ -12,17 +12,15 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 export const useUserProfile = () => {
   const { hash } = useLocation();
   const dispatch = useDispatch();
-  const { services, user, reviews } = useLoaderData() as {
+  const { services, user } = useLoaderData() as {
     services: ServicesRes;
     user: UserProfile;
-    reviews: ReviewsRes;
   };
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
   const myProfile = currentIdentity?.id === user?.id;
   const totalService = services?.total || 0;
-  const totalReviews = reviews?.total || 0;
 
   dispatch(setIdentity(user));
   dispatch(setIdentityType('users'));
@@ -33,7 +31,7 @@ export const useUserProfile = () => {
   const tabs = [
     { label: translate('user-profile.about'), content: <About /> },
     ...(myProfile || totalService ? [{ label: translate('user-profile.services'), content: <ServicesList /> }] : []),
-    ...(totalReviews ? [{ label: translate('user-profile.reviews'), content: <ReviewsList /> }] : []),
+    { label: translate('user-profile.reviews'), content: <ReviewsList /> },
   ];
 
   const activeTabIndex = {

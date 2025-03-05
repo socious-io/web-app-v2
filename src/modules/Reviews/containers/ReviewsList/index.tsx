@@ -1,9 +1,11 @@
 import { Divider } from '@mui/material';
 import { translate } from 'src/core/utils';
+import { Icon } from 'src/modules/general/components/Icon';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import Rate from 'src/modules/general/components/Rate';
 import ReviewCard from 'src/modules/Reviews/components/ReviewCard';
+import variables from 'src/styles/constants/_exports.module.scss';
 
 import styles from './index.module.scss';
 import { useReviewList } from './useReviewList';
@@ -14,7 +16,7 @@ const ReviewsList = () => {
     operations: { onChangePage },
   } = useReviewList();
 
-  return (
+  return reviewsCount ? (
     <div className={styles['container']}>
       <span className={styles['title']}>{translate('review-title')}</span>
       <div className={styles['rate']}>
@@ -33,6 +35,14 @@ const ReviewsList = () => {
       </div>
       <div className="md:hidden">
         <PaginationMobile page={page} count={totalPage} handleChange={onChangePage} />
+      </div>
+    </div>
+  ) : (
+    <div className={styles['empty']}>
+      <Icon name="info-circle" fontSize={20} color={variables.color_grey_700} className={styles['empty__icon']} />
+      <div className={styles['empty__info']}>
+        <span className={styles['empty__info--bold']}>{translate('review-empty-title')}</span>
+        {translate('review-empty-subtitle')}
       </div>
     </div>
   );
