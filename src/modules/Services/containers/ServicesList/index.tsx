@@ -10,6 +10,7 @@ import EmptyBox from 'src/modules/general/containers/EmptyBox';
 import ServiceCard from 'src/modules/Services/components/ServiceCard';
 import variables from 'src/styles/constants/_exports.module.scss';
 
+import styles from './index.module.scss';
 import { useServiceList } from './useServiceList';
 
 const ServicesList = () => {
@@ -24,6 +25,28 @@ const ServicesList = () => {
       onDeleteService,
     },
   } = useServiceList();
+
+  const EmptyServices = myProfile ? (
+    <EmptyBox
+      icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
+      title={translate('service-empty.title')}
+      subtitle={translate('service-empty.subtitle')}
+      button={{
+        children: translate('service-new'),
+        color: 'primary',
+        startIcon: <Icon name="plus" color={variables.color_white} />,
+        onClick: onCreateService,
+      }}
+    />
+  ) : (
+    <div className={styles['empty']}>
+      <Icon name="info-circle" fontSize={20} color={variables.color_grey_700} className={styles['empty__icon']} />
+      <div className={styles['empty__info']}>
+        <span className={styles['empty__info--bold']}>{translate('service-other-empty.title')}</span>
+        {translate('service-other-empty.subtitle')}
+      </div>
+    </div>
+  );
 
   return services.length ? (
     <>
@@ -83,17 +106,7 @@ const ServicesList = () => {
       />
     </>
   ) : (
-    <EmptyBox
-      icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
-      title={translate('service-empty.title')}
-      subtitle={translate('service-empty.subtitle')}
-      button={{
-        children: translate('service-new'),
-        color: 'primary',
-        startIcon: <Icon name="plus" color={variables.color_white} />,
-        onClick: onCreateService,
-      }}
-    />
+    EmptyServices
   );
 };
 

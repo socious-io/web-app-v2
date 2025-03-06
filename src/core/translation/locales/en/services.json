@@ -4,6 +4,10 @@
     "title": "Create a new service",
     "subtitle": "The clearer the service, the faster you'll get hired."
   },
+  "service-other-empty": {
+    "title": "Sorry, there are no services opened at the moment",
+    "subtitle": "Check back later!"
+  },
   "service-card": {
     "delivery": "delivery",
     "duplicate": "Duplicate",
