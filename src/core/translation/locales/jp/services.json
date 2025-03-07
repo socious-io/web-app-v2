@@ -4,6 +4,10 @@
     "title": "新しいサービスを作成",
     "subtitle": "サービスが明確であればあるほど、採用される可能性が高まります。"
   },
+  "service-other-empty": {
+    "title": "申し訳ありませんが、現在利用可能なサービスはありません",
+    "subtitle": "後でもう一度ご確認ください！"
+  },
   "service-card": {
     "delivery": "配達",
     "duplicate": "複製",
