@@ -1,0 +1,1901 @@
+{
+    "page": 1,
+    "limit": 10,
+    "total_count": 403,
+    "items": [
+        {
+            "id": "bf59fb3f-c07c-465d-9303-33a15ab507ae",
+            "content": "content",
+            "identity_id": "20b07c1c-b142-4ee3-a87f-122aa99a7659",
+            "created_at": "2024-11-18T19:22:56.439Z",
+            "updated_at": "2024-11-18T19:22:56.439Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "POVERTY"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "0ae176a0-22f4-4e89-9d2a-5f89b6cbe191",
+                    "url": "https://storage.googleapis.com/socious-gcs//060ee16295da3a568d5b2738754e16fe.png"
+                }
+            ],
+            "likes": 2,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'content':1 'poverti':2",
+            "title": "test2",
+            "comments": 0,
+            "identity_type": "users",
+            "identity_meta": {
+                "id": "20b07c1c-b142-4ee3-a87f-122aa99a7659",
+                "city": "Tehran, Tehran Province",
+                "name": "Sanaz Mahmoudi",
+                "email": "mahmoudisanaz59@gmail.com",
+                "avatar": "https://storage.googleapis.com/socious-gcs/40feef87c121271bfb9b5b26d9748219.jpg",
+                "status": "ACTIVE",
+                "address": null,
+                "country": "IR",
+                "username": "mahmoudisanaz599738",
+                "open_to_work": false,
+                "is_contributor": null,
+                "wallet_address": "0x6Ff5d5EC0eb3EE0FfeE5C9238bC1266afB56Ec4d",
+                "identity_verified": false,
+                "open_to_volunteer": false
+            },
+            "liked": true,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "035f724e-5824-4129-8ed6-96c6dda81a3a",
+                    "meta": {
+                        "id": "035f724e-5824-4129-8ed6-96c6dda81a3a",
+                        "city": null,
+                        "name": null,
+                        "email": "imshantik@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": null,
+                        "username": "imshantik5140",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2025-02-27T10:59:24.278886+00:00"
+                },
+                {
+                    "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                    "meta": {
+                        "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                        "city": "Arinsal",
+                        "name": "Nina N",
+                        "email": "testazintest2@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "AD",
+                        "username": "testazintest2",
+                        "open_to_work": false,
+                        "is_contributor": true,
+                        "wallet_address": "0x6990bf996E984cffde6EbCAb6AC8723c95069719",
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-11-03T06:22:49.394579+00:00"
+                }
+            ]
+        },
+        {
+            "id": "868184c7-c69b-4575-874c-830f96ffbb53",
+            "content": "We are excited to share our recent journey in London, which was made possible by the support of the Tokyo Metropolitan Government. As one of the top 10 Japanese startups in the X-Hub Tokyo Global Startup Accelerator's UK Outbound program, our experience was truly transformative.\n\nWe're immensely grateful to everyone who supported our journey - the Tokyo Metropolitan Government, JETRO - Japan External Trade Organization , L Marks, and our fellow visionaries at SOLIT, Inc., IDDK Co., Ltd., Elephantech Inc., datagusto, Thermalytica Inc., Dioseve, TKG Therapeutics, Inc., Gigalogy, and BoostDraft. \n\nOnward and upward 🚀",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2024-01-31T08:15:06.483Z",
+            "updated_at": "2024-01-31T08:15:06.483Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "SOCIAL"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "a77f92a8-3a8c-4f47-939a-3774df5461b1",
+                    "url": "https://storage.googleapis.com/socious-gcs/f0d9eb106d1aa169911099cd1456fa19.jpg"
+                }
+            ],
+            "likes": 13,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'10':28 'acceler':39 'boostdraft':91 'co':78 'datagusto':82 'diosev':85 'elephantech':80 'everyon':54 'excit':3 'experi':45 'extern':65 'fellow':72 'gigalog':89 'global':37 'govern':22,62 'grate':52 'hub':35 'iddk':77 'immens':51 'inc':76,81,84,88 'japan':64 'japanes':29 'jetro':63 'journey':8,58 'l':68 'london':10 'ltd':79 'made':13 'mark':69 'metropolitan':21,61 'one':24 'onward':92 'organ':67 'outbound':42 'possibl':14 'program':43 're':50 'recent':7 'share':5 'social':95 'solit':75 'startup':30,38 'support':17,56 'therapeut':87 'thermalytica':83 'tkg':86 'tokyo':20,36,60 'top':27 'trade':66 'transform':48 'truli':47 'uk':41 'upward':94 'visionari':73 'x':34 'x-hub':33",
+            "title": null,
+            "comments": 1,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "1396c403-1ade-4c40-b0d1-4680059a46c5",
+                    "meta": {
+                        "id": "1396c403-1ade-4c40-b0d1-4680059a46c5",
+                        "city": "Tehran",
+                        "name": "OrganizationTest",
+                        "email": "imshantik@gmal.com",
+                        "image": null,
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "IR",
+                        "mission": null,
+                        "verified": false,
+                        "shortname": "organizationtest",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2025-02-27T13:16:43.884937+00:00"
+                },
+                {
+                    "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                    "meta": {
+                        "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                        "city": "Tokyo, Tokyo Prefecture",
+                        "name": "Socious",
+                        "email": "info@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                        "country": "JP",
+                        "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                        "verified": true,
+                        "shortname": "socious",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": true
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "2bf159d6-814b-4022-b462-0eb3f0d0d786",
+                    "meta": {
+                        "id": "2bf159d6-814b-4022-b462-0eb3f0d0d786",
+                        "city": "Montpellier",
+                        "name": "Maxime GIL",
+                        "email": "maxime.gil.pro@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/246c35260732a919edb84b77d3ce3d62.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "FR",
+                        "username": "maxime",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2024-02-01T16:19:27.515537+00:00"
+                },
+                {
+                    "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                    "meta": {
+                        "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                        "city": "Arinsal",
+                        "name": "Nina N",
+                        "email": "testazintest2@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "AD",
+                        "username": "testazintest2",
+                        "open_to_work": false,
+                        "is_contributor": true,
+                        "wallet_address": "0x6990bf996E984cffde6EbCAb6AC8723c95069719",
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-11-03T06:22:49.394579+00:00"
+                },
+                {
+                    "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                    "meta": {
+                        "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                        "city": "Tokyo",
+                        "name": "Seira Yun",
+                        "email": "seira0819@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/ca6ee851abb9e8cfc562b2776615fc62.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "seirayun",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": "0xA7678C96e7E33eFBd7D7E786291bD7DB7AD16bEA",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "7dd7e966-e5b6-464b-8fa6-c37f5f355308",
+                    "meta": {
+                        "id": "7dd7e966-e5b6-464b-8fa6-c37f5f355308",
+                        "city": "Yokohama",
+                        "name": "Impactly",
+                        "email": "info@impactly.me",
+                        "image": null,
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": "At Impactly, we believe in the power of diversity and the strength that comes from understanding and inclusion. Our mission is to help organizations embrace neurodiversity and diversity, transforming workplaces into spaces where every individual feels valued, understood, and empowered. Through education, training, and advocacy, we aim to redefine standard corporate cultures, promoting an environment that celebrates differences and drives innovation. Our ultimate goal is to forge a more inclusive, understanding, and equitable future for all in the corporate world.",
+                        "verified": false,
+                        "shortname": "impactly9103",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-07-18T02:12:19.179986+00:00"
+                },
+                {
+                    "id": "aea89e4a-1201-42fe-a7dd-3de96eade8f0",
+                    "meta": {
+                        "id": "aea89e4a-1201-42fe-a7dd-3de96eade8f0",
+                        "city": "Tehran, Tehran Province",
+                        "name": "Marjan Arami",
+                        "email": "marjan.arami@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "IR",
+                        "username": "marjan.arami8629",
+                        "open_to_work": false,
+                        "is_contributor": true,
+                        "wallet_address": "0x90ac0057a1dEfeE17290D395c124bFA7ff2F7Bb0",
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-06-30T07:34:20.96439+00:00"
+                },
+                {
+                    "id": "ca1e2c57-2106-4290-9494-5af93b472ea6",
+                    "meta": {
+                        "id": "ca1e2c57-2106-4290-9494-5af93b472ea6",
+                        "city": "Tokyo",
+                        "name": "Elly Hirano",
+                        "email": "skrkskati@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/3929de5bcf18db4f2b562e56f956862c.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "elly-hirano7305",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                    "meta": {
+                        "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                        "city": "İstanbul",
+                        "name": "Özgün Aslan",
+                        "email": "ozgunaslan2@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/1650823713/D6C45943-AEEB-4356-A17A-F8202E2ECD54_x1DsDYDr.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "TR",
+                        "username": "oezguen-aslan6859",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "e905d163-73bb-45cd-b1a7-bf080d2f589d",
+                    "meta": {
+                        "id": "e905d163-73bb-45cd-b1a7-bf080d2f589d",
+                        "city": "Hanoi",
+                        "name": "Minswap",
+                        "email": "contact@minswap.org",
+                        "image": "https://storage.googleapis.com/socious-gcs/fb5f7ace1da8c3987643a2592b1fd7cd.jpg",
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "VN",
+                        "mission": "Minswap",
+                        "verified": false,
+                        "shortname": "minswap",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2024-07-06T12:55:11.675093+00:00"
+                },
+                {
+                    "id": "eafe49fe-3dfa-4a6c-afbf-114538b7afa8",
+                    "meta": {
+                        "id": "eafe49fe-3dfa-4a6c-afbf-114538b7afa8",
+                        "city": "Kawasaki, Kanagawa",
+                        "name": "Caven Mitchell",
+                        "email": "hello@cavenmitchell.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/c2563c954f403e6dc431aa2df5699005.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "cavenmitchell",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2024-01-19T14:55:27.963551+00:00"
+                },
+                {
+                    "id": "eec9a313-e8a9-42e2-9854-4a71f7526d4a",
+                    "meta": {
+                        "id": "eec9a313-e8a9-42e2-9854-4a71f7526d4a",
+                        "city": "Yokohama",
+                        "name": "Minh Douangprachanh",
+                        "email": "minh.douangprachanh@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/ce69062383153ea317f485504d82f8f9.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "minh0710",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": "0xC74E8d5fC72418fa898cde21c8eB4D64b00199AF",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "fc1f02c4-5078-42d4-b077-4fc634b8b892",
+                    "meta": {
+                        "id": "fc1f02c4-5078-42d4-b077-4fc634b8b892",
+                        "city": "Brighton",
+                        "name": "Natsumi Wada",
+                        "email": "natsumiwada1121@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/4fb02c87ba355b41271208911647885a.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "GB",
+                        "username": "natsumiwada",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2024-01-19T20:56:03.502145+00:00"
+                }
+            ]
+        },
+        {
+            "id": "852c05cd-0741-44d6-b63a-4ccd95f130b4",
+            "content": "Elephantech is seeking a Business Development Specialist to lead their growth in the Electric Vehicle (EV) market in Europe, with a specific focus on Flexible Printed Circuits (FPC) for Battery Management Systems (BMS). This vital role involves exploring and developing the EV BMS market across Europe, utilizing their environmentally friendly FPC products.\n\n**Key Details:**\n\n- **Location:** Europe\n- **Industry:** Automotive, Battery\n- **Employment Type:** Contractual, starting with an initial 3-month contract and potential for long-term engagement based on business performance\n- **Work Commitment:** Approximately 60 hours per month (flexibility in scheduling to be discussed)\n- **Compensation:** ~$5,000 USD per month\n\nIf you're driven to excel in the EV sector and have the necessary experience in business development, Elephantech invites you to apply. Click the link to learn more and take the first step towards a rewarding career with Elephantech!\n\nhttps://app.socious.io/jobs/65b981b2-da68-4e92-b671-4b0d91b38d85",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2023-12-15T07:06:40.081Z",
+            "updated_at": "2023-12-15T07:06:40.081Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "SUSTAINABLE_ENERGY"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "4c76be49-3f87-4c41-b91e-924ec670499e",
+                    "url": "https://storage.googleapis.com/socious-gcs/400a426e4e5d231934da110065b6e6b0.png"
+                }
+            ],
+            "likes": 6,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'/jobs/65b981b2-da68-4e92-b671-4b0d91b38d85':142 '000':96 '3':67 '5':95 '60':84 'a':4,21,135 'across':45 'an':65 'and':39,70,110,129 'app.socious.io':141 'app.socious.io/jobs/65b981b2-da68-4e92-b671-4b0d91b38d85':140 'apply':122 'approximately':83 'automotive':58 'based':77 'battery':30,59 'be':92 'bms':33,43 'business':5,79,116 'career':137 'circuits':27 'click':123 'commitment':82 'compensation':94 'contract':69 'contractual':62 'details':54 'developing':40 'development':6,117 'discussed':93 'driven':103 'electric':14 'elephantech':1,118,139 'employment':60 'energy':144 'engagement':76 'environmentally':49 'europe':19,46,56 'ev':16,42,108 'excel':105 'experience':114 'exploring':38 'first':132 'flexibility':88 'flexible':25 'focus':23 'for':29,72 'fpc':28,51 'friendly':50 'growth':11 'have':111 'hours':85 'if':100 'in':12,18,89,106,115 'industry':57 'initial':66 'invites':119 'involves':37 'is':2 'key':53 'lead':9 'learn':127 'link':125 'location':55 'long':74 'long-term':73 'management':31 'market':17,44 'month':68,87,99 'more':128 'necessary':113 'on':24,78 'per':86,98 'performance':80 'potential':71 'printed':26 'products':52 're':102 'rewarding':136 'role':36 'scheduling':90 'sector':109 'seeking':3 'specialist':7 'specific':22 'starting':63 'step':133 'sustainable':143 'systems':32 'take':130 'term':75 'the':13,41,107,112,124,131 'their':10,48 'this':34 'to':8,91,104,121,126 'towards':134 'type':61 'usd':97 'utilizing':47 'vehicle':15 'vital':35 'with':20,64,138 'work':81 'you':101,120",
+            "title": null,
+            "comments": 0,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "3c2aa2b0-e9d9-4c57-bee1-ba795f60effa",
+                    "meta": {
+                        "id": "3c2aa2b0-e9d9-4c57-bee1-ba795f60effa",
+                        "city": "Karaj",
+                        "name": "Ashkan Azari",
+                        "email": "azari.ashkan90@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "IR",
+                        "username": "azari.ashkan903113",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": "0x1AF1CD0dB83dF9C85aFbdc238dDe1e5D658E899e",
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-11-11T17:02:12.120908+00:00"
+                },
+                {
+                    "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                    "meta": {
+                        "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                        "city": "Arinsal",
+                        "name": "Nina N",
+                        "email": "testazintest2@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "AD",
+                        "username": "testazintest2",
+                        "open_to_work": false,
+                        "is_contributor": true,
+                        "wallet_address": "0x6990bf996E984cffde6EbCAb6AC8723c95069719",
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-11-03T06:22:49.394579+00:00"
+                },
+                {
+                    "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                    "meta": {
+                        "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                        "city": "Tokyo",
+                        "name": "Cardano BCG (Blockchain Game)",
+                        "email": "client.jobs@socious.io",
+                        "image": null,
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": null,
+                        "verified": false,
+                        "shortname": "cardano_bcg_(blockchain_game)3273",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-11-09T09:17:21.145631+00:00"
+                },
+                {
+                    "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                    "meta": {
+                        "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                        "city": "Tokyo",
+                        "name": "Seira Yun",
+                        "email": "seira0819@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/ca6ee851abb9e8cfc562b2776615fc62.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "seirayun",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": "0xA7678C96e7E33eFBd7D7E786291bD7DB7AD16bEA",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "7dd7e966-e5b6-464b-8fa6-c37f5f355308",
+                    "meta": {
+                        "id": "7dd7e966-e5b6-464b-8fa6-c37f5f355308",
+                        "city": "Yokohama",
+                        "name": "Impactly",
+                        "email": "info@impactly.me",
+                        "image": null,
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": "At Impactly, we believe in the power of diversity and the strength that comes from understanding and inclusion. Our mission is to help organizations embrace neurodiversity and diversity, transforming workplaces into spaces where every individual feels valued, understood, and empowered. Through education, training, and advocacy, we aim to redefine standard corporate cultures, promoting an environment that celebrates differences and drives innovation. Our ultimate goal is to forge a more inclusive, understanding, and equitable future for all in the corporate world.",
+                        "verified": false,
+                        "shortname": "impactly9103",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-07-18T02:12:19.179986+00:00"
+                },
+                {
+                    "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                    "meta": {
+                        "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                        "city": "İstanbul",
+                        "name": "Özgün Aslan",
+                        "email": "ozgunaslan2@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/1650823713/D6C45943-AEEB-4356-A17A-F8202E2ECD54_x1DsDYDr.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "TR",
+                        "username": "oezguen-aslan6859",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                }
+            ]
+        },
+        {
+            "id": "ff317941-46de-4fae-b720-45996f730010",
+            "content": "Play Tarochi and Help Preserve the Ancient Art of Aizome Dyeing #Tarochi4Aizome\n\nIn a unique collaboration, Paima Studio, Cardano BCG, and Socious are excited to announce a giveaway campaign that will help preserve the ancient art of Aizome, a traditional Japanese indigo dyeing technique.\n\nThis campaign combines the best of both worlds: the cutting-edge technology of blockchain gaming with the timeless beauty of traditional craftsmanship. By playing Paima's exciting blockchain game, Tarochi, and providing feedback, you can contribute to the preservation of Aizome and help train a new generation of traditional craftsmen.\n\nCampaign Prizes:\n\n- Tarochi Improvement Prize: 1000 ADA, 300 ADA, and 100 ADA for the first, second, and third place winners, respectively, as well as an NFT of a Japanese Aizome Handkerchief.\n- Tarochi Achievement Prize: 1000 ADA, 300 ADA, and 100 ADA for the first, second, and third place winners, respectively, as well as an NFT of a Japanese Aizome Handkerchief.\n- Socious Retweet Prize: 1000 ADA, 300 ADA, and 100 ADA for the first, second, and third place winners, respectively, as well as an NFT of a Japanese Aizome Handkerchief.\n- Participation Prize &amp; Lottery: Each of the first 100 participants will receive 10 ADA, and five people will be randomly chosen to receive an NFT of a Japanese Aizome handkerchief.\n\nHow to Participate:\n\n1. Visit [socious.io/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing](http://socious.io/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing) to learn more about the campaign and how to participate.\n2. Play Tarochi and provide feedback on [Paima Studio's Discord]\n3. Submit your results before 2023-12-23 23:59 JST.\n\nJoin us in this exciting campaign to preserve a cherished cultural heritage!\n\n#PlayAndEarn #BlockchainGaming #Aizome #CulturalHeritage\n\nLink for full details: http://socious.io/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2023-11-25T04:15:54.192Z",
+            "updated_at": "2023-11-25T04:15:54.192Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "COLLABORATION_FOR_IMPACT"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "4dde775a-7ac5-4a75-ac34-8c47ff20bee7",
+                    "url": "https://storage.googleapis.com/socious-gcs/e9bbb8bbb6040f4e2ec3ceb38f78c90d.png"
+                }
+            ],
+            "likes": 2,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'-12':249 '-23':250 '/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing':276 '/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing](http://socious.io/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing)':221 '1':217 '10':196 '100':106,135,164,192 '1000':101,130,159 '2':232 '2023':248 '23':251 '3':243 '300':103,132,161 '59':252 'a':14,27,39,90,123,152,181,210,262 'about':225 'achievement':128 'ada':102,104,107,131,133,136,160,162,165,197 'aizome':10,38,86,125,154,183,212,268 'an':120,149,178,207 'ancient':7,35 'and':3,21,76,87,105,112,134,141,163,170,198,228,235 'announce':26 'are':23 'art':8,36 'as':117,119,146,148,175,177 'bcg':20 'be':202 'beauty':64 'before':247 'best':49 'blockchain':59,73 'blockchaingaming':267 'both':51 'by':68 'campaign':29,46,96,227,259 'can':80 'cardano':19 'cherished':263 'chosen':204 'collaboration':16,277 'combines':47 'contribute':81 'craftsmanship':67 'craftsmen':95 'cultural':264 'culturalheritage':269 'cutting':55 'cutting-edge':54 'details':273 'discord':242 'dyeing':11,43 'each':188 'edge':56 'excited':24 'exciting':72,258 'feedback':78,237 'first':110,139,168,191 'five':199 'for':108,137,166,271,278 'full':272 'game':74 'gaming':60 'generation':92 'giveaway':28 'handkerchief':126,155,184,213 'help':4,32,88 'heritage':265 'how':214,229 'impact':279 'improvement':99 'in':13,256 'indigo':42 'japanese':41,124,153,182,211 'join':254 'jst':253 'learn':223 'link':270 'lottery':187 'more':224 'new':91 'nft':121,150,179,208 'of':9,37,50,58,65,85,93,122,151,180,189,209 'on':238 'paima':17,70,239 'participants':193 'participate':216,231 'participation':185 'people':200 'place':114,143,172 'play':1,233 'playandearn':266 'playing':69 'preservation':84 'preserve':5,33,261 'prize':100,129,158,186 'prizes':97 'provide':236 'providing':77 'randomly':203 'receive':195,206 'respectively':116,145,174 'results':246 'retweet':157 's':71,241 'second':111,140,169 'socious':22,156 'socious.io':220,275 'socious.io/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing':274 'socious.io/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing](http://socious.io/blog/play-tarochi-and-help-preserve-the-ancient-art-of-aizome-dyeing)':219 'studio':18,240 'submit':244 'tarochi':2,75,98,127,234 'tarochi4aizome':12 'technique':44 'technology':57 'that':30 'the':6,34,48,53,62,83,109,138,167,190,226 'third':113,142,171 'this':45,257 'timeless':63 'to':25,82,205,215,222,230,260 'traditional':40,66,94 'train':89 'unique':15 'us':255 'visit':218 'well':118,147,176 'will':31,194,201 'winners':115,144,173 'with':61 'worlds':52 'you':79 'your':245",
+            "title": null,
+            "comments": 0,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                    "meta": {
+                        "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                        "city": "Tokyo, Tokyo Prefecture",
+                        "name": "Socious",
+                        "email": "info@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                        "country": "JP",
+                        "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                        "verified": true,
+                        "shortname": "socious",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": true
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                    "meta": {
+                        "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                        "city": "Tokyo",
+                        "name": "Cardano BCG (Blockchain Game)",
+                        "email": "client.jobs@socious.io",
+                        "image": null,
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": null,
+                        "verified": false,
+                        "shortname": "cardano_bcg_(blockchain_game)3273",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-11-09T09:17:21.145631+00:00"
+                }
+            ]
+        },
+        {
+            "id": "1c941d49-3522-466d-a559-f75682fc80c3",
+            "content": "We're thrilled to announce that Socious is the Regional Winner of the Super Connect for Good East Asia powered by Empact Ventures and Hays.\n\nThis event is more than just a competition; it is a celebration of innovation and impact. We, along with other talented winners from the #UK, #Ireland, #Europe, #Asia, #Australia, and #NewZealand, are competing to be crowned the Global Winner of 2023. 🏆\n\nDon't miss the chance to witness this incredible event! You can watch the global final by registering via this link https://bit.ly/globalfinal23",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2023-11-24T06:45:30.458Z",
+            "updated_at": "2023-11-24T06:45:30.458Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "COLLABORATION_FOR_IMPACT"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "e8b4bc8f-4f01-4163-9026-97e042e6af28",
+                    "url": "https://storage.googleapis.com/socious-gcs/2a75cfe273b7eeca69de914bcdc6d6bb.png"
+                }
+            ],
+            "likes": 6,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'/globalfinal23':90 '2023':66 'a':32,36 'along':43 'and':24,40,55 'announce':5 'are':57 'asia':19,53 'australia':54 'be':60 'bit.ly':89 'bit.ly/globalfinal23':88 'by':21,83 'can':78 'celebration':37 'chance':71 'collaboration':91 'competing':58 'competition':33 'connect':15 'crowned':61 'don':67 'east':18 'empact':22 'europe':52 'event':27,76 'final':82 'for':16,92 'from':48 'global':63,81 'good':17 'hays':25 'impact':41,93 'incredible':75 'innovation':39 'ireland':51 'is':8,28,35 'it':34 'just':31 'link':87 'miss':69 'more':29 'newzealand':56 'of':12,38,65 'other':45 'powered':20 're':2 'regional':10 'registering':84 'socious':7 'super':14 't':68 'talented':46 'than':30 'that':6 'the':9,13,49,62,70,80 'this':26,74,86 'thrilled':3 'to':4,59,72 'uk':50 'ventures':23 'via':85 'watch':79 'we':1,42 'winner':11,64 'winners':47 'with':44 'witness':73 'you':77",
+            "title": null,
+            "comments": 0,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "1606dc87-0777-4cb6-89d0-b5e617c6e0df",
+                    "meta": {
+                        "id": "1606dc87-0777-4cb6-89d0-b5e617c6e0df",
+                        "city": "London",
+                        "name": "Ravi Jaiswal",
+                        "email": "ravijaiswal142@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/5b77199d84517e3dccf7a0bc0cf42889.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "GB",
+                        "username": "compassionate_ravi",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2024-01-21T11:10:20.061547+00:00"
+                },
+                {
+                    "id": "452a98a0-b229-4578-8372-2acd6eb35112",
+                    "meta": {
+                        "id": "452a98a0-b229-4578-8372-2acd6eb35112",
+                        "city": "Accra",
+                        "name": "Richard Okai",
+                        "email": "kmajesty70@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "GH",
+                        "username": "richard",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-12-27T06:19:11.903831+00:00"
+                },
+                {
+                    "id": "4ef1efae-3be5-412f-b349-96e498aef418",
+                    "meta": {
+                        "id": "4ef1efae-3be5-412f-b349-96e498aef418",
+                        "city": "Aveiro",
+                        "name": "Nuno Silva",
+                        "email": "nuno@xcuse.me",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/14563af488ac864a3ca93b50391c81ec.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "PT",
+                        "username": "nunofsilva",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-12-22T21:06:55.379175+00:00"
+                },
+                {
+                    "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                    "meta": {
+                        "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                        "city": "Tokyo",
+                        "name": "Cardano BCG (Blockchain Game)",
+                        "email": "client.jobs@socious.io",
+                        "image": null,
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": null,
+                        "verified": false,
+                        "shortname": "cardano_bcg_(blockchain_game)3273",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-11-09T09:17:21.145631+00:00"
+                },
+                {
+                    "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                    "meta": {
+                        "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                        "city": "İstanbul",
+                        "name": "Özgün Aslan",
+                        "email": "ozgunaslan2@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/1650823713/D6C45943-AEEB-4356-A17A-F8202E2ECD54_x1DsDYDr.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "TR",
+                        "username": "oezguen-aslan6859",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "ed1eea0a-ad40-4d3c-84bf-ef2aae35f5ec",
+                    "meta": {
+                        "id": "ed1eea0a-ad40-4d3c-84bf-ef2aae35f5ec",
+                        "city": "Alectown",
+                        "name": "John Darlington",
+                        "email": "coachstratumv2blockchain@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/2661895ba3dd8161a2dd32d124b21cd5.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "AU",
+                        "username": "coachstratumv2blockc1135",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2024-01-23T21:51:15.805093+00:00"
+                }
+            ]
+        },
+        {
+            "id": "e3a74a20-60a2-49ae-9d74-aeef45ad155d",
+            "content": "🌍✌️ Embrace Differences, Celebrate Unity! 🤝🌈\n\nToday, we're celebrating the International Day for Tolerance. It's a day to remind ourselves that our world is a beautifully diverse tapestry of cultures, beliefs, and backgrounds. Let's honor our differences and strive for a more inclusive and harmonious world! 🌎❤️\n\n🤝 Share your thoughts on how we can promote tolerance every day.\n🌟 Spread love, not hate.\n\n#InternationalDayForTolerance #ToleranceDay #EmbraceDiversity #UnityInDiversity #SpreadLove #ToleranceMatters",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2023-11-16T09:20:55.592Z",
+            "updated_at": "2023-11-16T09:20:55.592Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "DIVERSITY_INCLUSION"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "be5282e9-48f7-4736-945e-e8500238f13a",
+                    "url": "https://storage.googleapis.com/socious-gcs/acff42aaadf49065751e46e9433a56b9.png"
+                }
+            ],
+            "likes": 5,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'a':16,25,42 'and':32,39,45 'backgrounds':33 'beautifully':26 'beliefs':31 'can':54 'celebrate':3 'celebrating':8 'cultures':30 'day':11,17,58 'differences':2,38 'diverse':27 'diversity':69 'embrace':1 'embracediversity':65 'every':57 'for':12,41 'harmonious':46 'hate':62 'honor':36 'how':52 'inclusion':70 'inclusive':44 'international':10 'internationaldayfortolerance':63 'is':24 'it':14 'let':34 'love':60 'more':43 'not':61 'of':29 'on':51 'our':22,37 'ourselves':20 'promote':55 're':7 'remind':19 's':15,35 'share':48 'spread':59 'spreadlove':67 'strive':40 'tapestry':28 'that':21 'the':9 'thoughts':50 'to':18 'today':5 'tolerance':13,56 'toleranceday':64 'tolerancematters':68 'unity':4 'unityindiversity':66 'we':6,53 'world':23,47 'your':49",
+            "title": null,
+            "comments": 0,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                    "meta": {
+                        "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                        "city": "Tokyo, Tokyo Prefecture",
+                        "name": "Socious",
+                        "email": "info@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                        "country": "JP",
+                        "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                        "verified": true,
+                        "shortname": "socious",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": true
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                    "meta": {
+                        "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                        "city": "Tokyo",
+                        "name": "Seira Yun",
+                        "email": "seira0819@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/ca6ee851abb9e8cfc562b2776615fc62.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "seirayun",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": "0xA7678C96e7E33eFBd7D7E786291bD7DB7AD16bEA",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "937036e5-aa67-42a6-9fbb-a82abc17cfaf",
+                    "meta": {
+                        "id": "937036e5-aa67-42a6-9fbb-a82abc17cfaf",
+                        "city": "Tokyo",
+                        "name": "Yuki Sakashita",
+                        "email": "panchochiri@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/91decf38aad2a8209662b96d5de87b94.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "yuki-sakashita4774",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "9cbdb647-4167-4926-add9-1454c5635f02",
+                    "meta": {
+                        "id": "9cbdb647-4167-4926-add9-1454c5635f02",
+                        "city": "Taipei, Taiwan",
+                        "name": "Candice Tardivel",
+                        "email": "candys2711@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "TW",
+                        "username": "candice_tardivel",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2024-07-19T02:15:53.404987+00:00"
+                },
+                {
+                    "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                    "meta": {
+                        "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                        "city": "İstanbul",
+                        "name": "Özgün Aslan",
+                        "email": "ozgunaslan2@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/1650823713/D6C45943-AEEB-4356-A17A-F8202E2ECD54_x1DsDYDr.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "TR",
+                        "username": "oezguen-aslan6859",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                }
+            ]
+        },
+        {
+            "id": "64f34cf0-badb-4d57-baaa-39d343ded38f",
+            "content": "募集内容は以下の通りです。\n\nHiring TikTokers for Cardano Asia &amp; ProSkills39 - Blockchain Division\n\nCardano Asia is looking for TikTokers passionate about Blockchain to join our team. We invite you to join us in spreading knowledge about Blockchain to the Japanese community. If you love Blockchain technology and aspire to become a talented TikToker, please see the detailed requirements below:\n\nRequirements:\n\nFluency in Japanese: You need to have the ability to communicate fluently in Japanese to interact with the Japanese community.\n\nAbility to translate from English to Japanese: To accurately convey information about Blockchain, you need to have the ability to translate from English to Japanese. Cardano Asian will provide English script materials for you.\n\nCreate videos in Japanese: You will be responsible for creating videos on topics related to Blockchain in Japanese.\n\nSubmit original video clips: You will provide the original video clips to our team for review and editing.\n\nCommit to 3-4 video clips per week: You must create at least 3-4 weekly video clips for six months.\n\nSalary: Negotiable. Per Video or Month,\n\nWe hope you will help us spread knowledge about Blockchain and promote understanding of this technology within the Japanese community. Join us on this journey! 🚀",
+            "identity_id": "57a4b786-63b0-458c-930a-602afc59511c",
+            "created_at": "2023-11-04T15:29:10.705Z",
+            "updated_at": "2023-11-04T15:29:10.705Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "EDUCATION"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "fa54e511-3311-464d-88e7-a0a21bae848c",
+                    "url": "https://storage.googleapis.com/socious-gcs/40b639e57d4b7b5b60c473ab346d1179.jpg"
+                }
+            ],
+            "likes": 5,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'-4':150,161 '3':149,160 'a':47 'ability':65,77,95 'about':17,32,88,182 'accurately':85 'and':43,145,184 'asia':6,11 'asian':103 'aspire':44 'at':158 'be':117 'become':46 'below':55 'blockchain':8,18,33,41,89,126,183 'cardano':5,10,102 'clips':132,139,152,164 'commit':147 'communicate':67 'community':37,76,193 'convey':86 'create':111,157 'creating':120 'detailed':53 'division':9 'editing':146 'education':199 'english':81,99,106 'fluency':57 'fluently':68 'for':4,14,109,119,143,165 'from':80,98 'have':63,93 'help':178 'hiring':2 'hope':175 'if':38 'in':29,58,69,113,127 'information':87 'interact':72 'invite':24 'is':12 'japanese':36,59,70,75,83,101,114,128,192 'join':20,27,194 'journey':198 'knowledge':31,181 'least':159 'looking':13 'love':40 'materials':108 'month':173 'months':167 'must':156 'need':61,91 'negotiable':169 'of':187 'on':122,196 'or':172 'original':130,137 'our':21,141 'passionate':16 'per':153,170 'please':50 'promote':185 'proskills39':7 'provide':105,135 'related':124 'requirements':54,56 'responsible':118 'review':144 'salary':168 'script':107 'see':51 'six':166 'spread':180 'spreading':30 'submit':129 'talented':48 'team':22,142 'technology':42,189 'the':35,52,64,74,94,136,191 'this':188,197 'tiktoker':49 'tiktokers':3,15 'to':19,26,34,45,62,66,71,78,82,84,92,96,100,125,140,148 'topics':123 'translate':79,97 'understanding':186 'us':28,179,195 'video':131,138,151,163,171 'videos':112,121 'we':23,174 'week':154 'weekly':162 'will':104,116,134,177 'with':73 'within':190 'you':25,39,60,90,110,115,133,155,176 '募集内容は以下の通りです':1",
+            "title": null,
+            "comments": 0,
+            "identity_type": "users",
+            "identity_meta": {
+                "id": "57a4b786-63b0-458c-930a-602afc59511c",
+                "city": "Ho Chi Minh City",
+                "name": "Cardano Asia TikTok Channel",
+                "email": "thegoodgiao@gmail.com",
+                "avatar": "https://storage.googleapis.com/socious-gcs/96998020b68042268fc25e83d4a1dea3.jpg",
+                "status": "ACTIVE",
+                "address": "Room 409 C1 Apartment, Tan Vinh Street, Ward 6, District 4",
+                "country": "VN",
+                "username": "cardanoasia",
+                "open_to_work": true,
+                "is_contributor": null,
+                "wallet_address": null,
+                "identity_verified": false,
+                "open_to_volunteer": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                    "meta": {
+                        "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                        "city": "Tokyo, Tokyo Prefecture",
+                        "name": "Socious",
+                        "email": "info@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                        "country": "JP",
+                        "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                        "verified": true,
+                        "shortname": "socious",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": true
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                    "meta": {
+                        "id": "48ef808d-85eb-4e6d-a8a5-853cd93abc4d",
+                        "city": "Arinsal",
+                        "name": "Nina N",
+                        "email": "testazintest2@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "AD",
+                        "username": "testazintest2",
+                        "open_to_work": false,
+                        "is_contributor": true,
+                        "wallet_address": "0x6990bf996E984cffde6EbCAb6AC8723c95069719",
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-11-03T06:22:49.394579+00:00"
+                },
+                {
+                    "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                    "meta": {
+                        "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                        "city": "Tokyo",
+                        "name": "Cardano BCG (Blockchain Game)",
+                        "email": "client.jobs@socious.io",
+                        "image": null,
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": null,
+                        "verified": false,
+                        "shortname": "cardano_bcg_(blockchain_game)3273",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-11-09T09:17:21.145631+00:00"
+                },
+                {
+                    "id": "937036e5-aa67-42a6-9fbb-a82abc17cfaf",
+                    "meta": {
+                        "id": "937036e5-aa67-42a6-9fbb-a82abc17cfaf",
+                        "city": "Tokyo",
+                        "name": "Yuki Sakashita",
+                        "email": "panchochiri@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/91decf38aad2a8209662b96d5de87b94.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "yuki-sakashita4774",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "c5f21500-5df1-4854-a3f2-68f5659c5525",
+                    "meta": {
+                        "id": "c5f21500-5df1-4854-a3f2-68f5659c5525",
+                        "city": "Allora",
+                        "name": "John Darlington",
+                        "email": "braiins.mvin2pool@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "AU",
+                        "username": "braiins.mvin2pool9702",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2024-01-17T02:49:13.580973+00:00"
+                }
+            ]
+        },
+        {
+            "id": "aa4fc80e-244a-4191-8304-b113402773dd",
+            "content": "Today is the International Day Against Violence and Bullying at School Including Cyberbullying. Let's come together to create safer environments for everyone, both online and offline.\n\n#StopBullying #NoViolenceInSchools \n\nSchools should be sanctuaries, places where young minds can grow and thrive without fear. Sadly, that's not always the case. Physical violence, emotional abuse, and cyberbullying have been part of many students' daily lives.\n\nDid you know? One in every three students has been bullied at school, and about the same number have been bullied online. (https://www.childrenshospital.org/conditions/bullying)\n\nBullying can have long-term, significant effects according to recent studies:\n\n- Over 70% of young adults who were bullied in their youth experience increased levels of anxiety and depression well into adulthood. (Hawker, D.S.J. and Boulton, M.J. (2000) **Twenty Years' Research on Peer Victimization and Psychosocial Maladjustment**)\n- About 60% of adults who were bullied as children report a negative impact on their self-esteem, affecting their relationships, career, and overall well-being. (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4552909/)\n- 1 in 3 students who have been bullied in school continue to suffer from psychological and emotional distress years after the bullying has stopped (https://www.childrenshospital.org/conditions/bullying)\n\n🛡️ Let's stand together to #EndBullyingNow. Here are some ways you can help:\n\n1️⃣ Educate - Know the signs and types of bullying.\n2️⃣ Communicate - Talk openly about the issues.\n3️⃣ Activate - Be more than a bystander; intervene when safe to do so.\n4️⃣ Report - Use school and online mechanisms to report incidents.\n\n🌐 It starts with one. Be that one.\nThe following organizations are doing a great job in the fight against bullying:\n\n@STOMPoutBullying\n@PACER_NBPC\n@DitchtheLabel\n@CybersmileHQ\n\nResources: \nhttps://www.childrenshospital.org/conditions/bullying \nhttps://kidshealth.org/en/kids/bullies.html\nhttps://www.stopbullying.gov/\n\n #InternationalDayAgainstViolenceAndBullyingAtSchool #StopBullying #SafeSpacesForAll #OnlineAndOffline",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2023-11-03T00:28:47.158Z",
+            "updated_at": "2023-11-03T00:28:47.158Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "BULLYING"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "a3b04b0d-8c4a-4b65-b504-67560cf925f9",
+                    "url": "https://storage.googleapis.com/socious-gcs/1e395f08022025fbe08c8c594c38a867.png"
+                }
+            ],
+            "likes": 6,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'/conditions/bullying':275 '/conditions/bullying)':89,194 '/en/kids/bullies.html':278 '/pmc/articles/pmc4552909/)':167 '1':168 '1️⃣':208 '2000':128 '2️⃣':217 '3':170 '3️⃣':224 '4️⃣':237 '60':139 '70':103 'a':148,229,259 'about':79,138,221 'abuse':54 'according':98 'activate':225 'adulthood':122 'adults':106,141 'affecting':156 'after':187 'against':6,265 'always':48 'and':8,26,40,55,78,118,125,135,160,183,213,241 'anxiety':117 'are':202,257 'as':145 'at':10,76 'be':32,226,251 'been':58,74,84,174 'being':164 'both':24 'boulton':126 'bullied':75,85,109,144,175 'bullying':9,90,189,216,266,284 'bystander':230 'can':38,91,206 'career':159 'case':50 'children':146 'come':16 'communicate':218 'continue':178 'create':19 'cyberbullying':13,56 'cybersmilehq':271 'd.s.j':124 'daily':63 'day':5 'depression':119 'did':65 'distress':185 'ditchthelabel':270 'do':235 'doing':258 'educate':209 'effects':97 'emotional':53,184 'endbullyingnow':200 'environments':21 'esteem':155 'every':70 'everyone':23 'experience':113 'fear':43 'fight':264 'following':255 'for':22 'from':181 'great':260 'grow':39 'has':73,190 'have':57,83,92,173 'hawker':123 'help':207 'here':201 'impact':150 'in':69,110,169,176,262 'incidents':246 'including':12 'increased':114 'international':4 'internationaldayagainstviolenceandbullyingatschool':280 'intervene':231 'into':121 'is':2 'issues':223 'it':247 'job':261 'kidshealth.org':277 'kidshealth.org/en/kids/bullies.html':276 'know':67,210 'let':14,195 'levels':115 'lives':64 'long':94 'long-term':93 'm.j':127 'maladjustment':137 'many':61 'mechanisms':243 'minds':37 'more':227 'nbpc':269 'negative':149 'not':47 'noviolenceinschools':29 'number':82 'of':60,104,116,140,215 'offline':27 'on':132,151 'one':68,250,253 'online':25,86,242 'onlineandoffline':283 'openly':220 'organizations':256 'over':102 'overall':161 'pacer':268 'part':59 'peer':133 'physical':51 'places':34 'psychological':182 'psychosocial':136 'recent':100 'relationships':158 'report':147,238,245 'research':131 'resources':272 's':15,46,196 'sadly':44 'safe':233 'safer':20 'safespacesforall':282 'same':81 'sanctuaries':33 'school':11,77,177,240 'schools':30 'self':154 'self-esteem':153 'should':31 'significant':96 'signs':212 'so':236 'some':203 'stand':197 'starts':248 'stompoutbullying':267 'stopbullying':28,281 'stopped':191 'students':62,72,171 'studies':101 'suffer':180 'talk':219 'term':95 'than':228 'that':45,252 'the':3,49,80,188,211,222,254,263 'their':111,152,157 'three':71 'thrive':41 'to':18,99,179,199,234,244 'today':1 'together':17,198 'twenty':129 'types':214 'use':239 'victimization':134 'violence':7,52 'ways':204 'well':120,163 'well-being':162 'were':108,143 'when':232 'where':35 'who':107,142,172 'with':249 'without':42 'www.childrenshospital.org':88,193,274 'www.childrenshospital.org/conditions/bullying':273 'www.childrenshospital.org/conditions/bullying)':87,192 'www.ncbi.nlm.nih.gov':166 'www.ncbi.nlm.nih.gov/pmc/articles/pmc4552909/)':165 'www.stopbullying.gov':279 'years':130,186 'you':66,205 'young':36,105 'youth':112",
+            "title": null,
+            "comments": 1,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                    "meta": {
+                        "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                        "city": "Tokyo, Tokyo Prefecture",
+                        "name": "Socious",
+                        "email": "info@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                        "country": "JP",
+                        "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                        "verified": true,
+                        "shortname": "socious",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": true
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "452a98a0-b229-4578-8372-2acd6eb35112",
+                    "meta": {
+                        "id": "452a98a0-b229-4578-8372-2acd6eb35112",
+                        "city": "Accra",
+                        "name": "Richard Okai",
+                        "email": "kmajesty70@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "GH",
+                        "username": "richard",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-12-27T06:19:11.903831+00:00"
+                },
+                {
+                    "id": "57a4b786-63b0-458c-930a-602afc59511c",
+                    "meta": {
+                        "id": "57a4b786-63b0-458c-930a-602afc59511c",
+                        "city": "Ho Chi Minh City",
+                        "name": "Cardano Asia TikTok Channel",
+                        "email": "thegoodgiao@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/96998020b68042268fc25e83d4a1dea3.jpg",
+                        "status": "ACTIVE",
+                        "address": "Room 409 C1 Apartment, Tan Vinh Street, Ward 6, District 4",
+                        "country": "VN",
+                        "username": "cardanoasia",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2023-09-22T01:57:32.821404+00:00"
+                },
+                {
+                    "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                    "meta": {
+                        "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                        "city": "Tokyo",
+                        "name": "Cardano BCG (Blockchain Game)",
+                        "email": "client.jobs@socious.io",
+                        "image": null,
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": null,
+                        "verified": false,
+                        "shortname": "cardano_bcg_(blockchain_game)3273",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-11-09T09:17:21.145631+00:00"
+                },
+                {
+                    "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                    "meta": {
+                        "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                        "city": "Tokyo",
+                        "name": "Seira Yun",
+                        "email": "seira0819@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/ca6ee851abb9e8cfc562b2776615fc62.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "seirayun",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": "0xA7678C96e7E33eFBd7D7E786291bD7DB7AD16bEA",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                    "meta": {
+                        "id": "d2eaa463-8351-43ac-93d2-96c12129a516",
+                        "city": "İstanbul",
+                        "name": "Özgün Aslan",
+                        "email": "ozgunaslan2@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/1650823713/D6C45943-AEEB-4356-A17A-F8202E2ECD54_x1DsDYDr.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "TR",
+                        "username": "oezguen-aslan6859",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                }
+            ]
+        },
+        {
+            "id": "72cd4a3e-7865-4e6e-a9f2-b3e5cf18b278",
+            "content": "We're delighted to share that Socious has secured funding from Singularity NET as part of their Deep Funding Deep Funding initiative! This support is a major boost that will empower us to further our mission of connecting purpose-driven professionals with impact organizations. \n\nThis partnership is a significant step towards making a positive change in the world, and we're eager to embrace the opportunities it brings. Thank you for being a part of our journey, and stay tuned for more updates on how we'll be working together to drive positive impact!\n\n#Socious #SingularityNET #DeepFunding #ImpactMatters",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2023-10-31T05:27:57.391Z",
+            "updated_at": "2023-10-31T05:27:57.391Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "COLLABORATION_FOR_IMPACT"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "a3668448-c006-4126-9a1a-630edb518e6f",
+                    "url": "https://storage.googleapis.com/socious-gcs/abc99054d422c2e50feca93347857027.png"
+                }
+            ],
+            "likes": 5,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'a':26,49,54,74 'and':60,79 'as':14 'be':89 'being':73 'boost':28 'brings':69 'change':56 'collaboration':100 'connecting':38 'deep':18,20 'deepfunding':98 'delighted':3 'drive':93 'driven':41 'eager':63 'embrace':65 'empower':31 'for':72,82,101 'from':11 'funding':10,19,21 'further':34 'has':8 'how':86 'impact':44,95,102 'impactmatters':99 'in':57 'initiative':22 'is':25,48 'it':68 'journey':78 'll':88 'major':27 'making':53 'mission':36 'more':83 'net':13 'of':16,37,76 'on':85 'opportunities':67 'organizations':45 'our':35,77 'part':15,75 'partnership':47 'positive':55,94 'professionals':42 'purpose':40 'purpose-driven':39 're':2,62 'secured':9 'share':5 'significant':50 'singularity':12 'singularitynet':97 'socious':7,96 'stay':80 'step':51 'support':24 'thank':70 'that':6,29 'the':58,66 'their':17 'this':23,46 'to':4,33,64,92 'together':91 'towards':52 'tuned':81 'updates':84 'us':32 'we':1,61,87 'will':30 'with':43 'working':90 'world':59 'you':71",
+            "title": null,
+            "comments": 0,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "0ed06f1f-bde5-412c-9d50-8a81c47ea1da",
+                    "meta": {
+                        "id": "0ed06f1f-bde5-412c-9d50-8a81c47ea1da",
+                        "city": "Runcorn, England",
+                        "name": "Brandon Conley",
+                        "email": "mail@brandonconley.co.uk",
+                        "avatar": null,
+                        "status": "INACTIVE",
+                        "address": null,
+                        "country": "GB",
+                        "username": "bconley",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-11-02T10:36:20.357108+00:00"
+                },
+                {
+                    "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                    "meta": {
+                        "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                        "city": "Tokyo, Tokyo Prefecture",
+                        "name": "Socious",
+                        "email": "info@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                        "country": "JP",
+                        "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                        "verified": true,
+                        "shortname": "socious",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": true
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "57a4b786-63b0-458c-930a-602afc59511c",
+                    "meta": {
+                        "id": "57a4b786-63b0-458c-930a-602afc59511c",
+                        "city": "Ho Chi Minh City",
+                        "name": "Cardano Asia TikTok Channel",
+                        "email": "thegoodgiao@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/96998020b68042268fc25e83d4a1dea3.jpg",
+                        "status": "ACTIVE",
+                        "address": "Room 409 C1 Apartment, Tan Vinh Street, Ward 6, District 4",
+                        "country": "VN",
+                        "username": "cardanoasia",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2023-09-22T01:57:32.821404+00:00"
+                },
+                {
+                    "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                    "meta": {
+                        "id": "685b2aa0-f407-4d48-9bb6-6d134d1dbd17",
+                        "city": "Tokyo",
+                        "name": "Cardano BCG (Blockchain Game)",
+                        "email": "client.jobs@socious.io",
+                        "image": null,
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "mission": null,
+                        "verified": false,
+                        "shortname": "cardano_bcg_(blockchain_game)3273",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-11-09T09:17:21.145631+00:00"
+                },
+                {
+                    "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                    "meta": {
+                        "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                        "city": "Tokyo",
+                        "name": "Seira Yun",
+                        "email": "seira0819@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/ca6ee851abb9e8cfc562b2776615fc62.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "seirayun",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": "0xA7678C96e7E33eFBd7D7E786291bD7DB7AD16bEA",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                }
+            ]
+        },
+        {
+            "id": "355db010-ffd2-42ff-ac09-e8764444b56c",
+            "content": "🚀 Happy Ada Lovelace Day! 🎉\n\n\nOn this special day, we pay tribute not only to the incredible mathematician Ada Lovelace but also to the groundbreaking cryptocurrency Cardano (ADA), named in her honor. 🌟\n\n\nAda Lovelace, a visionary thinker of the 19th century, laid the foundation for modern computer programming with her pioneering work. Today, her legacy lives on in the world of blockchain and cryptocurrency through Cardano. 🌐💰\n\n\nJust like Ada Lovelace pushed the boundaries of what was possible in her time, Cardano is pushing the boundaries of blockchain technology, bringing innovation, sustainability, and inclusivity to the forefront. 💡🌿\n\n\nLet's celebrate this synergy of the past and the future! 🎩🚀 Share your love for Ada Lovelace, ADA, and the endless possibilities they represent in the world of blockchain. 🙌💻\n\n\n#AdaLovelaceDay #Cardano #ADA #Blockchain #Cryptocurrency #Innovation #Sustainability #FutureTech #Trailblazers #CryptoCommunity",
+            "identity_id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+            "created_at": "2023-10-10T09:28:44.843Z",
+            "updated_at": "2023-10-10T09:28:44.843Z",
+            "deleted_at": null,
+            "causes_tags": [
+                "COLLABORATION_FOR_IMPACT"
+            ],
+            "hashtags": null,
+            "identity_tags": null,
+            "media": [
+                {
+                    "id": "ac83d2df-835a-4bb7-87ad-54def8203d4b",
+                    "url": "https://storage.googleapis.com/socious-gcs/c8f9b9b4829af5f564addd27ae548ae9.png"
+                }
+            ],
+            "likes": 15,
+            "shared": 0,
+            "shared_id": null,
+            "old_id": null,
+            "search_tsv": "'19th':39 'ada':2,18,27,32,68,111,113,127 'adalovelaceday':125 'also':21 'blockchain':61,86,124,128 'boundari':72,84 'bring':88 'cardano':26,65,80,126 'celebr':98 'centuri':40 'collabor':135 'comput':46 'cryptocommun':134 'cryptocurr':25,63,129 'day':4,8 'endless':116 'forefront':95 'foundat':43 'futur':106 'futuretech':132 'groundbreak':24 'happi':1 'honor':31 'impact':137 'inclus':92 'incred':16 'innov':89,130 'laid':41 'legaci':54 'let':96 'like':67 'live':55 'love':109 'lovelac':3,19,33,69,112 'mathematician':17 'modern':45 'name':28 'past':103 'pay':10 'pioneer':50 'possibl':76,117 'program':47 'push':70,82 'repres':119 'share':107 'special':7 'sustain':90,131 'synergi':100 'technolog':87 'thinker':36 'time':79 'today':52 'trailblaz':133 'tribut':11 'visionari':35 'work':51 'world':59,122",
+            "title": null,
+            "comments": 0,
+            "identity_type": "organizations",
+            "identity_meta": {
+                "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                "city": "Tokyo, Tokyo Prefecture",
+                "name": "Socious",
+                "email": "info@socious.io",
+                "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                "hiring": true,
+                "status": "ACTIVE",
+                "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                "country": "JP",
+                "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                "verified": true,
+                "shortname": "socious",
+                "description": null,
+                "wallet_address": null,
+                "verified_impact": true
+            },
+            "liked": false,
+            "reported": false,
+            "shared_post": null,
+            "shared_from_identity": null,
+            "emojis": null,
+            "liked_identities": [
+                {
+                    "id": "017ea1cb-a34b-4bc5-afdd-678a64208856",
+                    "meta": {
+                        "id": "017ea1cb-a34b-4bc5-afdd-678a64208856",
+                        "city": "Lahore, Punjab Province",
+                        "name": "Malik Huzaifa",
+                        "email": "malikhuzaifa043@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": "House # 1104, LDA M-BLOCK, Near Comsats University, Lahore ",
+                        "country": "PK",
+                        "username": "malikhuzaifa0434823",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2023-10-02T08:17:43.186207+00:00"
+                },
+                {
+                    "id": "0ed06f1f-bde5-412c-9d50-8a81c47ea1da",
+                    "meta": {
+                        "id": "0ed06f1f-bde5-412c-9d50-8a81c47ea1da",
+                        "city": "Runcorn, England",
+                        "name": "Brandon Conley",
+                        "email": "mail@brandonconley.co.uk",
+                        "avatar": null,
+                        "status": "INACTIVE",
+                        "address": null,
+                        "country": "GB",
+                        "username": "bconley",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2022-11-02T10:36:20.357108+00:00"
+                },
+                {
+                    "id": "1180accd-2a57-4a2f-af73-692feb2c05b1",
+                    "meta": {
+                        "id": "1180accd-2a57-4a2f-af73-692feb2c05b1",
+                        "city": "Singapore",
+                        "name": "Emurgo",
+                        "email": "client.jobs@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/e927edcb447f6a2174e9bbce9ba66f0d.jpg",
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": "83 Clemenceau Avenue, Singapore River, 239920, SG",
+                        "country": "SG",
+                        "mission": "Changing people's lives and the world through Cardano",
+                        "verified": false,
+                        "shortname": "-emurgo5998",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2023-08-25T12:31:14.902838+00:00"
+                },
+                {
+                    "id": "14588a07-ec8b-4926-aa11-de90e7cbc642",
+                    "meta": {
+                        "id": "14588a07-ec8b-4926-aa11-de90e7cbc642",
+                        "city": "Tallinn",
+                        "name": "Solid World DAO",
+                        "email": "client.jobs@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ca9453f602aed05632915c493a364178.jpg",
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "ee",
+                        "mission": "Solid World DAO de-risks carbon investments and makes them liquid.",
+                        "verified": false,
+                        "shortname": "solid4705",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-11-10T13:24:09.56787+00:00"
+                },
+                {
+                    "id": "2b792002-5c93-430b-8a1e-7776cabee3f0",
+                    "meta": {
+                        "id": "2b792002-5c93-430b-8a1e-7776cabee3f0",
+                        "city": "Tallinn",
+                        "name": "Alejandro De La Parra Solomon",
+                        "email": "info@qbri.digital",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/838626c21746f535354fb083a7da4585.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "EE",
+                        "username": "alejandrodelaparra",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-10-19T12:43:16.500116+00:00"
+                },
+                {
+                    "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                    "meta": {
+                        "id": "2bd26aa5-f745-4f12-bca7-17916161ae8b",
+                        "city": "Tokyo, Tokyo Prefecture",
+                        "name": "Socious",
+                        "email": "info@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/ad4ae46f5dc138d8bc63928890bc64e0.png",
+                        "hiring": true,
+                        "status": "ACTIVE",
+                        "address": "Nihonbashi 3-2-14-1F, Chuo Ward, Tokyo, Japan 103-0027",
+                        "country": "JP",
+                        "mission": "Our mission is to give everyone the chance to make a difference.\r\n\r\nWe are a talent platform that makes impact work accessible and transparent; we build connections between purpose-driven individuals and organizations. By leveraging blockchain technology, we make social/environmental impact work traceable and reward contributions with crypto tokens.",
+                        "verified": true,
+                        "shortname": "socious",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": true
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "452a98a0-b229-4578-8372-2acd6eb35112",
+                    "meta": {
+                        "id": "452a98a0-b229-4578-8372-2acd6eb35112",
+                        "city": "Accra",
+                        "name": "Richard Okai",
+                        "email": "kmajesty70@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "GH",
+                        "username": "richard",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-12-27T06:19:11.903831+00:00"
+                },
+                {
+                    "id": "57a4b786-63b0-458c-930a-602afc59511c",
+                    "meta": {
+                        "id": "57a4b786-63b0-458c-930a-602afc59511c",
+                        "city": "Ho Chi Minh City",
+                        "name": "Cardano Asia TikTok Channel",
+                        "email": "thegoodgiao@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/96998020b68042268fc25e83d4a1dea3.jpg",
+                        "status": "ACTIVE",
+                        "address": "Room 409 C1 Apartment, Tan Vinh Street, Ward 6, District 4",
+                        "country": "VN",
+                        "username": "cardanoasia",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2023-09-22T01:57:32.821404+00:00"
+                },
+                {
+                    "id": "59307902-c641-4f2e-a631-739f237cf924",
+                    "meta": {
+                        "id": "59307902-c641-4f2e-a631-739f237cf924",
+                        "city": "Amsterdam",
+                        "name": "Priscilla  Camargo",
+                        "email": "prtl.camargo@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/2f602d8dadf9c7088c651bef8cc0994c.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "NL",
+                        "username": "prtl.camargo9790",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-10-17T10:45:11.42133+00:00"
+                },
+                {
+                    "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                    "meta": {
+                        "id": "69f73431-a23d-49b5-9ce2-81f30f0db4b7",
+                        "city": "Tokyo",
+                        "name": "Seira Yun",
+                        "email": "seira0819@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/ca6ee851abb9e8cfc562b2776615fc62.jpg",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "seirayun",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": "0xA7678C96e7E33eFBd7D7E786291bD7DB7AD16bEA",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "a5cedb8c-e774-4c50-aa79-07c627c27c17",
+                    "meta": {
+                        "id": "a5cedb8c-e774-4c50-aa79-07c627c27c17",
+                        "city": "San Francisco",
+                        "name": "Lime",
+                        "email": "client.jobs@socious.io",
+                        "image": "https://storage.googleapis.com/socious-gcs/81990581165e35bfd8f049805a135a1f.jpg",
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "us",
+                        "mission": "Lime is the world's largest shared electric vehicle company. We’re on a mission to build a future where transportation is shared, affordable and carbon-free. Named a Time 100 Most Influential Company in 2021, Lime has powered 350+ million electric bike and scooter rides in 200+ cities on 5 continents, saving an estimated 75+ million car trips. Learn more about how we help the world #RideGreen at li.me!",
+                        "verified": false,
+                        "shortname": "-li5991",
+                        "description": null,
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-11-04T16:29:03.198469+00:00"
+                },
+                {
+                    "id": "e381d1d7-9cce-46b4-a31f-45e84543f5f0",
+                    "meta": {
+                        "id": "e381d1d7-9cce-46b4-a31f-45e84543f5f0",
+                        "city": "Bamenda",
+                        "name": "Mo-safe",
+                        "email": "info@mo-safe.com",
+                        "image": "https://storage.googleapis.com/socious-gcs/1644033138/69155E8C-FF13-4785-A8B6-F77D2573D1AC_y0jNrMjh.png",
+                        "hiring": false,
+                        "status": "ACTIVE",
+                        "address": "Bamenda, commercial avenue",
+                        "country": "CM",
+                        "mission": "We are transforming charity organizations into sustainable entities by strategically creating profits from donations and using the revenues rather than relying solely on the goodwill of donors to fund unsustainable projects",
+                        "verified": false,
+                        "shortname": "mo-safe2789",
+                        "description": "Bamenda, Cameroon",
+                        "wallet_address": null,
+                        "verified_impact": false
+                    },
+                    "type": "organizations",
+                    "created_at": "2022-10-10T07:20:59.18245+00:00"
+                },
+                {
+                    "id": "e9e8d11c-e720-45f8-9d49-b94e7938f3cf",
+                    "meta": {
+                        "id": "e9e8d11c-e720-45f8-9d49-b94e7938f3cf",
+                        "city": "Minamiuonuma",
+                        "name": "Joshua Abonghe Tarh",
+                        "email": "tarhjoshua@gmail.com",
+                        "avatar": "https://storage.googleapis.com/socious-gcs/1638494676/FEC33041-44ED-480F-8D6F-C392ACBDC96F_CxXhCsOq.png",
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "JP",
+                        "username": "joshua-abonghe-tarh7816",
+                        "open_to_work": true,
+                        "is_contributor": null,
+                        "wallet_address": "0x69de111b981037341C3949DFf57c5f915dbBdf39",
+                        "identity_verified": true,
+                        "open_to_volunteer": true
+                    },
+                    "type": "users",
+                    "created_at": "2022-10-10T07:20:57.935185+00:00"
+                },
+                {
+                    "id": "eb457baf-a66d-4373-a839-ab9d8cee3655",
+                    "meta": {
+                        "id": "eb457baf-a66d-4373-a839-ab9d8cee3655",
+                        "city": "Goma",
+                        "name": "Paul Mupenda",
+                        "email": "paulmupendab@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "CD",
+                        "username": "paulmupendab6255",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": null,
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-10-17T11:24:01.899798+00:00"
+                },
+                {
+                    "id": "f413f97e-49b2-476e-8998-30b480018983",
+                    "meta": {
+                        "id": "f413f97e-49b2-476e-8998-30b480018983",
+                        "city": "Sutton",
+                        "name": "Christopher Irorita",
+                        "email": "irorita.chris08@gmail.com",
+                        "avatar": null,
+                        "status": "ACTIVE",
+                        "address": null,
+                        "country": "GB",
+                        "username": "chris.08",
+                        "open_to_work": false,
+                        "is_contributor": null,
+                        "wallet_address": "0xAc4004b060c8d3d0F76028486DBB78EDDE55254E",
+                        "identity_verified": false,
+                        "open_to_volunteer": false
+                    },
+                    "type": "users",
+                    "created_at": "2023-12-05T07:32:39.100827+00:00"
+                }
+            ]
+        }
+    ]
+}
