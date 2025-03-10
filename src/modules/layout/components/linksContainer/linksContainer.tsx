@@ -35,6 +35,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
                   label: ch.label,
                   navigateFunc: () => {
                     navigateFunction(ch.route);
+                    setOpen(false);
                   },
                 };
               })}
@@ -45,6 +46,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
               label={item.label}
               navigateFunc={() => {
                 navigateFunction(item.route);
+                setOpen(false);
               }}
               iconName={item.iconName}
               menuOpen={open}
