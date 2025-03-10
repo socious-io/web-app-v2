@@ -1,5 +1,6 @@
 import { Divider } from '@mui/material';
 import { translate } from 'src/core/utils';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -10,7 +11,6 @@ import EmptyBox from 'src/modules/general/containers/EmptyBox';
 import ServiceCard from 'src/modules/Services/components/ServiceCard';
 import variables from 'src/styles/constants/_exports.module.scss';
 
-import styles from './index.module.scss';
 import { useServiceList } from './useServiceList';
 
 const ServicesList = () => {
@@ -39,13 +39,12 @@ const ServicesList = () => {
       }}
     />
   ) : (
-    <div className={styles['empty']}>
-      <Icon name="info-circle" fontSize={20} color={variables.color_grey_700} className={styles['empty__icon']} />
-      <div className={styles['empty__info']}>
-        <span className={styles['empty__info--bold']}>{translate('service-other-empty.title')}</span>
-        {translate('service-other-empty.subtitle')}
-      </div>
-    </div>
+    <AlertMessage
+      iconName="info-circle"
+      theme="gray"
+      title={translate('service-other-empty.title')}
+      subtitle={translate('service-other-empty.subtitle')}
+    />
   );
 
   return services.length ? (
