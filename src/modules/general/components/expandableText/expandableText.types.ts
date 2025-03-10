@@ -5,5 +5,6 @@ export interface ExpandableTextProps {
   clickableUrls?: boolean;
   isMarkdown?: boolean;
   seeMoreButton?: boolean;
+  preview?: boolean;
   customStyle?: string;
 }

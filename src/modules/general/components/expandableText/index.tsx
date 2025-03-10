@@ -6,6 +6,11 @@ import css from './expandableText.module.scss';
 import { ExpandableTextProps } from './expandableText.types';
 import { TextClickableURLs } from '../textClickableUrls';
 
+const stripHtml = (html: string) => {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || '';
+};
+
 export const ExpandableText: React.FC<ExpandableTextProps> = ({
   text,
   seeMoreText = 'see more',
@@ -13,41 +18,29 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
   clickableUrls = true,
   isMarkdown = false,
   seeMoreButton = true,
+  preview = false,
   customStyle = '',
 }) => {
-  const initialText = text.length > expectedLength ? text.slice(0, expectedLength) + '...' : text;
-  const [maintext, setMainText] = useState(text);
-  const expect = text.slice(0, expectedLength);
-  const viewMoreCondition = expect.length < text.length;
-  const [shouldViewMore, setShouldViewMore] = useState(viewMoreCondition);
-
-  const toggleExpect = (): void => {
-    if (maintext !== text) {
-      setMainText(text);
-    } else {
-      setMainText(initialText);
-    }
-    setShouldViewMore(!shouldViewMore);
-  };
+  const textContent = preview ? stripHtml(text) : text;
+  const isTextLong = textContent.length > expectedLength;
+  const initialText = isTextLong ? textContent.slice(0, expectedLength) + '...' : textContent;
+  const [mainText, setMainText] = useState(initialText);
+  const [shouldViewMore, setShouldViewMore] = useState(isTextLong);
 
   useEffect(() => {
-    setShouldViewMore(viewMoreCondition);
-    setMainText(expect);
-  }, [text]);
-
-  useEffect(() => {
-    const newText = text.length > expectedLength ? text.slice(0, expectedLength) + '...' : text;
-    setShouldViewMore(text.length > expectedLength);
-    setMainText(newText);
+    setMainText(initialText);
+    setShouldViewMore(isTextLong);
   }, [text, expectedLength]);
 
   const renderText = () => {
-    if (clickableUrls && !isMarkdown) {
-      return <TextClickableURLs text={maintext} />;
-    } else if (isMarkdown) {
-      return convertMarkdownToJSX(maintext);
-    }
-    return maintext;
+    if (isMarkdown) return convertMarkdownToJSX(mainText);
+    if (clickableUrls) return <TextClickableURLs text={mainText} />;
+    return mainText;
+  };
+
+  const toggleExpect = (): void => {
+    setMainText(prev => (prev === text ? initialText : text));
+    setShouldViewMore(prev => !prev);
   };
 
   return (

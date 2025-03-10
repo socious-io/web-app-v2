@@ -116,6 +116,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
               expectedLength={isTouchDevice() ? 85 : 175}
               text={job.description || ''}
               seeMoreButton={false}
+              preview
             />
           </div>
         )}
