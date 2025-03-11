@@ -54,7 +54,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
           verified={false}
           handleClick={myProfile ? handleOpenEditAvatar : undefined}
         />
-        <div className={css.username}>
+        <div data-testId="username" className={css.username}>
           <div className={css.profileState}>
             <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
             {type === 'users' && (identity as User).open_to_work && (

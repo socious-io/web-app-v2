@@ -18,6 +18,10 @@ const user = new User(FIRSTNAME, LASTNAME, SIGNINGUP_EMAIL, USERNAME);
 describe('user view their profile', () => {
     beforeEach(() => {
 
+        cy.setCookie('access_token', ACCESS_TOKEN);
+        cy.setCookie('refresh_token', REFRESH_TOKEN);
+        cy.setCookie('token_type', TOKEN_TYPE);
+
         cy.intercept('GET', `**/identities*`, req => {
             req.reply(user.getIdentity());
         }).as('getIdentities');
@@ -31,10 +35,10 @@ describe('user view their profile', () => {
         ).as('postT');
 
         cy.intercept('GET', '**/chats/unreads/counts*', req => req.reply(200, { "count": 0 })).as('getUnreadCounts');
-        cy.intercept('GET', '**/user/impact-points*', req => req.reply(200, { "page": 1, "limit": 10, "total_count": 0, "items": [] })).as('getUnreadCounts');
-        cy.intercept('GET', '**/user/profile/*', req =>
-            req.reply(200, PROFILE)
-        ).as('getProfile');
+        cy.intercept('GET', '**/user/impact-points*', req => req.reply(200, { "page": 1, "limit": 10, "total_count": 0, "items": [] })).as('getImpactPoints');
+        cy.intercept('GET', '**/user/profile?t=*', req => {
+            req.reply(200, PROFILE);
+        }).as('getProfile');
 
         cy.intercept('GET', `**/w3m/v1/getMobileListings*`, req => req.reply(200, { message: 'success' })).as(
             'getMobileListings',
@@ -43,12 +47,30 @@ describe('user view their profile', () => {
             'getMobileListings',
         );
 
+        //after clicking the view profile button
+        cy.intercept('GET', '**/user/reviews?t=*', req => {
+            req.reply(200, {"page":1,"limit":5,"total_count":0,"items":[]})
+        }).as('getReviews');
 
     });
 
-    it('shoud navigate to home page', () => {
+    it('should navigate to home page and hit the view profile button', () => {
+
+        cy.getCookie('access_token').should('exist');
+        cy.getCookie('refresh_token').should('exist');
+        cy.getCookie('token_type').should('exist');
+
         cy.visit(APP_URL + '/dashboard/user');
-        // cy.wait('@getIdentities');
+        cy.wait('@getIdentities');
         cy.wait('@getProfile');
+
+        cy.contains(PROFILE.username).should('be.visible');
+
+        cy.get('[data-testId="viewProfile-button"]').click();
+        cy.wait('@getReviews');
+        cy.wait('@getProfile');
+
+        cy.contains('[data-testId="username"]').should('be.visible');
+
     });
 });
