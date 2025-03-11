@@ -1,4 +1,4 @@
-export const Feeds = {
+export const FEEDS = {
     page: 1,
     limit: 10,
     total_count: 403,

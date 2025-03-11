@@ -14,7 +14,7 @@ const FeedActions: React.FC<FeedActionsProps> = ({
   return (
     <div className="flex">
       <div className="flex-1 flex justify-center">
-        <div className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer" onClick={() => onLikeClick(liked)}>
+        <div className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer" onClick={() => onLikeClick(liked)} data-testid="like-button">
           <Icon
             name={liked ? 'heart-filled' : 'heart'}
             fontSize={20}

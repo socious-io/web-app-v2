@@ -30,7 +30,7 @@ export const Feeds = () => {
     <FeedsProvider>
       <div className={css.container}>
         <div className={css.header}>
-          <h1 className={css.title}>{translate('feeds')}</h1>
+          <h1 id="Feeds-Title" className={css.title}>{translate('feeds')}</h1>
           <h2 className={css.subtitle}>{translate('feeds-subtitle')}</h2>
         </div>
         <div className="md:max-w-[720px] flex flex-col gap-6 pt-6 pb-8 px-4 md:p-8 md:pb-12">

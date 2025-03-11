@@ -1,6 +1,5 @@
 //Server
 export const API_SERVER = Cypress.env('api_server') || 'https://dev.socious.io/api/v2';
-export const API_SERVER_HTTP = Cypress.env('api_server_http') || 'http://dev.socious.io/api/v2';
 export const APP_URL = Cypress.env('app_url') || 'http://localhost:3000';
 
 //Credentials
@@ -17,9 +16,9 @@ export const LASTNAME = 'Nigina';
 export const USERNAME = 'umayanigina';
 
 //Authentication
-export const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzNWY3MjRlLTU4MjQtNDEyOS04ZWQ2LTk2YzZkZGE4MWEzYSIsInJlZnJlc2giOmZhbHNlLCJpYXQiOjE3NDEzNDg2OTEsImV4cCI6MTc0MTUyMTQ5MX0.k39yUXJbCMdqeSs_yW6AQVguFSe8Y0SlwjF_afJEORU';
+export const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzNWY3MjRlLTU4MjQtNDEyOS04ZWQ2LTk2YzZkZGE4MWEzYSIsInJlZnJlc2giOmZhbHNlLCJpYXQiOjE3NDE1ODIzMjUsImV4cCI6MTc0MTc1NTEyNX0.ad96cf_yu5scVClKDlPJONjhHmMnMLTOtTEVE3iduyo';
 // export const REFRESH_TOKEN = 'VALID_REFRESH_TOKEN';
-export const REFRESH_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzNWY3MjRlLTU4MjQtNDEyOS04ZWQ2LTk2YzZkZGE4MWEzYSIsInJlZnJlc2giOnRydWUsImlhdCI6MTc0MTM0ODY5MSwiZXhwIjoxNzQzOTQwNjkxfQ.hTEW-4FuoC3ynB60JdBujQCQabU6j7S0e1O4wB8NLR0';
+export const REFRESH_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzNWY3MjRlLTU4MjQtNDEyOS04ZWQ2LTk2YzZkZGE4MWEzYSIsInJlZnJlc2giOnRydWUsImlhdCI6MTc0MTU4MjMyNSwiZXhwIjoxNzQ0MTc0MzI1fQ.pjSqb3nfz3Jbm17AgXfQGRgqXYMXqwRyyNmG-4FEIEM';
 // export const TOKEN_TYPE = 'VALID_TOKEN_TYPE';
 export const TOKEN_TYPE = 'Bearer';
 
