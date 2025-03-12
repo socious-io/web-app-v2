@@ -77,8 +77,6 @@ describe('notification test', () => {
 
     cy.get('[data-testid="notificationIcon"]').click();
 
-    cy.get('[data-testid="notification-slide"]')
-      .find('[data-testid="notification-Option"]') // Assuming the notification items have this test ID
-      .should('not.exist');
+    cy.get('[data-testid="notification-slide"]').find('[data-testid="notification-Option"]').should('not.exist');
   });
 });
