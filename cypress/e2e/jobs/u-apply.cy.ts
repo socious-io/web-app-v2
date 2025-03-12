@@ -1,4 +1,13 @@
-import { API_SERVER, APP_URL, FIRSTNAME, LASTNAME, USERNAME } from '../authentication/constants';
+import {
+  ACCESS_TOKEN,
+  API_SERVER,
+  APP_URL,
+  FIRSTNAME,
+  LASTNAME,
+  REFRESH_TOKEN,
+  TOKEN_TYPE,
+  USERNAME,
+} from '../authentication/constants';
 import { ORGS, PROJECT, PROJECTS, SENT_APPLICATION, UPLOAD } from '../authentication/mocks';
 import { User, generateRandomEmail } from '../authentication/utilities';
 
@@ -7,6 +16,10 @@ const user = new User(FIRSTNAME, LASTNAME, SIGNINGUP_EMAIL, USERNAME);
 
 describe('User Application', () => {
   beforeEach(() => {
+    cy.setCookie('access_token', ACCESS_TOKEN);
+    cy.setCookie('refresh_token', REFRESH_TOKEN);
+    cy.setCookie('token_type', TOKEN_TYPE);
+
     cy.intercept('GET', `${API_SERVER}/identities*`, req => {
       req.reply(user.getIdentity());
     }).as('getIdentities');
@@ -34,6 +47,7 @@ describe('User Application', () => {
   it('it should open job detail page and apply fill out the apply form', () => {
     // Visit jobs page
     cy.visit(`${APP_URL}/jobs`);
+    cy.wait('@getIdentities');
 
     // Go to the job details
     // cy.wait(6000)

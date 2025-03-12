@@ -120,7 +120,13 @@ const Password = () => {
               {translate('password.buttons.cancel')}
             </Button>
 
-            <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>
+            <Button
+              data-testid="submit-button"
+              disabled={!isFormValid}
+              color="primary"
+              block
+              onClick={handleSubmit(onSubmit)}
+            >
               {translate('password.buttons.update')}
             </Button>
           </div>
