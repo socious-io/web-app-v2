@@ -6,7 +6,7 @@ export interface NotifBellIconProps {
 }
 const NotifBellIcon = ({ unread = false }) => {
   return (
-    <div className={`${css.container} `}>
+    <div data-testid="notificationIcon" className={`${css.container} `}>
       <div className="hidden md:block">
         <Icon name="bell-01" className="text-Gray-light-mode-500 !cursor-pointer" fontSize={20} />
       </div>

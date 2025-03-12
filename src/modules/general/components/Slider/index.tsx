@@ -55,7 +55,9 @@ const Slider: React.FC<SliderProps> = ({
             </>
           )}
         </div>
-        <div className={`${styles['content']} ${contentClassName}`}>{children}</div>
+        <div data-testid="notification-slide" className={`${styles['content']} ${contentClassName}`}>
+          {children}
+        </div>
       </div>
     </Slide>
   );
