@@ -17,7 +17,10 @@ const Password = () => {
     isPasswordPatternValid,
     isPasswordLengthValid,
     alertContent,
+    watch,
   } = usePassword();
+
+  const confirmPassword = watch('confirm');
 
   return (
     <>
@@ -104,7 +107,11 @@ const Password = () => {
                 <div className={`${css.validation} mt-2 mb-4`}>
                   <img
                     className="mr-1"
-                    src={!errors.confirm ? '/icons/check-circle-green.svg' : '/icons/check-circle-grey.svg'}
+                    src={
+                      !errors.confirm && confirmPassword
+                        ? '/icons/check-circle-green.svg'
+                        : '/icons/check-circle-grey.svg'
+                    }
                     alt="check"
                   />
                   {translate('password.validations.passwordsMatch')}
