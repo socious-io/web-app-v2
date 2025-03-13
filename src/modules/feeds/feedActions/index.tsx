@@ -14,7 +14,11 @@ const FeedActions: React.FC<FeedActionsProps> = ({
   return (
     <div className="flex">
       <div className="flex-1 flex justify-center">
-        <div className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer" onClick={() => onLikeClick(liked)}>
+        <div
+          data-testid="like-button"
+          className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer"
+          onClick={() => onLikeClick(liked)}
+        >
           <Icon
             name={liked ? 'heart-filled' : 'heart'}
             fontSize={20}
@@ -25,14 +29,22 @@ const FeedActions: React.FC<FeedActionsProps> = ({
         </div>
       </div>
       <div className="flex-1 flex justify-center">
-        <div className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer" onClick={onCommentClick}>
+        <div
+          data-testid="comment-button"
+          className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer"
+          onClick={onCommentClick}
+        >
           <Icon name="message-text-square-01" fontSize={20} className="text-Gray-light-mode-600" cursor="pointer" />
           <span className="hidden md:inline">{translate('feeds-action-comment')}</span>
         </div>
       </div>
       {hasRepostAction && (
         <div className="flex-1 flex justify-center">
-          <div className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer" onClick={onRepostClick}>
+          <div
+            data-testid="repost-button"
+            className="flex gap-2 text-sm text-Gray-light-mode-600 cursor-pointer"
+            onClick={onRepostClick}
+          >
             <Icon name="refresh-ccw-02" fontSize={20} className="text-Gray-light-mode-600" cursor="pointer" />
             <span className="hidden md:inline">{translate('feeds-action-repost')}</span>
           </div>
