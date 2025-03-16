@@ -91,7 +91,7 @@ export const SEARCH_FOLLOWINGS = {
         wallet_address: null,
         verified_impact: false,
       },
-      mutual: false,
+      mutual: true,
       following: true,
       created_at: '2025-02-27T13:16:43.884Z',
     },

@@ -10,22 +10,21 @@ export const useNewChat = () => {
     try {
       if (searchText) {
         const res = await filterFollowings({ name: searchText });
-        const items = res.items.filter(i => i.mutual || i.following);
-
-        const transformedItems = items.map(i => {
-          const { profileImage, name, type } = getIdentityMeta(i);
-          return {
-            value: i.identity_meta?.id,
-            label: name,
-            icon: profileImage ? (
-              <img src={profileImage} width={24} height={24} alt="" className="rounded-2xl" />
-            ) : (
-              <Avatar type={type || 'users'} size="24px" iconSize={18} />
-            ),
-          };
-        });
-
-        cb(transformedItems);
+        const items = res.items.filter(i => i.mutual && i.following);
+        cb(
+          items.map(i => {
+            const { profileImage, name, type } = getIdentityMeta(i);
+            return {
+              value: i.identity_meta?.id,
+              label: name,
+              icon: profileImage ? (
+                <img src={profileImage} width={24} height={24} alt="" className="rounded-2xl" />
+              ) : (
+                <Avatar type={type || 'users'} size="24px" iconSize={18} />
+              ),
+            };
+          }),
+        );
       }
     } catch (error) {
       console.error('Error fetching followings', error);
