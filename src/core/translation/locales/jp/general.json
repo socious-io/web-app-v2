@@ -22,5 +22,6 @@
     "remove": "削除",
     "expiry": "有効期限",
     "ending": "下4桁"
-  }
+  },
+  "router-not-found": "ページが見つかりません :("
 }

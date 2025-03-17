@@ -35,6 +35,7 @@ import {
   cards,
 } from 'src/core/api';
 import { events, search as searchReq } from 'src/core/api/site/site.api';
+import { translate } from 'src/core/utils';
 import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
 import { RootState } from 'src/store';
@@ -653,7 +654,7 @@ export const blueprint: RouteObject[] = [
             async lazy() {
               const { Refer } = await import('src/pages/refer');
               return {
-                Component: Protect(Refer, 'users'),
+                Component: Protect(Refer, 'both'),
               };
             },
           },
@@ -1039,7 +1040,7 @@ export const blueprint: RouteObject[] = [
   },
   {
     path: '*',
-    element: <div>Page not found :(</div>,
+    element: <div>{translate('router-not-found')}</div>,
   },
 ];
 
