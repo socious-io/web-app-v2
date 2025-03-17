@@ -10,11 +10,14 @@ import { Resolver } from './index.types';
 
 export const UseFeeds = () => {
   const postsResponse = useLoaderData() as Resolver;
+  console.log(postsResponse + "----------------------------1");
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
   const { profileImage } = getIdentityMeta(currentIdentity);
   const { page, total_count } = postsResponse || {};
+  console.log(postsResponse + "----------------------------2");
+
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [currentPosts, setCurrentPosts] = useState(postsResponse.items || []);
   const [currentPage, setCurrentPage] = useState(page);

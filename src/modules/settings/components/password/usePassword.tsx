@@ -74,5 +74,6 @@ export const usePassword = () => {
     isPasswordLengthValid,
     isPasswordPatternValid,
     alertContent,
+    watch,
   };
 };
