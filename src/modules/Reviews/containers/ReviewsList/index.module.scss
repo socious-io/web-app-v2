@@ -36,35 +36,3 @@
         gap: 2.75rem;
     }
 }
-
-.empty {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border: 1px solid $color-grey-300;
-    border-radius: 12px;
-    box-shadow: $shadow-xs;
-
-    &__icon {
-        padding: 0.625rem;
-        border: 1px solid $color-grey-200;
-        border-radius: 8px;
-        box-shadow: $shadow-xs;
-    }
-
-    &__info {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-        font-size: 14px;
-        line-height: 20px;
-        color: $color-grey-600;
-
-        &--bold {
-            font-weight: 600;
-            color: $color-grey-700;
-        }
-    }
-}

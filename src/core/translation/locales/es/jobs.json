@@ -53,5 +53,14 @@
   "job-applied": "Trabajos aplicados",
   "job-my-applied": "Mis trabajos aplicados",
   "jobs-applicants-message": "Mensaje",
-  "jobs-applicants-reject": "Rechazar"
+  "jobs-applicants-reject": "Rechazar",
+  "jobs-create-new": "Crear un trabajo",
+  "jobs-empty": {
+    "title": "Crear un trabajo nuevo",
+    "subtitle": "Cuanto más específico y claro sea tu anuncio de trabajo, más rápido recibirás solicitudes."
+  },
+  "jobs-other-empty": {
+    "title": "Lo siento, no hay trabajos disponibles en este momento",
+    "subtitle": "¡Vuelve más tarde!"
+  }
 }
