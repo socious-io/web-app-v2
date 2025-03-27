@@ -1,5 +1,5 @@
 import { APP_URL, CITY, FIRSTNAME, LASTNAME, ORGANIZATION_EMAIL, ORGANIZATION_USERNAME, USERNAME } from "../authentication/constants";
-import { generateRandomEmail, OrganizationUser, User } from "../authentication/utilities";
+import { generateRandomEmail, OrganizationUser } from "../authentication/utilities";
 import { CATEGORIES, LOCATION, ORGANIZATION_PROJECTS, PROJECT_SKILLS } from "./mocks";
 
 const SIGNINGUP_EMAIL = generateRandomEmail();

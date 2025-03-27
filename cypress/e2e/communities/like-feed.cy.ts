@@ -1,13 +1,9 @@
 import { LIKE_RESPONSE } from './Like-response';
 // import { POST } from './postMock';
 import { COMMENT, FEEDS, REPOST_FEED } from './mocks';
-import {
-  API_SERVER,
+import {  
   APP_URL,
-  ACCESS_TOKEN,
-  TOKEN_TYPE,
   FIRSTNAME,
-  REFRESH_TOKEN,
   LASTNAME,
   USERNAME,
 } from '../authentication/constants';

@@ -1,5 +1,4 @@
 import {
-    API_SERVER,
     APP_URL,
     ACCESS_TOKEN,
     TOKEN_TYPE,

@@ -1,6 +1,6 @@
 import { APP_URL, FIRSTNAME, LASTNAME, USERNAME } from "../authentication/constants";
 import { generateRandomEmail, User } from "../authentication/utilities";
-import { IDENTITIES, MARK_AS_SAVE, MORE_IDENTITIES, NOT_INTERESTED, NOTIFICATIONS, PROJECT_DETAILS, PROJECTS, QUESTIONS, SAVED_JOBS, SKILLS } from "./mocks";
+import { MARK_AS_SAVE, NOT_INTERESTED, NOTIFICATIONS, PROJECT_DETAILS, PROJECTS, QUESTIONS, SAVED_JOBS, SKILLS } from "./mocks";
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
 const user = new User(FIRSTNAME, LASTNAME, SIGNINGUP_EMAIL, USERNAME);
