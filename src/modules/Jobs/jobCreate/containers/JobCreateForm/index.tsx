@@ -292,7 +292,7 @@ export const JobCreateForm = () => {
         </div>
         <div className={css.row}>
           {renderInfo('Remote preference', '')}
-          <div className={css.componentsContainer}>
+          <div data-testid="remote-preference" className={css.componentsContainer}>
             <SearchDropdown
               id="preference"
               placeholder="Please select"
@@ -463,7 +463,7 @@ export const JobCreateForm = () => {
           </div>
         </div>
         <div className={css.footer}>
-          <div className="flex space-x-3 ">
+          <div data-testid="create-job-button" className="flex space-x-3 ">
             {/* <Button color="secondary" variant="outlined" onClick={onPreview} disabled={!isValid || !isDirty}>
               Preview
             </Button> */}

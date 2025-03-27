@@ -88,6 +88,7 @@ export const JobListingCard: React.FC<JobListingCardProps> = ({
         )}
         {displaySave && (
           <IconButton
+            data-testid="bookmark-button"
             iconName={jobVal.saved ? 'bookmark-filled' : 'bookmark'}
             disabled={jobVal.not_interested}
             size="medium"

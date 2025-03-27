@@ -105,7 +105,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
   return (
     <div data-testid="dropdown-open" className={`${css.container} ${className}`}>
       {label && (
-        <div className={css.labelContainer}>
+        <div data-testid="option" className={css.labelContainer}>
           <label
             htmlFor={id}
             className={css.label}
