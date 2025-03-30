@@ -4,25 +4,29 @@ export const APP_URL = Cypress.env('app_url') || 'http://localhost:3000';
 
 //Credentials
 // export const VALID_EMAIL = 'valid_email@gmail.com';
-export const VALID_EMAIL = 'imshantik@gmail.com';
+export const VALID_EMAIL = 'VALID-EMAIL@GMAIL.COM';
 // export const VALID_PASSWORD = 'v@lidP@$$wd';
-export const VALID_PASSWORD = 'Sh@ntik2001';
+export const VALID_PASSWORD = 'VALID-PASSWORD';
 
 export const INVALID_EMAIL = 'wrong_email@gmail.com';
 export const INVALID_PASSWORD = 'wrong_password';
+
+export const WRONG_EMAIL = 'WRONG_EMAIL';
 
 export const FIRSTNAME = 'Umaya';
 export const LASTNAME = 'Nigina';
 export const USERNAME = 'umayanigina';
 
+export const VERIFICATION_CODE = 111111;
+
 //Authentication
 export const ACCESS_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzNWY3MjRlLTU4MjQtNDEyOS04ZWQ2LTk2YzZkZGE4MWEzYSIsInJlZnJlc2giOmZhbHNlLCJpYXQiOjE3NDE3NjcwMDAsImV4cCI6MTc0MTkzOTgwMH0.5kIAein21r4DHdzrI6GWx1OZWX5ELGsAP2Vrp6wzyQ8';
+  'ACCESS_TOKEM';
 // export const REFRESH_TOKEN = 'VALID_REFRESH_TOKEN';
 export const REFRESH_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzNWY3MjRlLTU4MjQtNDEyOS04ZWQ2LTk2YzZkZGE4MWEzYSIsInJlZnJlc2giOnRydWUsImlhdCI6MTc0MTU4MjMyNSwiZXhwIjoxNzQ0MTc0MzI1fQ.pjSqb3nfz3Jbm17AgXfQGRgqXYMXqwRyyNmG-4FEIEM';
+  'REFRESH_TOKEN';
 // export const TOKEN_TYPE = 'VALID_TOKEN_TYPE';
-export const TOKEN_TYPE = 'Bearer';
+export const TOKEN_TYPE = 'TOKEN_TYPE';
 
 //Sign-up
 export const EXISTING_EMAIL_ADDRESS = 'existingEmail@test.com';

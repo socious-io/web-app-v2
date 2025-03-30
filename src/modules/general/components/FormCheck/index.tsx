@@ -8,9 +8,9 @@ export const FormCheck: React.FC<FormCheckProps> = props => {
   return (
     <div className="flex flex-row gap-2">
       {passCondition ? (
-        <img src="/icons/check-circle-green.svg" alt="" />
+        <img data-testid="green-validation-icon" src="/icons/check-circle-green.svg" alt="" />
       ) : (
-        <img src="/icons/check-circle-grey.svg" alt="" />
+        <img data-testid="grey-validation-icon" src="/icons/check-circle-grey.svg" alt="" />
       )}
       <Typography variant="caption" color={variables.color_grey_600}>
         {label}
