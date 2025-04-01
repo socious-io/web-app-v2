@@ -12,7 +12,7 @@ import { SelectProps } from './search-dropdown.types';
 const CustomControl = (props: any) => {
   const { icon, children } = props;
   return (
-    <components.Control {...props} className={css.input}>
+    <components.Control {...props} className={css.input} data-testid="search-dropdown-input">
       {icon && <Icon className={css.startIcon} name={icon} fontSize={20} color={variables.color_grey_500} />}
       {children}
     </components.Control>
@@ -119,6 +119,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
       )}
       {!isAsync ? (
         <Select
+          data-testid="select-dropdown"
           id={id}
           ref={selectRef}
           options={options}

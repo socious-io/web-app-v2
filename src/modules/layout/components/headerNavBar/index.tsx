@@ -92,7 +92,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             />
           </div>
 
-          <IconDropDown
+          <IconDropDown            
             type={userType}
             img={image}
             accounts={accounts}

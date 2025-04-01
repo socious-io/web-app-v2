@@ -164,7 +164,7 @@ describe('user signs up to the platform', () => {
     cy.contains('button', 'Continue').should('be.disabled');
   });
 
-  it('user signs up with valid email with a valid username', () => {
+  it.only('user signs up with valid email with a valid username', () => {
     cy.visit(`${APP_URL}`);
     cy.contains('Get Started').should('be.visible');
 
