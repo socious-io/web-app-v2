@@ -22,5 +22,6 @@
     "remove": "Eliminar",
     "expiry": "Vencimiento",
     "ending": "termina en"
-  }
+  },
+  "router-not-found": "Página no encontrada :("
 }
