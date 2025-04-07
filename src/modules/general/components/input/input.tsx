@@ -28,7 +28,7 @@ export const Input: React.FC<InputProps> = ({
   onEnter,
   containerClassName = '',
   multiline = false,
-  rows = 1,
+  minRows = 1,
   maxRows = 4,
   ...props
 }) => {
@@ -114,11 +114,11 @@ export const Input: React.FC<InputProps> = ({
         fullWidth
         onKeyDown={handleKeydown}
         multiline={multiline}
-        rows={rows}
+        minrows={minRows}
         maxRows={maxRows}
         InputProps={{
           style: {
-            height: multiline ? 'auto' : props.customHeight ? props.customHeight : '44px',
+            height: multiline ? 'auto' : '44px',
           },
           endAdornment: endAdornmentJSX,
 
