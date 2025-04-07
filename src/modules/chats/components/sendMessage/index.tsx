@@ -12,13 +12,18 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
   const [newMessage, setNewMessage] = useState('');
 
   const handleSendMessage = () => {
-    onSend?.(newMessage);
-    if (recipientId) handleCreateChat?.(recipientId, newMessage);
-    setNewMessage('');
+    if (newMessage.trim()) {
+      onSend?.(newMessage);
+      if (recipientId) handleCreateChat?.(recipientId, newMessage);
+      setNewMessage('');
+    }
   };
 
   const enterInput = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) handleSendMessage();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
   };
 
   return (
@@ -47,7 +52,10 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
             value={newMessage}
             onChange={e => setNewMessage(e.target.value)}
             placeholder={translate('chat-send-placeholder')}
-            onKeyDown={enterInput}
+            multiline={true}
+            rows={1}
+            maxRows={4}
+            onEnter={handleSendMessage}
           />
         </div>
         <IconButton

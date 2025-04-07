@@ -27,6 +27,9 @@ export const Input: React.FC<InputProps> = ({
   postfixDropdown,
   onEnter,
   containerClassName = '',
+  multiline = false,
+  rows = 1,
+  maxRows = 4,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -64,10 +67,15 @@ export const Input: React.FC<InputProps> = ({
     return val;
   };
 
-  const handleKeydown = (e: ChangeEvent<unknown>) => {
-    const value = (e.target as HTMLInputElement)?.value;
-    if ('key' in e && e.key === 'Enter') {
-      onEnter?.(value);
+  const handleKeydown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      if (multiline && !e.shiftKey) {
+        return;
+      }
+      if (onEnter) {
+        e.preventDefault();
+        onEnter((e.target as HTMLInputElement)?.value);
+      }
     }
   };
 
@@ -105,9 +113,12 @@ export const Input: React.FC<InputProps> = ({
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
         onKeyDown={handleKeydown}
+        multiline={multiline}
+        rows={rows}
+        maxRows={maxRows}
         InputProps={{
           style: {
-            height: props.customHeight ? props.customHeight : '44px',
+            height: multiline ? 'auto' : props.customHeight ? props.customHeight : '44px',
           },
           endAdornment: endAdornmentJSX,
 
