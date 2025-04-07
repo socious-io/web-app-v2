@@ -54,7 +54,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
             onChange={e => setNewMessage(e.target.value)}
             placeholder={translate('chat-send-placeholder')}
             multiline={true}
-            rows={1}
+            minRows={1}
             maxRows={4}
             onEnter={handleSendMessage}
           />
