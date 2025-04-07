@@ -42,6 +42,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
           color="primary"
           customStyle="absolute right-[14px] bottom-[14px]"
           onClick={handleSendMessage}
+          disabled={!newMessage.trim()}
         >
           {translate('chat-send')}
         </Button>
@@ -65,6 +66,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
           iconColor={variables.color_white}
           handleClick={handleSendMessage}
           customStyle="!bg-Brand-600"
+          disabled={!newMessage.trim()}
         />
       </div>
     </>
