@@ -69,7 +69,7 @@ export const Search = () => {
           </div>
         )}
       </div>
-      <Slider
+      <Slider        
         open={sliderFilterOpen}
         onClose={handleCloseOrApplyFilter}
         title={translate('search.filterTitle')}
