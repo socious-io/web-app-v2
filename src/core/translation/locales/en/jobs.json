@@ -54,5 +54,14 @@
   "job-my-applied": "My applied jobs",
   "job-card-posted-on": "Posted on",
   "jobs-applicants-message": "Message",
-  "jobs-applicants-reject": "Reject"
+  "jobs-applicants-reject": "Reject",
+  "jobs-create-new": "Create a job",
+  "jobs-empty": {
+    "title": "Create a new job",
+    "subtitle": "The more specific and clear your job posting, the faster you'll receive applications."
+  },
+  "jobs-other-empty": {
+    "title": "Sorry, there are no jobs at the moment",
+    "subtitle": "Check back later!"
+  }
 }
