@@ -118,7 +118,7 @@ export const Input: React.FC<InputProps> = ({
         maxRows={maxRows}
         InputProps={{
           style: {
-            height: multiline ? 'auto' : '44px',
+            height: props.customHeight ? props.customHeight : multiline ? 'auto' : '44px',
           },
           endAdornment: endAdornmentJSX,
 
