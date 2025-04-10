@@ -3178,3 +3178,18 @@ export const SEARCH_SERVICES = {
         }
     ]
 }
+
+export const FILTER = {
+    page: 1,
+    limit: 10,
+    total_count: 1,
+    items: [
+        {
+            id: "5cbcb268-aa57-4712-8392-bf2cf14e993c",
+            title: "Tech for Impact Summit 2024",
+            description: "Boost your summit experience by connecting with fellow innovators and change-makers.",
+            event_at: "2024-08-01T18:25:43.511Z",
+            created_at: "2024-08-13T10:58:30.697Z"
+        }
+    ]
+}

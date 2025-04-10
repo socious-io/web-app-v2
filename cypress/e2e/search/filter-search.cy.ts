@@ -4,12 +4,12 @@ import { generateRandomEmail, OrganizationUser, User } from "../authentication/u
 import { QUESTIONS } from "../jobs/mocks";
 import { PROFILE } from "../userProfile/mocks";
 import { NOTIFICATIONS, ONE_NOTIFICATION, USER_IDENTTITY } from "../userSettings/mocks";
-import { ORGS_DETAIL, SEARCH_ORGANIZATIONS, SEARCH_PEOPLE, SEARCH_RESULT, SEARCH_RESULT_DETAIL, SEARCHED_JOBS } from "./mocks";
+import { FILTER, ORGS_DETAIL, SEARCH_ORGANIZATIONS, SEARCH_PEOPLE, SEARCH_RESULT, SEARCH_RESULT_DETAIL, SEARCHED_JOBS } from "./mocks";
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
 const user = new User(FIRSTNAME, LASTNAME, SIGNINGUP_EMAIL, USERNAME);
 
-const SEARCH_KEYWORD = 'OrganizationTest';
+const SEARCH_KEYWORD = 'development';
 
 const socialCauses = ['Health', 'Security', 'Bullying'];
 const organizationUser = new OrganizationUser(
@@ -58,11 +58,11 @@ describe('search bar test automation for jobs', () => {
             }
         );
 
-        cy.intercept('GET', `${APP_URL}/skills*t=*&limit=*`,
-            req => {
-                req.reply(200, SKILLS);
-            }
-        ).as('getSkills');
+        // cy.intercept('GET', `${APP_URL}/skills*t=*&limit=*`,
+        //     req => {
+        //         req.reply(200, SKILLS);
+        //     }
+        // ).as('getSkills');
 
         cy.intercept('GET', `${APP_URL}/notifications*t=*&page=*&limit=*`,
             req => {
@@ -125,24 +125,40 @@ describe('search bar test automation for jobs', () => {
                 req.reply(200);
             }
         );
-
-
+        //================== after opening the filter ==================//
+        cy.intercept('GET', `${APP_URL}/skills?t=*&limit=500`, req => {
+            req.reply(200, SKILLS);
+        });
+        cy.intercept('GET', `${APP_URL}/site/events?t=*&limit=10`, req => {
+            req.reply(200, FILTER);
+        });
     });
 
-    it('user navigates to jobs page and opens the search organization modal', () => {
-        returnEmpty = false;
+    // it('user naviagatios to dashboard and searches for a DEVELOPMENT job', () => {
+    //     cy.visit(`${APP_URL}/jobs`);
+    //     cy.url().should('contain', '/jobs');
+    //     cy.contains('Find work that matters to you and the world').should('be.visible');
+
+    //     cy.get('#search-input').click();
+    //     cy.get('#search-modal').type('development{enter}');
+    //     cy.wait('@mockSearch');
+
+    //     // cy.contains('Search for development');
+
+    //     // cy.contains('Filters').should('be.visible');
+    //     // cy.contains('Filters').click({ force: true });
+    // });
+
+    it('user naviagatios to dashboard and searches for a DEVELOPMENT job', () => {
         cy.visit(`${APP_URL}/jobs`);
         cy.url().should('contain', '/jobs');
         cy.contains('Find work that matters to you and the world').should('be.visible');
 
         cy.get('#search-input').click();
-        cy.contains('div', 'Organizations').click();
+        cy.get('#search-modal').type('development{enter}');
+        cy.wait('@mockSearch');
 
-        cy.get('#search-modal').type(`${SEARCH_KEYWORD}{enter}`);
-
-        cy.contains(`Search for ${SEARCH_KEYWORD}`).should('be.visible');
-        cy.contains('button', 'Filters').should('be.visible');
-        cy.contains('Filters').click({ force: true });
+        cy.contains(`Search for ${SEARCH_KEYWORD}`);
     });
 
 })

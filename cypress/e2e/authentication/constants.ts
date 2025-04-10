@@ -26,7 +26,7 @@ export const ACCESS_TOKEN =
 export const REFRESH_TOKEN =
   'REFRESH_TOKEN';
 // export const TOKEN_TYPE = 'VALID_TOKEN_TYPE';
-export const TOKEN_TYPE = 'TOKEN_TYPE';
+export const TOKEN_TYPE = 'bearer';
 
 //Sign-up
 export const EXISTING_EMAIL_ADDRESS = 'existingEmail@test.com';
