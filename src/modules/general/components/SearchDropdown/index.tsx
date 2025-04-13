@@ -12,7 +12,7 @@ import { SelectProps } from './search-dropdown.types';
 const CustomControl = (props: any) => {
   const { icon, children } = props;
   return (
-    <components.Control {...props} className={css.input}>
+    <components.Control {...props} className={css.input} data-testid="search-dropdown-input">
       {icon && <Icon className={css.startIcon} name={icon} fontSize={20} color={variables.color_grey_500} />}
       {children}
     </components.Control>
@@ -103,9 +103,9 @@ export const SearchDropdown: React.FC<SelectProps> = ({
     }
   };
   return (
-    <div className={`${css.container} ${className}`}>
+    <div data-testid="dropdown-open" className={`${css.container} ${className}`}>
       {label && (
-        <div className={css.labelContainer}>
+        <div data-testid="option" className={css.labelContainer}>
           <label
             htmlFor={id}
             className={css.label}
@@ -119,6 +119,7 @@ export const SearchDropdown: React.FC<SelectProps> = ({
       )}
       {!isAsync ? (
         <Select
+          data-testid="select-dropdown"
           id={id}
           ref={selectRef}
           options={options}
@@ -203,7 +204,12 @@ export const SearchDropdown: React.FC<SelectProps> = ({
           options={options}
           noOptionsMessage={() => null}
           components={{
-            Option: props => <CustomOption {...props} value={selectedVal} selectId={id} />,
+            // Option: props => <CustomOption {...props} value={selectedVal} selectId={id} />,
+            Option: props => (
+              <div data-testid={`dropdown-option-${props.innerProps.key}`} {...props.innerProps}>
+                <CustomOption {...props} value={selectedVal} selectId={id} />
+              </div>
+            ),
             Control: props => <CustomControl {...props} icon={icon} />,
             DropdownIndicator: () =>
               hasDropdownIcon && (

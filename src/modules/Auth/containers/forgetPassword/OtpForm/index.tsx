@@ -13,6 +13,7 @@ export const OtpForm = () => {
     <div className="flex flex-col gap-8 justify-center items-center">
       <div className="mt-8">
         <OTP
+          data-testid="verification-intput"
           value={otpVal}
           setValue={setOtpVal}
           isValid={isValid}

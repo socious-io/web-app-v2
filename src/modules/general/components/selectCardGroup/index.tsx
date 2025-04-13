@@ -16,6 +16,7 @@ export const SelectCardGroup: React.FC<SelectCardGroupProps> = props => {
     <div className={css.container}>
       {items.map(i => (
         <div
+          data-testid="select-card-group"
           key={i.value}
           className={`${css.card} ${value?.value === i.value ? css.cardSelected : ''}`}
           onClick={() => handleClick(i.value, i.label)}

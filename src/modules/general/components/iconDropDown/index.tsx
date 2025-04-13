@@ -26,7 +26,7 @@ export const IconDropDown: React.FC<IconDropDownProps> = props => {
   const { open, handleOpen, handleClose, switchAccount, handleClick, navigateToOnboarding } = useIconDropDown();
 
   return (
-    <div className="flex flex-col items-end relative">
+    <div data-testid="icon-dropdown"   className="flex flex-col items-end relative">
       <IconButton
         className={`${css.avatarBtn} ${open && `${css.avatarBtnOpen}`}`}
         disableRipple

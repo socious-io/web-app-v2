@@ -21,6 +21,7 @@ export const CreateOrganization = () => {
           </div>
         </div>
         <Input
+          data-testid="org-name-input"
           id="name"
           value={orgName}
           label={translate('onboarding-org-name')}
@@ -29,7 +30,7 @@ export const CreateOrganization = () => {
         />
       </div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-44 ${css.footer}`}>
-        <Button disabled={!isValidForm} color="primary" block onClick={goNextPage}>
+        <Button data-testid="continue-button" disabled={!isValidForm} color="primary" block onClick={goNextPage}>
           {translate('onboarding-next-org-type')}
         </Button>
       </div>

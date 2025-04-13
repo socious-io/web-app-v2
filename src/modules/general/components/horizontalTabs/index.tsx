@@ -29,6 +29,7 @@ export const HorizontalTabs: React.FC<HorizontalTabsProps> = ({
       <div className={css.tabContainer}>
         {tabs.map((tab, index) => (
           <div
+            data-testid={`tab-${index}`}
             key={`${tab.label}-${index.toString()}`}
             className={`${css.tab} ${index === active ? css.tabActive : ''} ${leftAligned ? '' : 'flex-1'}`}
             onClick={() => handleTabClick(index)}

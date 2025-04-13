@@ -24,7 +24,7 @@ export const AuthGuardModal: React.FC<SigninModalProps> = ({ open, handleSignin,
           <Button variant="contained" color="primary" onClick={handleSignup}>
             Create an account
           </Button>
-          <Button variant="outlined" color="primary" onClick={handleSignin}>
+          <Button data-testid="conitinue-button" variant="outlined" color="primary" onClick={handleSignin}>
             Login
           </Button>
         </div>
