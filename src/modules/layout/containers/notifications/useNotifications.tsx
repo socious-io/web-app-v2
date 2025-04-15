@@ -75,10 +75,10 @@ export const useNotifications = (handleClose: () => void) => {
         path = `/profile/${notifIdentityType}/${username}/view`;
         break;
       case 'COMMENT_LIKE':
-        path = `/feeds/${notifRefId}`;
+        path = '/feeds';
         break;
       case 'POST_LIKE':
-        path = `/feeds/${notifRefId}`;
+        path = '/feeds';
         break;
       case 'CHAT':
         path = `/chats/contacts/${notifRefId}`;
@@ -90,7 +90,7 @@ export const useNotifications = (handleClose: () => void) => {
         path = '';
         break;
       case 'COMMENT':
-        path = `/feeds/${notifRefId}`;
+        path = '/feeds';
         break;
       case 'APPLICATION':
         path = `/jobs/created/${notifRefId}`;
