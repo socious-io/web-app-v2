@@ -37,7 +37,6 @@ const AddPayoutAccount: React.FC<AddPayoutAccountProps> = ({ open, handleClose, 
             </div>
           </div>
           <SearchDropdown
-            data-testid="search-country"
             placeholder={translate('general-payout-account.country-placeholder')}
             icon="search-lg"
             options={COUNTRIES}

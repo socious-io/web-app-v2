@@ -50,7 +50,7 @@ export const Search = () => {
       </div>
       <div className={css.list}>
         {searchResult.items?.map((item, index) => (
-          <div key={item.id} className="mt-6" ref={index === scrollIndex ? scrollRef : null}>
+          <div data-testid="search-item" key={item.id} className="mt-6" ref={index === scrollIndex ? scrollRef : null}>
             {card(item, index)}
           </div>
         ))}

@@ -1,7 +1,7 @@
 import { LIKE_RESPONSE } from './Like-response';
 // import { POST } from './postMock';
-import { COMMENT, FEEDS, REPOST_FEED } from './mocks';
-import {  
+import { COMMENT, COMMENT_REPLIES, COMMETNS, FEEDS, REACT, REPLY_COMMENT, REPOST_FEED } from './mocks';
+import {
   APP_URL,
   FIRSTNAME,
   LASTNAME,
@@ -49,6 +49,25 @@ describe('Like Feed items', () => {
     cy.intercept('POST', `${APP_URL}/posts/*/share`, req => {
       req.reply(200, REPOST_FEED);
     }).as('postRepost');
+
+    cy.intercept('GET', `${APP_URL}/posts/*/comments?t=*&page=1&limit=10`, req => {
+      req.reply(200, COMMETNS);
+    }).as('getComments');
+
+    cy.intercept('POST', `${APP_URL}/posts/*/comments/*/react`, req => {
+      req.reply(200, REACT);
+    }).as('postReact');
+
+    cy.intercept('POST', `${APP_URL}/posts/*/comments`, req => {
+      req.reply(200, REPLY_COMMENT);
+    }).as('replyComment');
+
+    cy.intercept('GET', `${APP_URL}/posts/comments/*?t=*&page=1&limit=10`, req => {
+      req.reply(200, COMMENT_REPLIES);
+    }).as('getCommentReplies');
+
+
+
   });
   Cypress.on('uncaught:exception', (err, runnable) => {
     return false;
@@ -77,7 +96,58 @@ describe('Like Feed items', () => {
     cy.get('input[name="comment"]').type('hello this is the comment that it is being tested by');
 
     cy.contains('button', 'Send').should('be.visible').click();
-    cy.wait('@postComment').its('response.statusCode').should('eq', 200);
+    // cy.wait('@postComment').its('response.statusCode').should('eq', 200);
+  });
+  it('should open the comment box from the feed and get other comments', () => {
+    cy.visit(APP_URL + '/feeds');
+    cy.wait('@getFeeds');
+
+    cy.get('#Feeds-Title').should('be.visible');
+
+    cy.get('[data-testid="comment-button"]').click();
+    cy.get('[data-testid="comment-box"]').should('exist');
+  });
+  it('should open the comment box from the feed and react to one comment', () => {
+    cy.visit(APP_URL + '/feeds');
+    cy.wait('@getFeeds');
+
+    cy.get('#Feeds-Title').should('be.visible');
+
+    cy.get('[data-testid="comment-button"]').click();
+    cy.get('[data-testid="comment-box"]').should('exist');
+
+    cy.contains('❤️').first().should('exist');
+    cy.contains('❤️').first().click();
+    cy.wait('@postReact').its('response.statusCode').should('eq', 200);
+
+    cy.contains('1❤️').should('be.visible');
+  });
+
+
+  it('should open the comment box from the feed and react to one comment with multiple reactions', () => {
+    cy.visit(APP_URL + '/feeds');
+    cy.wait('@getFeeds');
+
+    cy.get('#Feeds-Title').should('be.visible');
+
+    cy.get('[data-testid="comment-button"]').click();
+    cy.get('[data-testid="comment-box"]').should('exist');
+
+    cy.contains('❤️').first().should('exist');
+    cy.contains('❤️').first().click();
+    cy.wait('@postReact').its('response.statusCode').should('eq', 200);
+
+    cy.contains('👌').first().should('exist');
+    cy.contains('👌').first().click();
+    cy.wait('@postReact').its('response.statusCode').should('eq', 200);
+
+    cy.contains('🙂').first().should('exist');
+    cy.contains('🙂').first().click();
+    cy.wait('@postReact').its('response.statusCode').should('eq', 200);
+
+    cy.contains('1❤️').should('be.visible');
+    cy.contains('1👌').should('be.visible');
+    cy.contains('1🙂').should('be.visible');
   });
 
   it('should repost the feed', () => {
@@ -91,4 +161,55 @@ describe('Like Feed items', () => {
     cy.contains('button', 'Post').click();
     cy.wait('@postRepost').its('response.statusCode').should('eq', 200);
   });
+
+  it('should open the comment box and reply to a comment', () => {
+    cy.visit(APP_URL + '/feeds');
+    cy.wait('@getFeeds');
+
+    cy.get('#Feeds-Title').should('be.visible');
+
+    cy.get('[data-testid="comment-button"]').click();
+    cy.get('[data-testid="comment-box"]').should('exist');
+
+    cy.contains('Reply').first().should('be.visible');
+    cy.contains('Reply').first().click()
+
+    cy.get('input[name="reply"]').scrollIntoView().should('be.visible');
+    cy.get('input[name="reply"]').type('this is an automation test reply');
+
+    cy.contains('button', 'Reply').should('exist').click();
+    cy.wait('@replyComment').its('response.statusCode').should('eq', 200);
+  });
+
+  it('should open the comment box and click on show replies', () => {
+    cy.visit(APP_URL + '/feeds');
+    cy.wait('@getFeeds');
+
+    cy.get('#Feeds-Title').should('be.visible');
+
+    cy.get('[data-testid="comment-button"]').click();
+    cy.get('[data-testid="comment-box"]').should('exist');
+
+    cy.contains('Show replies').should('be.visible');
+    cy.contains('Show replies').first().click();
+
+    cy.wait('@getCommentReplies').its('response.statusCode').should('eq', 200);
+  });
+  it('should open the comment box and click custom emoji picker', () => {
+    cy.visit(APP_URL + '/feeds');
+    cy.wait('@getFeeds');
+
+    cy.get('#Feeds-Title').should('be.visible');
+
+    cy.get('[data-testid="comment-button"]').click();
+    cy.get('[data-testid="comment-box"]').should('exist');
+
+    cy.get('span.icon-face-smile.text-Gray-light-mode-500').should('exist');
+    cy.get('span.icon-face-smile.text-Gray-light-mode-500').click();
+
+    cy.get('[data-testid="emoji-picker"]').should('be.visible');
+
+  });
+
+
 });

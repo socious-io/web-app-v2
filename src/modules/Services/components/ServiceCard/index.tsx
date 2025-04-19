@@ -64,7 +64,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   );
 
   return (
-    <div className={styles['container']} onClick={() => onCardClick(id)}>
+    <div data-testid="service-card" className={styles['container']} onClick={() => onCardClick(id)}>
       {sample && <img src={sample} alt="work-sample" className={styles['image']} />}
       <div className={`${styles['content']} ${!sample && styles['content--full']}`}>
         <div className="flex w-full">

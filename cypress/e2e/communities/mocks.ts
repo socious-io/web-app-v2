@@ -25,7 +25,7 @@ export const FEEDS = {
       old_id: null,
       search_tsv: "'content':1 'poverti':2",
       title: 'test2',
-      comments: 0,
+      comments: 2,
       identity_type: 'users',
       identity_meta: {
         id: '20b07c1c-b142-4ee3-a87f-122aa99a7659',
@@ -311,4 +311,196 @@ export const FOLLOW = {
   follower_identity_id: "1396c403-1ade-4c40-b0d1-4680059a46c5",
   following_identity_id: "035f724e-5824-4129-8ed6-96c6dda81a3a",
   created_at: "2025-03-25T22:21:50.730Z"
+}
+
+export const COMMETNS = {
+  page: 1,
+  limit: 10,
+  total_count: 2,
+  items: [
+    {
+      id: "bdf053cd-de26-4687-bf85-5f1427eb6ac9",
+      identity_id: "1dbc7d65-3e5e-4408-b76f-c6896882f25a",
+      post_id: "ce7ef31b-1135-427d-b30b-f973fb76a86a",
+      content: "test comment",
+      reply_id: null,
+      replied: true,
+      created_at: "2025-04-14T10:59:03.829Z",
+      updated_at: "2025-04-14T10:59:03.829Z",
+      likes: 0,
+      media_id: null,
+      identity_type: "users",
+      identity_meta: {
+        id: "1dbc7d65-3e5e-4408-b76f-c6896882f25a",
+        city: "‘Alāqahdārī Dīshū",
+        name: "Iman Rezasefat",
+        email: "iman.rezasefat@gmail.com",
+        avatar: null,
+        status: "ACTIVE",
+        address: null,
+        country: "AF",
+        username: "iman.rezasefat3818",
+        open_to_work: false,
+        is_contributor: null,
+        wallet_address: "0x12c40A61ECcB7A54eE3d8bB92a0476Aff8030303",
+        identity_verified: false,
+        open_to_volunteer: false
+      },
+      reported: false,
+      liked: false,
+      media: null,
+      emojis: null
+    },
+    {
+      id: "40eee3a4-908c-4cd6-811c-957e9e908350",
+      identity_id: "1dbc7d65-3e5e-4408-b76f-c6896882f25a",
+      post_id: "ce7ef31b-1135-427d-b30b-f973fb76a86a",
+      content: "123",
+      reply_id: null,
+      replied: false,
+      created_at: "2025-04-14T10:58:54.285Z",
+      updated_at: "2025-04-14T10:58:54.285Z",
+      likes: 0,
+      media_id: null,
+      identity_type: "users",
+      identity_meta: {
+        id: "1dbc7d65-3e5e-4408-b76f-c6896882f25a",
+        city: "‘Alāqahdārī Dīshū",
+        name: "Iman Rezasefat",
+        email: "iman.rezasefat@gmail.com",
+        avatar: null,
+        status: "ACTIVE",
+        address: null,
+        country: "AF",
+        username: "iman.rezasefat3818",
+        open_to_work: false,
+        is_contributor: null,
+        wallet_address: "0x12c40A61ECcB7A54eE3d8bB92a0476Aff8030303",
+        identity_verified: false,
+        open_to_volunteer: false
+      },
+      reported: false,
+      liked: false,
+      media: null,
+      emojis: null
+    }
+  ]
+}
+
+export const REACT = {
+  id: "3e24e9ca-2e36-4720-aaa8-3107f18797a6",
+  identity_id: "035f724e-5824-4129-8ed6-96c6dda81a3a",
+  comment_id: "fb208555-649e-4082-a445-c0c6f18e066e",
+  post_id: "bf59fb3f-c07c-465d-9303-33a15ab507ae",
+  emoji: "❤️",
+  created_at: "2025-04-17T12:34:38.504Z"
+}
+
+export const REPLY_COMMENT = {
+  total_count: "1",
+  id: "65830a47-1df5-49d9-83bc-2df6f6584d37",
+  identity_id: "035f724e-5824-4129-8ed6-96c6dda81a3a",
+  post_id: "ce7ef31b-1135-427d-b30b-f973fb76a86a",
+  content: "reply test",
+  reply_id: "bdf053cd-de26-4687-bf85-5f1427eb6ac9",
+  replied: false,
+  created_at: "2025-04-17T12:46:22.673Z",
+  updated_at: "2025-04-17T12:46:22.673Z",
+  likes: 0,
+  media_id: null,
+  identity_type: "users",
+  identity_meta: {
+    id: "035f724e-5824-4129-8ed6-96c6dda81a3a",
+    city: null,
+    name: null,
+    email: "imshantik@gmail.com",
+    avatar: null,
+    status: "ACTIVE",
+    address: null,
+    country: null,
+    username: "imshantik5140",
+    open_to_work: false,
+    is_contributor: null,
+    wallet_address: null,
+    identity_verified: false,
+    open_to_volunteer: true
+  },
+  reported: false,
+  liked: false,
+  media: null,
+  emojis: null
+}
+
+export const COMMENT_REPLIES = {
+  page: 1,
+  limit: 10,
+  total_count: 2,
+  items: [
+    {
+      id: "65830a47-1df5-49d9-83bc-2df6f6584d37",
+      identity_id: "035f724e-5824-4129-8ed6-96c6dda81a3a",
+      post_id: "ce7ef31b-1135-427d-b30b-f973fb76a86a",
+      content: "reply test",
+      reply_id: "bdf053cd-de26-4687-bf85-5f1427eb6ac9",
+      replied: false,
+      created_at: "2025-04-17T12:46:22.673Z",
+      updated_at: "2025-04-17T12:46:22.673Z",
+      likes: 0,
+      media_id: null,
+      identity_type: "users",
+      identity_meta: {
+        id: "035f724e-5824-4129-8ed6-96c6dda81a3a",
+        city: null,
+        name: null,
+        email: "imshantik@gmail.com",
+        avatar: null,
+        status: "ACTIVE",
+        address: null,
+        country: null,
+        username: "imshantik5140",
+        open_to_work: false,
+        is_contributor: null,
+        wallet_address: null,
+        identity_verified: false,
+        open_to_volunteer: true
+      },
+      reported: false,
+      liked: false,
+      media: null,
+      emojis: null
+    },
+    {
+      id: "1b55bf63-9185-4fd2-a4e9-645d4a72693b",
+      identity_id: "1dbc7d65-3e5e-4408-b76f-c6896882f25a",
+      post_id: "ce7ef31b-1135-427d-b30b-f973fb76a86a",
+      content: "respond to iman",
+      reply_id: "bdf053cd-de26-4687-bf85-5f1427eb6ac9",
+      replied: false,
+      created_at: "2025-04-14T10:59:24.389Z",
+      updated_at: "2025-04-14T10:59:24.389Z",
+      likes: 0,
+      media_id: null,
+      identity_type: "users",
+      identity_meta: {
+        id: "1dbc7d65-3e5e-4408-b76f-c6896882f25a",
+        city: "‘Alāqahdārī Dīshū",
+        name: "Iman Rezasefat",
+        email: "iman.rezasefat@gmail.com",
+        avatar: null,
+        status: "ACTIVE",
+        address: null,
+        country: "AF",
+        username: "iman.rezasefat3818",
+        open_to_work: false,
+        is_contributor: null,
+        wallet_address: "0x12c40A61ECcB7A54eE3d8bB92a0476Aff8030303",
+        identity_verified: false,
+        open_to_volunteer: false
+      },
+      reported: false,
+      liked: false,
+      media: null,
+      emojis: null
+    }
+  ]
 }

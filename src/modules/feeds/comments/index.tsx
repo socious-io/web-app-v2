@@ -31,7 +31,7 @@ const Comments: React.FC<CommentsProps> = ({
         return (
           <div key={item.id} className="flex gap-3 items-start">
             <Avatar type={type || 'users'} size="2rem" img={(profileImage as string) || ''} />
-            <div className="flex-1 flex flex-col relative gap-1">
+            <div data-testid="comment-box" className="flex-1 flex flex-col relative gap-1">
               <div className="flex justify-between">
                 <span className="text-sm text-Gray-light-mode-900">{name}</span>
                 <span className="text-xs text-Gray-light-mode-600">

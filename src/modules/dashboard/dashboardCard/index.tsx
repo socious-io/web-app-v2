@@ -38,7 +38,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
         {!!supportingText2 && <span className="text-sm font-semibold text-Gray-light-mode-900">{supportingText2}</span>}
       </div>
       <div className="mr-0 ml-auto">
-        <Button variant="outlined" color="primary" onClick={() => navigate(redirectUrl)} customStyle="flex gap-2">
+        <Button data-testid="card-button" variant="outlined" color="primary" onClick={() => navigate(redirectUrl)} customStyle="flex gap-2">
           {!!buttonIcon && <Icon name={buttonIcon} fontSize={20} className="text-Gray-light-mode-500" />}
           {buttonLabel}
         </Button>
