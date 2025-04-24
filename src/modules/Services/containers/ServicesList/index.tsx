@@ -1,5 +1,6 @@
 import { Divider } from '@mui/material';
 import { translate } from 'src/core/utils';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -24,6 +25,27 @@ const ServicesList = () => {
       onDeleteService,
     },
   } = useServiceList();
+
+  const EmptyServices = myProfile ? (
+    <EmptyBox
+      icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
+      title={translate('service-empty.title')}
+      subtitle={translate('service-empty.subtitle')}
+      button={{
+        children: translate('service-new'),
+        color: 'primary',
+        startIcon: <Icon name="plus" color={variables.color_white} />,
+        onClick: onCreateService,
+      }}
+    />
+  ) : (
+    <AlertMessage
+      iconName="info-circle"
+      theme="gray"
+      title={translate('service-other-empty.title')}
+      subtitle={translate('service-other-empty.subtitle')}
+    />
+  );
 
   return services.length ? (
     <>
@@ -83,17 +105,7 @@ const ServicesList = () => {
       />
     </>
   ) : (
-    <EmptyBox
-      icon={<FeaturedIcon iconName="search-lg" size="lg" type="modern" theme="gray" />}
-      title={translate('service-empty.title')}
-      subtitle={translate('service-empty.subtitle')}
-      button={{
-        children: translate('service-new'),
-        color: 'primary',
-        startIcon: <Icon name="plus" color={variables.color_white} />,
-        onClick: onCreateService,
-      }}
-    />
+    EmptyServices
   );
 };
 

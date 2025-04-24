@@ -1,6 +1,6 @@
 import { bscTestnet, bsc, sepolia, adf } from 'wagmi/chains';
-import { DappConfig } from './dapp.types';
 
+import { DappConfig } from './dapp.types';
 
 export const dappConfig: DappConfig = {
   walletConnetProjectId: '40ce0f320baccb067909071c983ca357',
@@ -46,7 +46,6 @@ export const dappConfig: DappConfig = {
           name: 'ADA',
           symbol: 'ADA',
         },
-
       },
       escrow: '',
       tokens: [
@@ -55,9 +54,9 @@ export const dappConfig: DappConfig = {
           symbol: 'ADA',
           address: 'lovelace',
           decimals: 6,
-        }
+        },
       ],
-    }
+    },
   ],
   mainet: [
     {

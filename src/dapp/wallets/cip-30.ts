@@ -11,13 +11,12 @@ export type EIP1193RequestParams = {
 };
 
 export class CIP30ToEIP1193Provider {
-
   public isCIP30 = true;
   public name: string;
   private provider: CIP30Provider;
   private listeners: { [event: string]: Array<(...args: any[]) => void> };
   private enabled: any;
-  private tmpChainId: number
+  private tmpChainId: number;
 
   constructor(provider: CIP30Provider, name: string, tmpChainId: number) {
     this.provider = provider;
@@ -34,14 +33,14 @@ export class CIP30ToEIP1193Provider {
     this.enabled = await this.provider.enable();
     switch (method) {
       case 'eth_requestAccounts':
-        const accounts = await this.getAccounts()
+        const accounts = await this.getAccounts();
         this.emit('connect', { chainId: await this.enabled.getNetworkId() });
         this.emit('accountsChanged', accounts);
         return accounts;
       case 'eth_accounts':
         return this.getAccounts();
       case 'eth_chainId':
-        return  this.tmpChainId;
+        return this.tmpChainId;
       case 'wallet_requestPermissions':
         return [];
       default:
@@ -52,7 +51,7 @@ export class CIP30ToEIP1193Provider {
   async getAccounts() {
     let addresses = await this.enabled.getUsedAddresses();
     if (addresses.length < 1) addresses = await this.enabled.getUnusedAddresses();
-  
+
     // Convert Cardano addresses to Ethereum-compatible addresses
     const ethereumAddresses = addresses.map(address => {
       // Hash the Cardano address using Keccak-256
@@ -61,7 +60,7 @@ export class CIP30ToEIP1193Provider {
       const ethereumAddress = `0x${hash.slice(-40)}`;
       return ethereumAddress;
     });
-  
+
     return ethereumAddresses;
   }
 

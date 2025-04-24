@@ -2,13 +2,14 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet, walletConnectWallet, trustWallet, ledgerWallet } from '@rainbow-me/rainbowkit/wallets';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { Escrow } from 'cardano-bridge';
 import { BrowserProvider, Eip1193Provider, JsonRpcSigner } from 'ethers';
 import { useState, useEffect } from 'react';
 import { config } from 'src/config';
 import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 import { Chain, HttpTransport } from 'viem';
 import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
-import { Escrow } from 'cardano-bridge';
+
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
 import { laceWallet } from './wallets/lace';
@@ -45,7 +46,6 @@ const connectors = connectorsForWallets(
   },
 );
 
-
 const wagmiConfig = createConfig({
   chains: chains as [Chain, ...Chain[]],
   transports: Object.fromEntries(chains.map(chain => [chain.id, http(chain.rpcUrls.default?.http[0])])),
@@ -73,7 +73,6 @@ export const useWeb3 = () => {
   const [account, setAccount] = useState<string>();
   const [chainId, setChainId] = useState<number>(0);
   const [signer, setSigner] = useState<JsonRpcSigner>();
-
 
   const Button: React.FC = () => {
     const { address, isConnected, connector } = useAccount();

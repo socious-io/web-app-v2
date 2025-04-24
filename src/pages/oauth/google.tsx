@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Capacitor } from '@capacitor/core';
 // import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-login';

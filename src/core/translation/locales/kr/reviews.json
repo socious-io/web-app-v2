@@ -1,5 +1,7 @@
 {
   "review-title": "리뷰",
   "review-counts": "{{count}}개의 리뷰",
-  "review-job": "직업: "
+  "review-job": "직업: ",
+  "review-empty-title": "죄송합니다, 아직 리뷰가 없습니다",
+  "review-empty-subtitle": "나중에 다시 확인해주세요!"
 }

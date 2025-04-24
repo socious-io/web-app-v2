@@ -1,8 +1,3 @@
-import { Contract, parseUnits } from 'ethers';
-import { config } from 'src/config';
-import { dappConfig } from './dapp.config';
-import { CardanoEscrow, NETWORKS } from './dapp.connect';
-import { AllowanceParams, EscrowParams, FlattenToken, WithdrawnParams } from './dapp.types';
 import {
   BlockfrostProvider,
   BrowserWallet,
@@ -18,7 +13,12 @@ import {
   deserializeAddress,
   pubKeyAddress,
 } from '@meshsdk/core';
+import { Contract, parseUnits } from 'ethers';
+import { config } from 'src/config';
 
+import { dappConfig } from './dapp.config';
+import { CardanoEscrow, NETWORKS } from './dapp.connect';
+import { AllowanceParams, EscrowParams, FlattenToken, WithdrawnParams } from './dapp.types';
 
 export const allowance = async (params: AllowanceParams) => {
   const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
@@ -41,12 +41,12 @@ export const escrow = async (params: EscrowParams) => {
   if (walletProvider?.isCIP30) {
     console.log(walletProvider.enabled, '----------------------------');
     const addrr = await CardanoEscrow.getWalletDappAddress();
-    
-    console.log(deserializeAddress(addrr), '*********@@@')
+
+    console.log(deserializeAddress(addrr), '*********@@@');
     console.log('---------------------------@@@ 1');
     const txHash = await CardanoEscrow.deposit({
       unit: token,
-      quantity: `${(params.totalAmount * 1000000)}`
+      quantity: `${params.totalAmount * 1000000}`,
     });
     console.log('---------------------------@@@ 2');
     return {
@@ -55,7 +55,7 @@ export const escrow = async (params: EscrowParams) => {
       token,
     };
   }
-  
+
   const tokenConfig = selectedNetwork.tokens.find(t => t.address === token);
   if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
 

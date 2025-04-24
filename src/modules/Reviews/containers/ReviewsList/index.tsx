@@ -1,5 +1,6 @@
 import { Divider } from '@mui/material';
 import { translate } from 'src/core/utils';
+import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 import Rate from 'src/modules/general/components/Rate';
@@ -14,7 +15,7 @@ const ReviewsList = () => {
     operations: { onChangePage },
   } = useReviewList();
 
-  return (
+  return reviews.length ? (
     <div className={styles['container']}>
       <span className={styles['title']}>{translate('review-title')}</span>
       <div className={styles['rate']}>
@@ -35,6 +36,13 @@ const ReviewsList = () => {
         <PaginationMobile page={page} count={totalPage} handleChange={onChangePage} />
       </div>
     </div>
+  ) : (
+    <AlertMessage
+      iconName="info-circle"
+      theme="gray"
+      title={translate('review-empty-title')}
+      subtitle={translate('review-empty-subtitle')}
+    />
   );
 };
 
