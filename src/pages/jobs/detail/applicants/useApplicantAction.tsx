@@ -54,6 +54,7 @@ export const useApplicantAction = (
       const currentPage = pages.find(item => item.tab === currentTab);
       const status = statusObj[currentTab];
       const res = await jobApplicants(jobId, { page: currentPage?.page, limit: PER_PAGE, status });
+
       setApplicantsList(res.items);
       setTotalCounts(totalCounts =>
         totalCounts.map(item => (item.tab === currentTab ? { ...item, count: res.total_count } : item)),
@@ -146,7 +147,9 @@ export const useApplicantAction = (
             <div
               className="flex flex-row justify-start items-center gap-2 cursor-pointer"
               onClick={() => {
-                detail && onClickName(detail.user.id, detail.id);
+                if (detail) {
+                  onClickName(detail.user.id, detail.id);
+                }
               }}
             >
               <Avatar size="40px" type="users" img={String(detail?.user.avatar || '')} />
