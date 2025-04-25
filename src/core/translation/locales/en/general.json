@@ -22,5 +22,6 @@
     "remove": "Remove",
     "expiry": "Expiry",
     "ending": "ending in"
-  }
+  },
+  "router-not-found": "Page not found :("
 }

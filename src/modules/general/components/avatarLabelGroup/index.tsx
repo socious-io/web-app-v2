@@ -12,6 +12,7 @@ export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = ({
   justAvatarClickable = false,
   handleClick,
   customStyle = '',
+  isVerified = false,
 }) => {
   const nonFull = removeFull ? '' : 'w-full';
 
@@ -25,6 +26,7 @@ export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = ({
         type={account.type}
         size={avatarSize || '40px'}
         onClick={e => justAvatarClickable && handleClick?.(e)}
+        isVerified={isVerified}
       />
       <div className="flex flex-col">
         <Typography variant="subtitle2" color={variables.color_grey_900}>

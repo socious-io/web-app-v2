@@ -46,6 +46,7 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
             <AvatarLabelGroup
               removeFull={true}
               customStyle="w-auto"
+              isVerified={item.isVerified}
               account={{
                 name: item.title,
                 id: item.id,

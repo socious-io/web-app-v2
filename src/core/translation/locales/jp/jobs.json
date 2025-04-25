@@ -54,5 +54,14 @@
   "job-my-applied": "私の応募済みの求人",
   "job-card-posted-on": "投稿日",
   "jobs-applicants-message": "メッセージ",
-  "jobs-applicants-reject": "拒否"
+  "jobs-applicants-reject": "拒否",
+  "jobs-create-new": "求人を作成する",
+  "jobs-empty": {
+    "title": "新しい求人を作成する",
+    "subtitle": "求人内容が具体的で明確であればあるほど、応募が早く集まります。"
+  },
+  "jobs-other-empty": {
+    "title": "申し訳ありませんが、現在求人はありません",
+    "subtitle": "後で再度確認してください！"
+  }
 }

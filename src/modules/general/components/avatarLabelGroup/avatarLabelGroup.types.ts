@@ -7,4 +7,5 @@ export interface AvatarLabelGroupProps {
   justAvatarClickable?: boolean;
   handleClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
   customStyle?: string;
+  isVerified?: boolean;
 }

@@ -4,6 +4,10 @@
     "title": "Crear un nuevo servicio",
     "subtitle": "Cuanto más claro sea el servicio, más rápido te contratarán."
   },
+  "service-other-empty": {
+    "title": "Lo sentimos, no hay servicios disponibles en este momento",
+    "subtitle": "¡Vuelve a revisar más tarde!"
+  },
   "service-card": {
     "delivery": "entrega",
     "duplicate": "Duplicar",

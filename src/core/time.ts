@@ -49,10 +49,19 @@ export const getDaysInMonth = (month: number, year: number) => {
   return date.getDate();
 };
 
-export const getUTCDate = (date: string) => (date.endsWith('Z') ? date : `${date}Z`);
+export const getUTCDate = (date: string) => {
+  if (/^\d{4}$/.test(date)) {
+    return `${date}-01-01T00:00:00.000Z`;
+  }
+  if (!date.endsWith('Z')) {
+    return `${date}Z`;
+  }
+  return date;
+};
 
 export const getStringDate = (date: string) => {
   const dateFormat = new Date(getUTCDate(date));
+  if (isNaN(dateFormat.getTime())) throw new Error('Invalid date');
   const month = monthShortNames[dateFormat.getMonth()];
   const year = dateFormat.getFullYear().toString();
   return `${month} ${year}`;

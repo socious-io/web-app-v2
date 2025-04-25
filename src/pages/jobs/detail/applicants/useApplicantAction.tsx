@@ -6,7 +6,6 @@ import { toRelativeTime } from 'src/core/relative-time';
 import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Checkbox } from 'src/modules/general/components/checkbox/checkbox';
-
 export const useApplicantAction = (
   jobId: string,
   applicants: ApplicantsRes,
@@ -148,7 +147,9 @@ export const useApplicantAction = (
             <div
               className="flex flex-row justify-start items-center gap-2 cursor-pointer"
               onClick={() => {
-                detail && onClickName(detail.user.id, detail.id);
+                if (detail) {
+                  onClickName(detail.user.id, detail.id);
+                }
               }}
             >
               <Avatar size="40px" type="users" img={String(detail?.user.avatar || '')} />
