@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import { SearchInput } from 'src/modules/Search/components/SearchInput';
 import { SearchInputProps } from 'src/modules/Search/components/SearchInput/SearchInput.types';
@@ -7,7 +7,7 @@ export default {
   component: SearchInput,
 } as Meta;
 
-const Template: Story<SearchInputProps> = args => <SearchInput {...args} />;
+const Template: StoryFn<SearchInputProps> = args => <SearchInput {...args} />;
 
 export const Preview = Template.bind({});
 Preview.args = {

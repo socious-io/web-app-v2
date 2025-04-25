@@ -47,6 +47,7 @@ export default defineConfig([
     },
     rules: {
       'i18next/no-literal-string': 2,
+      '@typescript-eslint/no-explicit-any': 1,
       semi: 'error',
       'eol-last': ['error', 'always'],
       'react/react-in-jsx-scope': 'off',
@@ -68,7 +69,7 @@ export default defineConfig([
   {
     files: ['**/*.stories.js', '**/*.stories.jsx', '**/*.stories.ts', '**/*.stories.tsx'],
     rules: {
-      'i18next/no-literal-string': 'off',
+      'i18next/no-literal-string': 0,
     },
   },
 ]);

@@ -2,10 +2,6 @@ import { SemanticContractStatus } from 'src/core/adaptors';
 import { StatusProps } from 'src/modules/general/components/Status/index.types';
 
 export const CONTRACT_STATUS: Record<SemanticContractStatus, Omit<StatusProps, 'label'>> = {
-  Pending: {
-    theme: 'warning',
-    icon: 'dot',
-  },
   'Offer received': {
     theme: 'warning',
     icon: 'dot',
@@ -31,12 +27,6 @@ export const CONTRACT_STATUS: Record<SemanticContractStatus, Omit<StatusProps, '
     icon: 'check-circle',
   },
   Canceled: {
-    theme: 'secondary',
-  },
-  'Kicked out': {
-    theme: 'secondary',
-  },
-  Closed: {
     theme: 'secondary',
   },
   Withdrawn: {
