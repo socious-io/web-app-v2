@@ -186,7 +186,7 @@ jobs:
       - name: Build and archiving the app
         run: |
           cd ios/App
-          xcodebuild -scheme App -archivePath ./Actions.xcarchive -configuration Release archive -workspace ./App.xcworkspace PROVISIONING_PROFILE="${{env.MOBILE_PROVISIONING_UUID}}"
+          xcodebuild -scheme App -archivePath ./Actions.xcarchive -configuration Release -workspace ./App.xcworkspace PROVISIONING_PROFILE="${{env.MOBILE_PROVISIONING_UUID}}" clean archive
 
       - name: Exporting archive for releasing to Appstore (.IPA)
         run: |
