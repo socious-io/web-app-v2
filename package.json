@@ -49,7 +49,7 @@
     "@hookform/resolvers": "^5.0.1",
     "@ionic/pwa-elements": "^3.3.0",
     "@mui/material": "^7.0.1",
-    "@mui/x-date-pickers": "^7.28.3",
+    "@mui/x-date-pickers": "^8.1.0",
     "@rainbow-me/rainbowkit": "^2.2.4",
     "@reduxjs/toolkit": "^2.7.0",
     "@reown/appkit": "^1.7.3",
