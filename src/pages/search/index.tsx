@@ -6,8 +6,12 @@ import Slider from 'src/modules/general/components/Slider';
 import { FilterSlider } from 'src/modules/Search/components/FilterSlider';
 import { useSearch } from 'src/pages/search/useSearch';
 import variables from 'src/styles/constants/_exports.module.scss';
+import { useLocation } from 'react-router-dom';
 
 import css from './list.module.scss';
+
+const location = useLocation();
+const customTitle = location.state?.customTitle;
 
 export const Search = () => {
   const {
@@ -32,7 +36,9 @@ export const Search = () => {
     <div className={css.container}>
       <div className={css.headerContainer}>
         <div className={headerClass}>
-          <h1 className={css.title}>{translate('search.title', { query: q })}</h1>
+          <h1 className={css.title}>
+            {customTitle || translate('search.title', { query: q })}
+          </h1>
           <h2 className={css.subtitle}>
             {translate('search.subtitle', {
               total,
@@ -69,7 +75,7 @@ export const Search = () => {
           </div>
         )}
       </div>
-      <Slider        
+      <Slider
         open={sliderFilterOpen}
         onClose={handleCloseOrApplyFilter}
         title={translate('search.filterTitle')}

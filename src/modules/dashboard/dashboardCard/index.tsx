@@ -14,6 +14,7 @@ interface DashboardCardProps {
   buttonIcon?: string;
   supportingText1?: string;
   supportingText2?: string;
+  customRedirectTitle?: string;
 }
 
 export const DashboardCard: React.FC<DashboardCardProps> = ({
@@ -25,6 +26,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
   buttonIcon,
   supportingText1,
   supportingText2,
+  customRedirectTitle
 }) => {
   const navigate = useNavigate();
   return (
@@ -38,7 +40,13 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
         {!!supportingText2 && <span className="text-sm font-semibold text-Gray-light-mode-900">{supportingText2}</span>}
       </div>
       <div className="mr-0 ml-auto">
-        <Button data-testid="card-button" variant="outlined" color="primary" onClick={() => navigate(redirectUrl)} customStyle="flex gap-2">
+        <Button data-testid="card-button" variant="outlined" color="primary" onClick={() =>
+          navigate(redirectUrl, {
+            state: {
+              customTitle: customRedirectTitle,
+            },
+          })
+        } customStyle="flex gap-2">
           {!!buttonIcon && <Icon name={buttonIcon} fontSize={20} className="text-Gray-light-mode-500" />}
           {buttonLabel}
         </Button>

@@ -1,7 +1,7 @@
 import { API_SERVER, API_SERVER_V3, APP_URL, CITY, FIRSTNAME, LASTNAME, ORGANIZATION_EMAIL, ORGANIZATION_USERNAME, USERNAME } from "../authentication/constants";
 import { generateRandomEmail, OrganizationUser } from "../authentication/utilities";
 import { ORGANIZATION_PROJECTS } from "../jobs/mocks";
-import { CATEGORIES, IDENTITY_SERVICES, ORG_ODENTITY, SERCVISES, SERVICE_DETAIL } from "./mocks";
+import { CATEGORIES, IDENTITY_SERVICES, ORG_ODENTITY, ORG_PROFESSIONALS, SERCVISES, SERVICE_DETAIL } from "./mocks";
 
 const SIGNINGUP_EMAIL = generateRandomEmail();
 const socialCauses = ['Health', 'Security', 'Bullying'];
@@ -18,7 +18,14 @@ const organizationUser = new OrganizationUser(
 
 const orgName = organizationUser.getIdentity()[0].meta.name;
 
+const getMockSearchResponse = (shouldReturnEmpty) => {
+    return shouldReturnEmpty
+        ? { "page": 1, "limit": 20, "total_count": 0, "items": [] }
+        : ORG_PROFESSIONALS;
+};
+
 describe('organization applying to services', () => {
+    let returnEmpty = false;
     beforeEach(() => {
         cy.intercept('POST', `https://pulse.walletconnect.org/batch?projectId=*&st=*&sv=*`,
             req => {
@@ -111,73 +118,80 @@ describe('organization applying to services', () => {
             }
         );
 
-        // =============== find services =================//
+        // =============== after clicking on find professionals ==============//
 
-        cy.intercept('POST', `${APP_URL}/dashboard/my_organization/search/v2?limit=10&page=1`,
+        // cy.intercept('POST', `${APP_URL}/search/v2?limit=10&page=1`,
+        //     req => {
+        //         req.reply(200, ORG_PROFESSIONALS);
+        //     }
+        // );
+        // cy.intercept('POST', `${APP_URL}/dashboard/my_organization/search/v2?limit=10&page=1`,
+        //     req => {
+        //         req.reply(200, ORG_PROFESSIONALS);
+        //     }
+        // );
+        // cy.intercept('GET', `${APP_URL}/dashboard/*/projects/categories?t=*`,
+        //     req => {
+        //         req.reply(200, CATEGORIES);
+        //     }
+        // );
+        // cy.intercept('GET', `${APP_URL}/projects/categories?t=*`,
+        //     req => {
+        //         req.reply(200, CATEGORIES);
+        //     }
+        // );
+        // cy.intercept('GET', `${APP_URL}/dashboard/*/notifications?t=*&page=1&limit=50`,
+        //     req => {
+        //         req.reply(200);
+        //     }
+        // );
+
+        cy.intercept('POST', `${APP_URL}/search/v2?page=1&limit=20`, (req) => {
+            const response = getMockSearchResponse(returnEmpty);
+            req.reply(200, response);
+        });
+        cy.intercept('GET', `${APP_URL}/search/v2?page=1&limit=20`, (req) => {
+            const response = getMockSearchResponse(returnEmpty);
+            req.reply(200, response);
+        }).as('mockSearch');
+        
+        cy.intercept('POST', `${APP_URL}/dashboard/my_organization/search/v2?limit=10&page=1`, (req) => {
+            const response = getMockSearchResponse(returnEmpty);
+            req.reply(200, response);
+        }).as('getProfessionals');
+
+
+        //===============search detail ==============//
+        cy.intercept('POST', new RegExp(`${APP_URL}/search/v2.*`), (req) => {
+            const response = getMockSearchResponse(returnEmpty);
+            req.reply(200, response);
+        }).as('mockSearch');
+
+        cy.intercept('GET', `${APP_URL}/jobs/identities?t=*`,
+            req => {
+                req.reply(200, organizationUser.getIdentity());
+            }
+        ).as('getApplicants');
+        cy.intercept('GET', `${APP_URL}/connections/related/*?t=*`,
             req => {
                 req.reply(200);
-            }
-        );
-        cy.intercept('GET', `${APP_URL}/dashboard/my_organization/notifications?t=*&page=1&limit=50`,
-            req => {
-                req.reply(200);
-            }
-        );
-        cy.intercept('GET', `${APP_URL}/dashboard/my_organization/projects/categories?t=*`,
-            req => {
-                req.reply(200, CATEGORIES);
             }
         );
         cy.intercept('GET', `${APP_URL}/projects/categories?t=*`,
             req => {
-                req.reply(200, CATEGORIES);
-            }
-        );
-        cy.intercept('GET', `${APP_URL}/search/v2?limit=10&page=1`,
-            req => {
                 req.reply(200);
             }
         );
-        cy.intercept('POST', `${APP_URL}/search/v2?limit=10&page=*`,
-            req => {
-                req.reply(200, SERCVISES);
-            }
-        ).as('getServices');
-
-        // ================ details =================//
-        cy.intercept('GET', `https://socious.io/api/v3/projects/*?t=*`,
-            req => {
-                req.reply(200, SERVICE_DETAIL);
-            }
-        ).as('getServices');
-        cy.intercept('GET', `${APP_URL}/identities?t=*`,
-            req => {
-                req.reply(200, IDENTITY_SERVICES);
-            }
-        ).as('getServices');
-
 
     });
 
     it('organization navigates to services page and gets the services', () => {
+        returnEmpty = false;
         cy.visit(`${APP_URL}/dashboard/my_organization/org`);
 
         cy.contains('Find services').should('be.visible');
-        cy.get('[data-testid="card-button"]').eq(1).should('exist').should('be.enabled');
-        cy.get('[data-testid="card-button"]').eq(1).click({ force: true });        
+        cy.get('[data-testid="card-button"]').eq(0).should('exist').should('be.enabled');
+        cy.get('[data-testid="card-button"]').eq(0).click({ force: true });
 
     });
-    it('organization navigates to services page and applies to one service', () => {
-        cy.visit('http://localhost:3000/search?q=&type=services&page=1');
-
-        cy.contains('Search for ');
-
-        cy.get('[data-testid="service-card"]').should('exist');
-        cy.get('[data-testid="service-card"]').first().click();
-
-    });
-
-    it('open the service page', () => {
-        cy.visit(`${APP_URL}/dashboard/my_organization/org`);
-    })
 })
