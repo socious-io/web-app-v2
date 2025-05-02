@@ -40,7 +40,6 @@
     "@capacitor/preferences": "^7.0.1",
     "@capacitor/push-notifications": "^7.0.1",
     "@capacitor/toast": "^7.0.1",
-    "@capgo/capacitor-social-login": "^7.4.9",
     "@datadog/browser-rum": "^6.6.3",
     "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.14.0",
