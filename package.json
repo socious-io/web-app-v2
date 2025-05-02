@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@capacitor-community/apple-sign-in": "^7.0.1",
-    "@capacitor-firebase/crashlytics": "^7.2.0",
     "@capacitor-firebase/messaging": "^7.1.0",
     "@capacitor/action-sheet": "^7.0.1",
     "@capacitor/android": "^7.2.0",
@@ -41,7 +40,7 @@
     "@capacitor/preferences": "^7.0.1",
     "@capacitor/push-notifications": "^7.0.1",
     "@capacitor/toast": "^7.0.1",
-    "@capgo/capacitor-social-login": "^7.4.9",
+    "@capgo/capacitor-social-login": "^7.5.3",
     "@datadog/browser-rum": "^6.6.3",
     "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.14.0",
