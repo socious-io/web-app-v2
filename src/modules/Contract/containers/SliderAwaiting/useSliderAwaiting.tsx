@@ -10,7 +10,7 @@ import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 export const useSliderAwaiting = (contract: Contract) => {
   const dispatch = useDispatch();
-  const { signer, chainId, Web3Connect, isConnected } = useWeb3();
+  const { signer, chainId, Web3Connect, isConnected, walletProvider } = useWeb3();
   const identity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
@@ -41,23 +41,25 @@ export const useSliderAwaiting = (contract: Contract) => {
   const onConfirm = async () => {
     setOpenAlert(false);
     setDisabledPrimaryButton(true);
-    try {
-      const escrowId = contract?.escrowId || '';
-      if (contract.payment === 'CRYPTO' && signer && chainId && escrowId) {
-        const result = await dapp.withdrawnEscrow({
-          signer,
-          chainId,
-          escrowId,
-        });
+    const escrowId = contract?.escrowId || '';
+    if (contract.payment === 'CRYPTO' && signer && chainId && escrowId) {
+      console.log('***************************************');
+      const result = await dapp.withdrawnEscrow({
+        walletProvider,
+        signer,
+        chainId,
+        escrowId,
+        meta: contract?.paymentObj?.meta,
+      });
 
-        if (!result) {
-          setDisabledPrimaryButton(false);
-          return;
-        }
+      if (!result) {
+        setDisabledPrimaryButton(false);
+        return;
       }
+    }
 
-      await completeContractAdaptor(contract.id);
-      dispatch(
+    // await completeContractAdaptor(contract.id);
+    /* dispatch(
         updateStatus({
           id: contract.id,
           status: 'COMPLETED',
@@ -65,10 +67,8 @@ export const useSliderAwaiting = (contract: Contract) => {
           type: contract.type,
           paymentId: contract.paymentId,
         }),
-      );
-    } catch (e) {
-      console.log('Error in confirming contract', e);
-    }
+      ); */
+
     setDisabledPrimaryButton(false);
   };
 

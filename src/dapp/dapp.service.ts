@@ -39,20 +39,19 @@ export const escrow = async (params: EscrowParams) => {
   if (!token) token = selectedNetwork.tokens[0].address as string;
 
   if (walletProvider?.isCIP30) {
-    console.log(walletProvider.enabled, '----------------------------');
-    const addrr = await CardanoEscrow.getWalletDappAddress();
-
-    console.log(deserializeAddress(addrr), '*********@@@');
-    console.log('---------------------------@@@ 1');
     const txHash = await CardanoEscrow.deposit({
       unit: token,
       quantity: `${params.totalAmount * 1000000}`,
     });
-    console.log('---------------------------@@@ 2');
+    // more info need for release cardano escrow
+    console.log('-------------------------------------------');
     return {
       txHash,
       id: txHash,
       token,
+      contributor: params.contributor,
+      amount: params.totalAmount,
+      fee: params.totalAmount - params.escrowAmount,
     };
   }
 
@@ -103,6 +102,38 @@ export const escrow = async (params: EscrowParams) => {
 };
 
 export const withdrawnEscrow = async (params: WithdrawnParams) => {
+  console.log(params.walletProvider, '-----------------------#####--');
+  if (params.walletProvider?.isCIP30) {
+    const obj = {
+      tx: params.escrowId,
+      payouts: [
+        {
+          address: config.cardanoPayoutFeeAddress,
+          amount: params.meta?.fee as number,
+        },
+        {
+          address: params.meta.contributor,
+          amount: (params.meta?.amount - params.meta?.fee) as number,
+        },
+      ],
+    };
+    console.log(JSON.stringify(obj), '-------------------------@@@@@@@', CardanoEscrow.release);
+    const tx = await CardanoEscrow.release({
+      tx: params.escrowId,
+      payouts: [
+        {
+          address: config.cardanoPayoutFeeAddress,
+          amount: params.meta?.fee as number,
+        },
+        {
+          address: params.meta.contributor,
+          amount: (params.meta?.amount - params.meta?.fee) as number,
+        },
+      ],
+    });
+    console.log(tx, '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+    return tx;
+  }
   const selectedNetwork = NETWORKS.filter(n => n.chain.id === params.chainId)[0];
   const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
   const tx = await contract.withdrawn(params.escrowId);

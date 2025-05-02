@@ -10,13 +10,17 @@ import styles from './index.module.scss';
 import { WalletModalProps } from './index.types';
 
 const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, handleAccept, walletAddress }) => {
-  const { isConnected, account, Web3Connect } = Dapp.useWeb3();
+  const { isConnected, account, Web3Connect, walletProvider } = Dapp.useWeb3();
 
   useEffect(() => {
+    console.log('**********************@@@@@', walletAddress, account, '**************sssss@@@', walletProvider, isConnected);
+    if (isConnected && walletProvider?.isCIP30) {
+      console.log(walletProvider, "*************************")
+    }
     if (isConnected && account && (!walletAddress || String(walletAddress) !== account)) {
       updateWallet({ wallet_address: account });
     }
-  }, [isConnected, account]);
+  }, [isConnected, account, walletProvider]);
 
   const footerJsx = (
     <div className={styles['modal__footer']}>

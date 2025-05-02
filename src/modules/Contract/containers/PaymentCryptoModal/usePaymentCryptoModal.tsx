@@ -43,6 +43,9 @@ export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (co
         addressReferringCont: contract.amounts?.user_referrer_wallet,
       });
       const { error, data } = await depositContractAdaptor(contract.id, result.txHash, contract.payment, {
+        amount: result.amount,
+        contributor: result.contributor,
+        fee: result.fee,
         escrowId: result.id,
         token: result?.token || '',
         txHash: result.txHash,
