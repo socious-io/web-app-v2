@@ -9,6 +9,7 @@ import { removeValuesFromObject } from 'src/core/utils';
 import { JobListingCard } from 'src/modules/Jobs/components/JobListingCard';
 import { SearchResultProfile } from 'src/modules/Search/components/searchResultProfile';
 import ServiceCard from 'src/modules/Services/components/ServiceCard';
+import { useLocation } from 'react-router-dom';
 
 export type FilterReq = {
   causes_tags?: Array<string>;
@@ -48,6 +49,9 @@ export const useSearch = () => {
   const prevPage = useRef(0);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const customTitle = location.state?.customTitle;
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -197,6 +201,7 @@ export const useSearch = () => {
       countryName,
       scrollRef,
       scrollIndex,
+      customTitle,
     },
     operations: {
       setPage,

@@ -6,12 +6,8 @@ import Slider from 'src/modules/general/components/Slider';
 import { FilterSlider } from 'src/modules/Search/components/FilterSlider';
 import { useSearch } from 'src/pages/search/useSearch';
 import variables from 'src/styles/constants/_exports.module.scss';
-import { useLocation } from 'react-router-dom';
 
 import css from './list.module.scss';
-
-const location = useLocation();
-const customTitle = location.state?.customTitle;
 
 export const Search = () => {
   const {
@@ -27,6 +23,7 @@ export const Search = () => {
       countryName,
       scrollRef,
       scrollIndex,
+      customTitle,
     },
     operations: { setPage, card, handleCloseOrApplyFilter, onApply, onClose, handleChangeMobilePage },
   } = useSearch();

@@ -24,7 +24,7 @@ const getMockSearchResponse = (shouldReturnEmpty) => {
         : ORG_PROFESSIONALS;
 };
 
-describe('organization applying to services', () => {
+describe('organization applying to professionals', () => {
     let returnEmpty = false;
     beforeEach(() => {
         cy.intercept('POST', `https://pulse.walletconnect.org/batch?projectId=*&st=*&sv=*`,
