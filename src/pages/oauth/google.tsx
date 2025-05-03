@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 // import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-// import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-login';
+import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-login';
 import { useEffect } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { config } from 'src/config';
@@ -12,11 +12,11 @@ import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
 
-// SocialLogin.initialize({
-//   google: {
-//     iOSClientId: config.googleOauthClientIdIos,
-//   },
-// });
+SocialLogin.initialize({
+  google: {
+    iOSClientId: config.googleOauthClientIdIos,
+  },
+});
 export const GoogleOauth2 = () => {
   //in ios instead of https there is capacitor in the link !!
   const replaceCapacitor = str => str.replace(/capacitor/g, 'https');
@@ -97,15 +97,15 @@ export const GoogleOauth2 = () => {
     };
 
     if (Capacitor.getPlatform() === 'ios') {
-      // SocialLogin.login({
-      //   provider: 'google',
-      //   options: {
-      //     scopes: ['email', 'profile'],
-      //   },
-      // }).then(googleUser => {
-      //   const googleRes = googleUser.result as GoogleLoginResponseOnline;
-      //   handleGoogleOauth(googleRes.idToken, 'ios');
-      // });
+      SocialLogin.login({
+        provider: 'google',
+        options: {
+          scopes: ['email', 'profile'],
+        },
+      }).then(googleUser => {
+        const googleRes = googleUser.result as GoogleLoginResponseOnline;
+        handleGoogleOauth(googleRes.idToken, 'ios');
+      });
     } else {
       if (!code) {
         window.location.href = googleLoginURL;

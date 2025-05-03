@@ -30,6 +30,7 @@
 		"HapticsPlugin",
 		"PreferencesPlugin",
 		"PushNotificationsPlugin",
-		"ToastPlugin"
+		"ToastPlugin",
+		"SocialLoginPlugin"
 	]
 }
