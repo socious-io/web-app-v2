@@ -21,6 +21,6 @@
   },
   "include": ["cypress", "src", "**/*.ts", "**/*.tsx", "tailwind.config.js", "postcss.config.js"],
   "typesOnlyInclude": ["**/*.d.ts", "tailwind.config.js", "postcss.config.js"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

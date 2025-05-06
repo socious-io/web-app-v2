@@ -71,9 +71,9 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
         const selectedNetwork = Dapp.NETWORKS.filter(n => n.chain.id === chainId)[0];
         const mapTokens = selectedNetwork.tokens.map(token => {
           return {
-            value: token.address,
+            value: token?.address || '',
             label: token.name,
-            address: token.address,
+            address: token?.address || '',
           };
         });
 
