@@ -1,7 +1,6 @@
 import { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { searchServiceAdaptor } from 'src/core/adaptors';
 import { Job, JobsRes, Organization, OrganizationsRes, Service, User, UsersRes } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
 import { isTouchDevice } from 'src/core/device-type-detector';
@@ -157,9 +156,10 @@ export const useSearch = () => {
           </div>
         );
       }
-      if (type && ['services'].includes(type)) {
-        return <ServiceCard {...searchServiceAdaptor(item)} onCardClick={() => navigate(`/services/${item.id}`)} />;
-      }
+      // This feature is not used for now
+      // if (type && ['services'].includes(type)) {
+      //   return <ServiceCard {...searchServiceAdaptor(item)} onCardClick={() => navigate(`/services/${item.id}`)} />;
+      // }
       return <JobListingCard job={item as Job} page={page} scrollIndex={index} />;
     },
     [type, page],

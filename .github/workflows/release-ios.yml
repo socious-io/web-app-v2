@@ -1,22 +1,12 @@
 name: CD - Release - iOS
 
 on:
-  # push:
-  #   # tags:
-  #   #   - v*
-  #   branches:
-  #     - ci
   release:
     types: [prereleased, released]
 
-# echo ${{ github.event.release.tag_name }} -> tagname
-# echo ${{ github.event.release.prerelease }} -> true,false (${{ github.event.release.prerelease == true }})
-# echo '${{ github.event.release.name }}' -> title
-# echo '${{ github.event.release.body }}' -> body
-
 env:
   CI: false
-  #Github ENVs
+  # GitHub ENVs
   IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
   IOS_DEVELOPMENT_TEAM_ID: ${{ vars.IOS_DEVELOPMENT_TEAM_ID }}
   IOS_DISTRIBUTION_CERT_BASE64: ${{ secrets.IOS_DISTRIBUTION_CERT_BASE64 }}
@@ -27,7 +17,7 @@ env:
   IOS_APPSTORECONNECT_API_ISSUER: ${{ vars.IOS_APPSTORECONNECT_API_ISSUER }}
   IOS_APPSTORECONNECT_API_KEY: ${{ secrets.IOS_APPSTORECONNECT_API_KEY }}
   IOS_APP_APPLE_ID: ${{ vars.IOS_APP_APPLE_ID }}
-  #Workflow ENVs
+  # Workflow ENVs
   APPSTORECONNECT_AUTH_KEY_PATH: /Users/runner/private_keys
   MOBILE_PROVISIONING_PATH: ~/Library/MobileDevice/Provisioning\ Profiles
   SIGNING_CERTIFICATE_PATH: ${{ github.workspace }}/ios/App/signing-certificate.p12
@@ -40,10 +30,32 @@ jobs:
     name: Building iOS
     outputs:
       LATEST_APPSTORE_BUILD_NUMBER: ${{ steps.build-number.outputs.LATEST_APPSTORE_BUILD_NUMBER }}
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: List Available Xcode Versions
+        run: |
+          ls -l /Applications | grep Xcode
+          echo "Available Xcode versions:"
+          find /Applications -maxdepth 1 -name 'Xcode*.app' -exec {} -version \;
+
+      - name: Select Xcode Version
+        run: |
+          XCODE_PATH=$(find /Applications -maxdepth 1 -name 'Xcode*.app' | grep 'Xcode' | sort -V | tail -n 1)
+          if [ -z "$XCODE_PATH" ]; then
+            echo "No Xcode installation found!"
+            exit 1
+          fi
+          echo "Selected Xcode path: $XCODE_PATH"
+          sudo xcode-select -s "$XCODE_PATH/Contents/Developer"
+
+      - name: Check Xcode Version
+        run: xcodebuild -version
+
+      - name: Verify SDK Version
+        run: xcodebuild -showsdks
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -54,20 +66,6 @@ jobs:
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
           version: latest
-
-      # - name: Cache node modules
-      #   id: cache-npm
-      #   uses: actions/cache@v4
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #     # npm cache files are stored in `~/.npm` on Linux/macOS
-      #     path: ~/.npm
-      #     save-always: 'true'
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      #       ${{ runner.os }}-build-
 
       - name: Install Node.js dependencies
         run: |
@@ -151,12 +149,9 @@ jobs:
           APPLICATION_ID_RESOURCE_ID: ${{ env.IOS_APP_APPLE_ID }}
         run: |
           python -m pip install codemagic-cli-tools
-
           LATEST_APPSTORE_BUILD_NUMBER=$(app-store-connect get-latest-build-number "$APPLICATION_ID_RESOURCE_ID" | awk '{print $1 + 1}')
-
           echo "LATEST_APPSTORE_BUILD_NUMBER=$LATEST_APPSTORE_BUILD_NUMBER" >> $GITHUB_OUTPUT
           echo "LATEST_APPSTORE_BUILD_NUMBER=$LATEST_APPSTORE_BUILD_NUMBER" >> $GITHUB_ENV
-
           app-store-connect get-latest-app-store-build-number "$APPLICATION_ID_RESOURCE_ID"
           app-store-connect get-latest-testflight-build-number "$APPLICATION_ID_RESOURCE_ID"
 
@@ -180,13 +175,10 @@ jobs:
         run: |
           npm run build:icons
 
-      # On Pre-Relase
-
-      # On Relase
       - name: Build and archiving the app
         run: |
           cd ios/App
-          xcodebuild -scheme App -archivePath ./Actions.xcarchive -configuration Release archive -workspace ./App.xcworkspace PROVISIONING_PROFILE="${{env.MOBILE_PROVISIONING_UUID}}"
+          xcodebuild -scheme App -archivePath ./Actions.xcarchive -configuration Release -workspace ./App.xcworkspace PROVISIONING_PROFILE="${{env.MOBILE_PROVISIONING_UUID}}" clean archive
 
       - name: Exporting archive for releasing to Appstore (.IPA)
         run: |
@@ -218,7 +210,7 @@ jobs:
 
   deploy-appstore:
     name: Deploy to Apple Appstore
-    runs-on: macos-latest
+    runs-on: macos-14
     if: github.event.release.prerelease != true
     needs: [build-ios]
     env:

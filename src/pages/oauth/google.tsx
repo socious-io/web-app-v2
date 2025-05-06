@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Capacitor } from '@capacitor/core';
 // import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { SocialLogin, GoogleLoginResponseOnline } from '@capgo/capacitor-social-login';
@@ -80,7 +79,9 @@ export const GoogleOauth2 = () => {
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
     const registered = (loginResp.registered ??= false);
-    eventName && setEventsFilter();
+    if (eventName) {
+      setEventsFilter();
+    }
     navigate(await determineUserLandingPath(userProfile, path, registered));
     return loginResp;
   }

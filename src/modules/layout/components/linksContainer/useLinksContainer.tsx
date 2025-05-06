@@ -105,40 +105,38 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
       iconName: 'shield-tick',
       public: false,
     },
+    {
+      label: translate('nav-refer'),
+      route: '/referral',
+      iconName: 'star-06',
+      public: false,
+    },
   ];
 
   if (currentIdentity?.type === 'users') {
-    menu.push(
-      {
-        label: translate('nav-refer'),
-        route: '/referral',
-        iconName: 'star-06',
-        public: false,
-      },
-      {
-        label: translate('nav-contributor'),
-        route: '',
-        iconName: 'heart-hand',
-        public: false,
-        children: [
-          {
-            label: translate('nav-contributor-dashboard'),
-            route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
-            public: false,
-          },
-        ].concat(
-          joinedContributors
-            ? [
-                {
-                  label: translate('nav-dispute-resolution'),
-                  route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,
-                  public: false,
-                },
-              ]
-            : [],
-        ),
-      },
-    );
+    menu.push({
+      label: translate('nav-contributor'),
+      route: '',
+      iconName: 'heart-hand',
+      public: false,
+      children: [
+        {
+          label: translate('nav-contributor-dashboard'),
+          route: `/${(currentIdentity.meta as UserMeta).username}/contribute`,
+          public: false,
+        },
+      ].concat(
+        joinedContributors
+          ? [
+              {
+                label: translate('nav-dispute-resolution'),
+                route: `/${(currentIdentity.meta as UserMeta).username}/contribute/center`,
+                public: false,
+              },
+            ]
+          : [],
+      ),
+    });
   }
   let filteredMenu = userIsLoggedIn ? menu : menu.filter(item => item.public);
 

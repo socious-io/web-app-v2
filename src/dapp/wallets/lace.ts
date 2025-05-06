@@ -8,7 +8,7 @@ export interface MyWalletOptions {
   projectId: string;
 }
 
-export const laceWallet = ({ projectId }: MyWalletOptions): Wallet => ({
+export const laceWallet = (): Wallet => ({
   id: 'lace.wallet',
   name: 'Lace',
   iconUrl: '/lace.svg',

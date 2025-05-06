@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { Logo } from 'public/icons/dynamic/logo';
 import React from 'react';
 import { IntroHeader } from 'src/modules/Auth/components/IntroHeader';
@@ -9,7 +9,7 @@ export default {
   component: IntroHeader,
 } as Meta;
 
-const Template: Story<IntroHeaderProps> = args => <IntroHeader {...args} />;
+const Template: StoryFn<IntroHeaderProps> = args => <IntroHeader {...args} />;
 
 export const Preview = Template.bind({});
 Preview.args = {

@@ -16,9 +16,9 @@ export const useTokens = (isConnected: boolean, chainId: number | undefined) => 
         const selectedNetwork = Dapp.NETWORKS.find(network => network.chain.id === chainId);
         if (selectedNetwork) {
           const mapTokens = selectedNetwork.tokens.map(token => ({
-            value: token.address,
+            value: token?.address || '',
             label: token.name,
-            address: token.address,
+            address: token?.address || '',
           }));
           setTokens(mapTokens);
         } else {
