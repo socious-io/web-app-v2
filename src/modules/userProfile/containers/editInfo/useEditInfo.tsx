@@ -64,10 +64,10 @@ export const useEditInfo = (handleClose: () => void) => {
       username: yup
         .string()
         .required('Username is required')
-        .test('checkUsernameValidity', usernameValidError, function (value) {
+        .test('checkUsernameValidity', usernameValidError, function () {
           return isUsernameValid;
         })
-        .test('checkUsernameAvailabality', 'Username is not available', function (value) {
+        .test('checkUsernameAvailabality', 'Username is not available', function () {
           return isUsernameAvailable;
         }),
 
@@ -141,8 +141,8 @@ export const useEditInfo = (handleClose: () => void) => {
 
   const resetState = () => {
     reset({
-      firstName: user.first_name,
-      lastName: user.last_name,
+      firstName: user.first_name || undefined,
+      lastName: user.last_name || undefined,
       username: user.username,
       city: { label: user.city, value: user.city },
       country: user.country,

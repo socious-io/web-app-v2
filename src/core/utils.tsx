@@ -121,7 +121,7 @@ export const getIdentityMeta = (identity: User | Organization | Identity | UserM
     return {
       username: `@${user.username}`,
       usernameVal: user.username,
-      name: user.name || `${user.first_name} ${user.last_name}`,
+      name: user.name || `${user?.first_name || ''} ${user?.last_name || ''}`,
       profileImage: user.avatar?.url || (user.avatar && String(user.avatar)) || '',
       type: 'users' as Identity['type'],
       website: undefined,
