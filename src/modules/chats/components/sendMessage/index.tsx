@@ -10,15 +10,20 @@ import { SendMessageProps } from './index.types';
 
 export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateChat, recipientId }) => {
   const [newMessage, setNewMessage] = useState('');
+  const isValidMessage = !!newMessage.trim();
 
   const handleSendMessage = () => {
+    if (!isValidMessage) return;
     onSend?.(newMessage);
     if (recipientId) handleCreateChat?.(recipientId, newMessage);
     setNewMessage('');
   };
 
   const enterInput = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) handleSendMessage();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
   };
 
   return (
@@ -37,6 +42,7 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
           color="primary"
           customStyle="absolute right-[14px] bottom-[14px]"
           onClick={handleSendMessage}
+          disabled={!isValidMessage}
         >
           {translate('chat-send')}
         </Button>
@@ -47,7 +53,11 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
             value={newMessage}
             onChange={e => setNewMessage(e.target.value)}
             placeholder={translate('chat-send-placeholder')}
-            onKeyDown={enterInput}
+            customHeight="auto"
+            multiline
+            minRows={1}
+            maxRows={4}
+            onEnter={handleSendMessage}
           />
         </div>
         <IconButton
@@ -56,7 +66,8 @@ export const SendMessage: React.FC<SendMessageProps> = ({ onSend, handleCreateCh
           iconSize={20}
           iconColor={variables.color_white}
           handleClick={handleSendMessage}
-          customStyle="!bg-Brand-600"
+          disabled={!isValidMessage}
+          customStyle={css['btn']}
         />
       </div>
     </>

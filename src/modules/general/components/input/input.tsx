@@ -27,12 +27,15 @@ export const Input: React.FC<InputProps> = ({
   postfixDropdown,
   onEnter,
   containerClassName = '',
+  multiline = false,
+  minRows = 1,
+  maxRows = 4,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [endIcon, setEndIcon] = useState<React.ReactNode>('');
   const [inputType, setInputType] = useState(props.type || 'text');
-  const [showEyeIcon, setshowEyeIcon] = useState(false);
+  const [showEyeIcon, setShowEyeIcon] = useState(false);
 
   useEffect(() => {
     if (errors) setEndIcon(<AlertCircle width={14} height={14} stroke={`${variables.color_error_600}`} />);
@@ -59,14 +62,17 @@ export const Input: React.FC<InputProps> = ({
       val = val.trim();
     }
     if (props.type === 'password')
-      if (val.length) setshowEyeIcon(true);
-      else setshowEyeIcon(false);
+      if (val.length) setShowEyeIcon(true);
+      else setShowEyeIcon(false);
     return val;
   };
 
-  const handleKeydown = (e: ChangeEvent<unknown>) => {
+  const handleKeydown = (e: React.KeyboardEvent) => {
     const value = (e.target as HTMLInputElement)?.value;
-    if ('key' in e && e.key === 'Enter') {
+    const isValidValue = !!value.trim();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!isValidValue) return;
       onEnter?.(value);
     }
   };
@@ -105,6 +111,9 @@ export const Input: React.FC<InputProps> = ({
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
         onKeyDown={handleKeydown}
+        multiline={multiline}
+        minrows={minRows}
+        maxRows={maxRows}
         InputProps={{
           style: {
             height: props.customHeight ? props.customHeight : '44px',

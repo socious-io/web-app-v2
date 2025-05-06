@@ -23,7 +23,7 @@ export const ChatDetailItem: React.FC<ChatDetailItemProps> = ({
   return (
     <div className={`flex mb-4   ${isMine ? 'justify-end' : 'justify-start'} ${className}`}>
       {isMine ? (
-        <div className="flex flex-col gap-1.5 items-end">
+        <div className="w-full flex flex-col gap-1.5 items-end">
           <div className="flex justify-between items-center gap-2">
             <span className="font-medium text-sm leading-5 text-Gray-light-mode-700">You</span>
             <span className="font-normal text-xs leading-[18px] text-Gray-light-mode-600">
