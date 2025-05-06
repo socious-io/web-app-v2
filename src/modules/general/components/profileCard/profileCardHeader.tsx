@@ -61,7 +61,7 @@ export const ProfileCardHeader: React.FC<ProfileCardHeaderProps> = ({
         </div>
         {myProfile && (
           <div className="mb-3 flex gap-3">
-            <Button variant="contained" color="primary" onClick={navigateToProfile}>
+            <Button data-testId="viewProfile-button" variant="contained" color="primary" onClick={navigateToProfile}>
               {translate('profile-view')}
             </Button>
             {/* <Button variant="outlined" color="secondary">

@@ -44,13 +44,13 @@ export const Pagination: React.FC<PaginationProps> = props => {
             <PaginationItem
               slots={{
                 previous: () => (
-                  <div className={css.buttonsFont}>
+                  <div data-testit="pagination-previous" className={css.buttonsFont}>
                     <Icon name="arrow-left" fontSize={20} color={variables.color_grey_800} className="mr-2" />
                     Previous
                   </div>
                 ),
                 next: () => (
-                  <div className={css.buttonsFont}>
+                  <div data-testit="pagination-next" className={css.buttonsFont}>
                     Next <Icon name="arrow-right" fontSize={20} color={variables.color_grey_800} className="ml-2" />
                   </div>
                 ),

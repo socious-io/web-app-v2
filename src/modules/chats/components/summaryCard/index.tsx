@@ -43,7 +43,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
       onClick={() => handleSelect(chat.id)}
     >
       <div className="w-full flex justify-between items-start">
-        <div className="flex items-center justify-start gap-3">
+        <div data-testid="select-chat" className="flex items-center justify-start gap-3">
           <Dot
             size="small"
             color={Number(chat.unread_count) ? variables.color_primary_600 : 'transparent'}

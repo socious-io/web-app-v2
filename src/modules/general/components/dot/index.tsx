@@ -12,10 +12,9 @@ interface DotProps {
 export const Dot: React.FC<DotProps> = props => {
   const { size, color, shadow, shadowColor, onClick } = props;
   return (
-    <div
-      className={`${size === 'small' ? css.small : size === 'medium' ? css.medium : css.large} ${
-        onClick && 'cursor-pointer'
-      }`}
+    <div      
+      className={`${size === 'small' ? css.small : size === 'medium' ? css.medium : css.large} ${onClick && 'cursor-pointer'
+        }`}
       style={{ backgroundColor: color, boxShadow: shadow ? `0px 0px 0px 4px ${shadowColor}` : '' }}
       onClick={onClick}
     />

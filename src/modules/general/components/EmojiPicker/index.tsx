@@ -16,6 +16,7 @@ const CustomEmojiPicker: React.FC<EmojiPickerProps> = ({
   useDetectOutside(emojiPicker, handleClose);
   return (
     <div
+      data-testid="emoji-picker"
       ref={emojiPicker}
       className={`max-w-[358px] max-h-[300px] overflow-y-auto absolute bottom-0 left-0 z-10 border border-solid border-Gray-light-mode-200 rounded-lg ${customStyle}`}
     >

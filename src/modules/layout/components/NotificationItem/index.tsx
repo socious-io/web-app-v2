@@ -30,7 +30,11 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
   const notifSubText = hasSubText ? item.data.body.title : '';
 
   return (
-    <div className="flex gap-3 w-full h-fit items-start cursor-pointer" onClick={onClick}>
+    <div
+      data-testid="notification-Option"
+      className="flex gap-3 w-full h-fit items-start cursor-pointer"
+      onClick={onClick}
+    >
       <Avatar size="48px" img={avatarImg} type={item.data.identity?.type || 'users'} />
       <div className="w-full h-fit flex flex-col">
         <div className="flex gap-2">

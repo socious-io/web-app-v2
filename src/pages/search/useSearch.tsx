@@ -7,6 +7,8 @@ import { isTouchDevice } from 'src/core/device-type-detector';
 import { removeValuesFromObject } from 'src/core/utils';
 import { JobListingCard } from 'src/modules/Jobs/components/JobListingCard';
 import { SearchResultProfile } from 'src/modules/Search/components/searchResultProfile';
+import ServiceCard from 'src/modules/Services/components/ServiceCard';
+import { useLocation } from 'react-router-dom';
 
 export type FilterReq = {
   causes_tags?: Array<string>;
@@ -46,6 +48,9 @@ export const useSearch = () => {
   const prevPage = useRef(0);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const customTitle = location.state?.customTitle;
 
   function getCountryName(shortname?: keyof typeof COUNTRIES_DICT | undefined) {
     if (shortname && COUNTRIES_DICT[shortname]) {
@@ -112,7 +117,7 @@ export const useSearch = () => {
       setCountryName(label);
     }
     if (page !== 1) setPage(1);
-    else navigate(`/search?q=${q}&type=${type}&page=1`);
+    else navigate(`/search?q=${q}&type=${type}&page=1`, { state: { customTitle } });
     handleCloseOrApplyFilter();
   };
 
@@ -139,7 +144,7 @@ export const useSearch = () => {
     }
     const url = `/profile/${type}/${id}/view`;
     if (e.metaKey || e.ctrlKey) window.open(url);
-    else navigate(url);
+    else navigate(url, { state: { customTitle } });
   };
 
   const card = useCallback(
@@ -161,9 +166,13 @@ export const useSearch = () => {
   );
 
   useEffect(() => {
+    document.title = customTitle;
+  }, [customTitle]);
+
+  useEffect(() => {
     if (isMobile) fetchMore();
     else {
-      navigate(`/search?q=${q}&type=${type}&page=${page}`);
+      navigate(`/search?q=${q}&type=${type}&page=${page}`, { state: { customTitle } });
     }
   }, [page]);
 
@@ -196,6 +205,7 @@ export const useSearch = () => {
       countryName,
       scrollRef,
       scrollIndex,
+      customTitle,
     },
     operations: {
       setPage,
