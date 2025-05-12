@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { User, identities, preRegister, updateProfile } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { checkUsernameConditions } from 'src/core/utils';
@@ -29,6 +30,7 @@ export const useUserDetails = () => {
   const { t: translate } = useTranslation();
   const resolver = useLoaderData() as { currentProfile: User };
   const currentProfile = useRef<User>(resolver.currentProfile);
+  const { state } = useLocation();
 
   const navigate = useNavigate();
   const {
@@ -93,5 +95,17 @@ export const useUserDetails = () => {
 
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
-  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile, translate };
+  // data come from apple login
+  const appleUser = state?.socialUser;
+  return {
+    onSubmit,
+    register,
+    handleSubmit,
+    errors,
+    isUsernameValid,
+    isFormValid,
+    currentProfile,
+    translate,
+    appleUser,
+  };
 };

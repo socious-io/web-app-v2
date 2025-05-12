@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import { SignInWithApple, SignInWithAppleResponse, SignInWithAppleOptions } from '@capacitor-community/apple-sign-in';
+import { SignInWithApple, SignInWithAppleOptions } from '@capacitor-community/apple-sign-in';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
@@ -18,6 +18,7 @@ const options: SignInWithAppleOptions = {
   state: '12345',
   nonce: 'nonce',
 };
+type Socialuser = { first_name: string; last_name: string; email: string };
 export const AppleOauth2 = () => {
   const platform = Capacitor.getPlatform();
   const [appleResponse, setAppleResponse] = useState<AppleAuthResponse | null>(null);
@@ -31,7 +32,6 @@ export const AppleOauth2 = () => {
   const referrerUser = savedReferrer ? JSON.parse(savedReferrer) : null;
   const eventName = searchParams.get('event_name') || '';
   const eventId = events?.items.find(event => event.title === EVENTS_QUERIES[eventName])?.id || '';
-
   const checkOnboardingMandatoryFields = (profile: User) => {
     const mandatoryFields: (keyof User)[] = ['country', 'city', 'social_causes', 'skills'];
 
@@ -58,7 +58,6 @@ export const AppleOauth2 = () => {
   async function determineUserLandingPath(userProfile: User, path?: string | null | undefined, registered?: boolean) {
     const isParticularsIncomplete = hasUserParticularsMandatoryFields(userProfile);
     const isOnboardingIncomplete = checkOnboardingMandatoryFields(userProfile);
-
     if (registered || isParticularsIncomplete) {
       return '/sign-up/user/complete';
     }
@@ -74,14 +73,16 @@ export const AppleOauth2 = () => {
     return eventName ? '/search?q=&type=users&page=1' : '/jobs';
   }
 
-  async function onLoginSucceed(loginResp: GoogleAuthRes) {
+  async function onLoginSucceed(loginResp: GoogleAuthRes, appleUser?) {
     await setAuthParams(loginResp, true);
     const path = await nonPermanentStorage.get('savedLocation');
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
     const registered = (loginResp.registered ??= false);
-    eventName && setEventsFilter();
-    navigate(await determineUserLandingPath(userProfile, path, registered));
+    if (eventName) {
+      setEventsFilter();
+    }
+    navigate(await determineUserLandingPath(userProfile, path, registered), { state: { socialUser: appleUser } });
     return loginResp;
   }
 
@@ -91,6 +92,7 @@ export const AppleOauth2 = () => {
   const appleLogin = async options => {
     try {
       const result = await SignInWithApple.authorize(options);
+
       setAppleResponse(result.response);
     } catch (error) {
       console.error('Error in apple login', error);
@@ -102,14 +104,15 @@ export const AppleOauth2 = () => {
     identityToken: string,
     referrerId: string | undefined,
     eventId: string | undefined,
-    onLoginSucceed: (res: any) => void,
+    onLoginSucceed: (res, appleUser?: Socialuser) => void,
     navigate: (path: string) => void,
     eventName?: string,
     platform?: string,
+    appleUser?: Socialuser,
   ) => {
     try {
       const res = await appleOauth(authorizationCode, identityToken, referrerId, eventId, platform);
-      onLoginSucceed(res);
+      onLoginSucceed(res, appleUser);
     } catch {
       navigate(`/sign-in?${eventName ? `event_name=${eventName}` : ''}`);
     } finally {
@@ -121,6 +124,11 @@ export const AppleOauth2 = () => {
   useEffect(() => {
     if (platform === 'ios') {
       if (appleResponse) {
+        const appleUser = {
+          first_name: appleResponse?.givenName || '',
+          last_name: appleResponse.familyName || '',
+          email: appleResponse.email || '',
+        };
         handleAppleOauth(
           appleResponse.authorizationCode,
           appleResponse.identityToken,
@@ -130,6 +138,7 @@ export const AppleOauth2 = () => {
           navigate,
           eventName,
           'ios',
+          appleUser,
         );
       } else {
         appleLogin(options);
