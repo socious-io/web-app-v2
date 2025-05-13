@@ -12,14 +12,10 @@ export const UserDetails = () => {
     errors,
     isUsernameValid,
     isFormValid,
-    currentProfile,
     translate,
-    appleUser,
+    defaultFirstName,
+    defaultLastName,
   } = useUserDetails();
-  const { last_name, first_name } = currentProfile.current;
-
-  const defaultFirstName = first_name || appleUser?.first_name || '';
-  const defaultLastName = last_name || appleUser?.last_name || '';
 
   return (
     <>

@@ -47,6 +47,10 @@ export const useUserDetails = () => {
   const firstName = watch('firstName');
   const lastName = watch('lastName');
 
+  const appleUser = state?.socialUser;
+  const defaultFirstName = currentProfile?.current.first_name || appleUser?.first_name || '';
+  const defaultLastName = currentProfile?.current.last_name || appleUser?.last_name || '';
+
   useEffect(() => {
     const usernameConditionErrors = checkUsernameConditions(username);
     clearErrors('username');
@@ -95,8 +99,7 @@ export const useUserDetails = () => {
 
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
-  // data come from apple login
-  const appleUser = state?.socialUser;
+
   return {
     onSubmit,
     register,
@@ -107,5 +110,7 @@ export const useUserDetails = () => {
     currentProfile,
     translate,
     appleUser,
+    defaultFirstName,
+    defaultLastName,
   };
 };
