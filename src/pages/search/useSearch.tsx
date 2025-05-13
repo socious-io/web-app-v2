@@ -164,9 +164,7 @@ export const useSearch = () => {
     [type, page],
   );
 
-  useEffect(() => {
-    document.title = customTitle;
-  }, [customTitle]);
+
 
   useEffect(() => {
     if (isMobile) fetchMore();
