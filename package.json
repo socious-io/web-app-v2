@@ -50,7 +50,7 @@
     "@mui/material": "^7.0.2",
     "@mui/x-date-pickers": "^8.2.0",
     "@rainbow-me/rainbowkit": "^2.2.4",
-    "@reduxjs/toolkit": "^2.7.0",
+    "@reduxjs/toolkit": "^2.8.1",
     "@reown/appkit": "^1.7.3",
     "@reown/appkit-adapter-wagmi": "^1.7.3",
     "@storybook/addon-designs": "^8.2.1",
