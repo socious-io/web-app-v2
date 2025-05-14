@@ -23,6 +23,7 @@ export const Search = () => {
       countryName,
       scrollRef,
       scrollIndex,
+      customTitle,
     },
     operations: { setPage, card, handleCloseOrApplyFilter, onApply, onClose, handleChangeMobilePage },
   } = useSearch();
@@ -32,7 +33,9 @@ export const Search = () => {
     <div className={css.container}>
       <div className={css.headerContainer}>
         <div className={headerClass}>
-          <h1 className={css.title}>{translate('search.title', { query: q })}</h1>
+           <h1 className={css.title}>
+            {customTitle || translate('search.title', { query: q })}
+          </h1>
           <h2 className={css.subtitle}>
             {translate('search.subtitle', {
               total,
