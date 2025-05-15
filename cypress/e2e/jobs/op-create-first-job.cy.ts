@@ -40,7 +40,7 @@ describe('Create First Job', () => {
     cy.intercept('GET', `${API_SERVER}/chats/unreads/counts*`, req => req.reply(200, { message: 'success' })).as(
       'getUnreadChatsCount',
     );
-
+    
     cy.intercept('GET', `${API_SERVER}/projects/*/applicants*`, req => req.reply(200, [])).as('getApplicants');
     cy.intercept('GET', `${API_SERVER}/skills*`, req => req.reply(SKILLS));
     cy.intercept('GET', `${API_SERVER}/projects/categories*`, req => req.reply(CATEGORIES));
