@@ -1,5 +1,12 @@
 {
-  "referral-banner": "紹介にアクセスするには、Atala PRISM DIDを取得して、本人確認を行う必要があります。",
+  "referral-not-verified-user-banner-desc": "本人確認をして、友達を紹介して報酬を獲得しましょう！",
+  "referral-not-verified-org-banner-desc": "組織の本人確認をして、紹介を始めて報酬を獲得しましょう！",
+  "referral-pending-org-banner": "現在、組織の本人確認を行っています。",
+  "referral-pending-org-banner-desc": "完了次第、お知らせします。",
+  "referral-verified-banner": "{{identity}} の確認が完了しました！",
+  "referral-verified-user-banner-desc": "今すぐ友達を紹介して報酬を獲得できます。",
+  "referral-verified-org-banner-desc": "パートナーの紹介を始めて報酬を獲得しましょう。",
+  "referral-verified-dismiss-btn": "閉じる",
   "referral-header": "✨ 紹介して報酬を獲得",
   "referral-title": "私たちと一緒により大きな影響を生み出し、コミュニティに貢献しましょう",
   "referral-subtitle": "優れた人材やインパクト組織とSociousを共有することで、ネットワークを広げるだけでなく、変革のスピードを加速させます。",
