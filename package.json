@@ -59,7 +59,7 @@
     "@tanstack/react-table": "^8.21.3",
     "@web3modal/ethers": "^5.1.11",
     "axios": "^1.9.0",
-    "cardano-bridge": "github:socious-io/cardano-bridge#v0.0.6"
+    "cardano-bridge": "github:socious-io/cardano-bridge#v0.0.6",
     "country-flag-icons": "^1.5.19",
     "ethers": "^6.14.0",
     "firebase": "^11.6.1",
