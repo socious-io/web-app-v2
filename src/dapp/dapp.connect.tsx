@@ -2,18 +2,21 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet, walletConnectWallet, trustWallet, ledgerWallet } from '@rainbow-me/rainbowkit/wallets';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { Escrow } from 'cardano-bridge';
 import { BrowserProvider, Eip1193Provider, JsonRpcSigner } from 'ethers';
 import { useState, useEffect } from 'react';
 import { config } from 'src/config';
 import ConnectButton from 'src/modules/wallet/components/ConnectButton';
-import { Chain } from 'viem';
+import { Chain, HttpTransport } from 'viem';
 import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
-
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
 import { laceWallet } from './wallets/lace';
+import { eternlWallet } from './wallets/eternl';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
+
+export const CardanoEscrow = new Escrow({ blockfrost: config.blocfrostProjectId });
 
 const chains = NETWORKS.map(n => n.chain);
 
@@ -34,7 +37,7 @@ const connectors = connectorsForWallets(
     },
     {
       groupName: 'Cardano',
-      wallets: [laceWallet],
+      wallets: [laceWallet(1215), eternlWallet(1215)],
     },
   ],
   {
@@ -65,6 +68,7 @@ export const useWeb3 = () => {
   // const connectors = useConnectors()
   // const { walletProvider } = /useWeb3ModalProvider();
   const [provider, setProvider] = useState<BrowserProvider>();
+  const [walletProvider, setWalletProvider] = useState<unknown>();
   const [connected, setConnected] = useState<boolean>(false);
   const [account, setAccount] = useState<string>();
   const [chainId, setChainId] = useState<number>(0);
@@ -77,6 +81,10 @@ export const useWeb3 = () => {
       if (!connector?.getChainId) return;
       setChainId(await connector.getChainId());
       const eipProvider = await connector.getProvider();
+      setWalletProvider(eipProvider);
+
+      if (eipProvider.isCIP30) await CardanoEscrow.connectWallet(eipProvider?.name as string);
+
       const ethers = new BrowserProvider(eipProvider as Eip1193Provider);
       setProvider(ethers);
       setSigner(await ethers.getSigner());
@@ -100,5 +108,5 @@ export const useWeb3 = () => {
     );
   };
 
-  return { Web3Connect, account, provider, isConnected: connected, signer, chainId };
+  return { Web3Connect, account, provider, isConnected: connected, signer, chainId, walletProvider };
 };

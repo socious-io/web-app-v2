@@ -47,6 +47,9 @@ export interface Payment {
     project_id: string;
     token?: string;
     txHash?: string;
+    amount?: number;
+    fee?: number;
+    contributor?: string;
   };
 
   payer_identity: Identity;

@@ -1,4 +1,4 @@
-import { Amounts, Identity, Media, PaymentMode, ProjectPaymentType } from 'src/core/api';
+import { Amounts, Identity, Media, Payment, PaymentMode, ProjectPaymentType } from 'src/core/api';
 
 import { CurrencyDetail, PaginateRes } from '..';
 
@@ -46,6 +46,7 @@ export interface Contract {
   file?: Media | null;
   feedback?: boolean;
   escrowId?: string;
+  paymentObj?: Payment;
 }
 
 export type ContractRes = PaginateRes<Contract>;

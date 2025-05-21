@@ -19,6 +19,8 @@ export const config = {
   appleOauthClientId: import.meta.env.VITE_APPLE_OAUTH_CLIENT_ID,
   googleRecaptchaSiteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
   appleOauthClientIdIOS: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID_IOS,
+  blocfrostProjectId: import.meta.env.VITE_BLOCKFROST_PROJECT_ID,
+  cardanoPayoutFeeAddress: import.meta.env.VITE_CARDANO_PAYOUT_ADERESS,
 };
 
 export const isTestingEnvironment = config.env === 'test';

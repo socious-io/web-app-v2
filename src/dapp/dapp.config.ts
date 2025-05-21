@@ -1,4 +1,4 @@
-import { bscTestnet, bsc, sepolia } from 'wagmi/chains';
+import { bscTestnet, bsc, sepolia, adf } from 'wagmi/chains';
 
 import { DappConfig } from './dapp.types';
 
@@ -34,6 +34,26 @@ export const dappConfig: DappConfig = {
           symbol: 'USDC',
           address: '0x06666b1DbFb62613515cEAE861CAd3d8A9d88451',
           decimals: 18,
+        },
+      ],
+    },
+    {
+      chain: {
+        ...adf,
+        name: 'Cardano',
+        nativeCurrency: {
+          decimals: 6,
+          name: 'ADA',
+          symbol: 'ADA',
+        },
+      },
+      escrow: '',
+      tokens: [
+        {
+          name: 'ADA',
+          symbol: 'ADA',
+          address: 'lovelace',
+          decimals: 6,
         },
       ],
     },

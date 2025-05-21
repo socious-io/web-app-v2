@@ -1,5 +1,5 @@
 import { Interface, InterfaceAbi, JsonRpcSigner } from 'ethers';
-import { Chain } from 'viem';
+import { Chain, HttpTransport } from 'viem';
 
 export interface Token {
   name: string;
@@ -27,6 +27,8 @@ export interface DappConfig {
 }
 
 export interface EscrowParams {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  walletProvider?: any;
   signer: JsonRpcSigner;
   chainId: number;
   totalAmount: number;
@@ -59,9 +61,13 @@ export interface EscrowActionEventData {
 }
 
 export interface WithdrawnParams {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  walletProvider?: unknown;
   signer: JsonRpcSigner;
   chainId: number;
   escrowId: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  meta?: any;
 }
 
 export interface FlattenToken {
