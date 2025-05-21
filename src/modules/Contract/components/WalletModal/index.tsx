@@ -14,7 +14,6 @@ const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, handleAcce
 
   useEffect(() => {
     if (isConnected && walletProvider?.isCIP30) {
-      console.log(walletAddress, ' <---------------------> ', walletProvider.addresses[0]);
       if (walletAddress != walletProvider.addresses[0]) {
         updateWallet({ wallet_address: walletProvider.addresses[0] });
         return;

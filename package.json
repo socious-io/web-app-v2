@@ -92,6 +92,7 @@
     "ssi-auth-lib": "^0.0.12",
     "uuid": "^11.1.0",
     "viem": "^2.28.4",
+    "vite-plugin-node-polyfills": "^0.23.0",
     "vite-tsconfig-paths": "^5.1.4",
     "wagmi": "^2.15.2",
     "yup": "^1.6.1"
@@ -161,7 +162,8 @@
     "ts-jest": "^29.3.2",
     "tsc-files": "^1.1.4",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-wasm": "^3.4.1"
   },
   "husky": {
     "hooks": {
