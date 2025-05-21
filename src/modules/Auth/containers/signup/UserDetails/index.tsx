@@ -3,10 +3,19 @@ import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 
 import { useUserDetails } from './useUserDetails';
+
 export const UserDetails = () => {
-  const { register, handleSubmit, onSubmit, errors, isUsernameValid, isFormValid, currentProfile, translate } =
-    useUserDetails();
-  const { last_name, first_name } = currentProfile.current;
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    errors,
+    isUsernameValid,
+    isFormValid,
+    translate,
+    defaultFirstName,
+    defaultLastName,
+  } = useUserDetails();
 
   return (
     <>
@@ -16,7 +25,7 @@ export const UserDetails = () => {
           autoComplete="first"
           label={translate('sign-up-user-detail-name')}
           name="firstName"
-          defaultValue={first_name}
+          defaultValue={defaultFirstName}
           register={register}
           placeholder={translate('sign-up-user-detail-name-placeholder')}
           errors={errors['firstName']?.message ? [errors['firstName']?.message.toString()] : undefined}
@@ -26,7 +35,7 @@ export const UserDetails = () => {
             id="last-name"
             label={translate('sign-up-user-detail-last-name')}
             name="lastName"
-            defaultValue={last_name}
+            defaultValue={defaultLastName}
             register={register}
             placeholder={translate('sign-up-user-detail-last-name-placeholder')}
             errors={errors['lastName']?.message ? [errors['lastName']?.message.toString()] : undefined}
@@ -46,7 +55,6 @@ export const UserDetails = () => {
                 hide: !isUsernameValid,
               },
             ]}
-            // prefix="socious.io/"
             isValid={isUsernameValid}
             errors={errors['username']?.message ? [errors['username']?.message.toString()] : undefined}
           />

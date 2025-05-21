@@ -5,12 +5,15 @@
     align-items: center;
     justify-content: center;
     padding: 16px;
+
     @media screen and (max-width: 600px) {
         justify-content: flex-end;
         padding-bottom: 80px;
     }
 }
+
 .container {
+    width: 400px;
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -18,12 +21,12 @@
     border-radius: 12px;
     word-wrap: break-word;
     overflow-y: auto;
+
     @media screen and (max-width: 600px) {
         width: 100%;
         padding: 16px;
         padding-top: 20px;
     }
-    width: 400px;
 
     .title {
         font-size: 18px;

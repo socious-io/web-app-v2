@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import { BackLink } from 'src/modules/general/components/BackLink';
 import { BackLinkProps } from 'src/modules/general/components/BackLink/back-link.types';
@@ -10,7 +10,7 @@ export default {
   decorators: [withRouter],
 } as Meta;
 
-const Template: Story<BackLinkProps> = (args: BackLinkProps) => <BackLink {...args} />;
+const Template: StoryFn<BackLinkProps> = (args: BackLinkProps) => <BackLink {...args} />;
 
 export const Preview = Template.bind({});
 Preview.args = {

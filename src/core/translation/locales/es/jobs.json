@@ -62,5 +62,6 @@
   "jobs-other-empty": {
     "title": "Lo siento, no hay trabajos disponibles en este momento",
     "subtitle": "¡Vuelve más tarde!"
-  }
+  },
+  "job-card-posted-on": "Publicado el"
 }

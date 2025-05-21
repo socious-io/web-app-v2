@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { User, identities, preRegister, updateProfile } from 'src/core/api';
 import { dialog } from 'src/core/dialog/dialog';
 import { checkUsernameConditions } from 'src/core/utils';
@@ -29,6 +30,7 @@ export const useUserDetails = () => {
   const { t: translate } = useTranslation();
   const resolver = useLoaderData() as { currentProfile: User };
   const currentProfile = useRef<User>(resolver.currentProfile);
+  const { state } = useLocation();
 
   const navigate = useNavigate();
   const {
@@ -44,6 +46,10 @@ export const useUserDetails = () => {
   const username = watch('username');
   const firstName = watch('firstName');
   const lastName = watch('lastName');
+
+  const appleUser = state?.socialUser;
+  const defaultFirstName = currentProfile?.current.first_name || appleUser?.first_name || '';
+  const defaultLastName = currentProfile?.current.last_name || appleUser?.last_name || '';
 
   useEffect(() => {
     const usernameConditionErrors = checkUsernameConditions(username);
@@ -93,5 +99,18 @@ export const useUserDetails = () => {
 
   const isFormValid =
     Object.keys(errors).length === 0 && firstName !== '' && lastName !== '' && username !== '' && isUsernameValid;
-  return { onSubmit, register, handleSubmit, errors, isUsernameValid, isFormValid, currentProfile, translate };
+
+  return {
+    onSubmit,
+    register,
+    handleSubmit,
+    errors,
+    isUsernameValid,
+    isFormValid,
+    currentProfile,
+    translate,
+    appleUser,
+    defaultFirstName,
+    defaultLastName,
+  };
 };

@@ -16,8 +16,8 @@ export const useReferCard = (referType: 'organization' | 'talent') => {
   const title = referType === 'organization' ? translate('referral-refer-org') : translate('referral-refer-talent');
   const url =
     referType === 'organization'
-      ? `${config.appBaseURL}referral/${account?.shortname || account?.username}/org`
-      : `${config.appBaseURL}referral/${account?.shortname || account?.username}/talent`;
+      ? `${config.appBaseURL}referral/${(account as OrgMeta)?.shortname || (account as UserMeta)?.username}/org`
+      : `${config.appBaseURL}referral/${(account as OrgMeta)?.shortname || (account as UserMeta)?.username}/talent`;
   const subtitle = referType === 'organization' ? translate('referral-org-link') : translate('referral-talent-link');
 
   const handleCopy = () => {

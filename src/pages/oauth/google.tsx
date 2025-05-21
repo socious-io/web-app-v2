@@ -79,7 +79,9 @@ export const GoogleOauth2 = () => {
     store.dispatch(setIdentityList(await identities()));
     const userProfile = await profile();
     const registered = (loginResp.registered ??= false);
-    eventName && setEventsFilter();
+    if (eventName) {
+      setEventsFilter();
+    }
     navigate(await determineUserLandingPath(userProfile, path, registered));
     return loginResp;
   }

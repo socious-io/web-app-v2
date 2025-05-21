@@ -47,7 +47,7 @@ export const escrow = async (params: EscrowParams) => {
   const approved = await allowance({
     chainId,
     signer,
-    token,
+    token: token || '',
     amount: params.totalAmount,
     decimals: tokenConfig.decimals,
   });
