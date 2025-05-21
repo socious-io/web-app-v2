@@ -26,17 +26,15 @@ export const Credentials = () => {
             />
           )
         ) : (
-          ''
-        )}
-
-        {verified && !hideVerifyBanner && (
-          <TopBanner
-            theme="success"
-            text={translate('cred-verified-banner')}
-            supportingText={translate('cred-verified-banner-desc')}
-            secondaryBtnLabel={translate('cred-dismiss')}
-            secondaryBtnAction={handleDismissVerified}
-          />
+          !hideVerifyBanner && (
+            <TopBanner
+              theme="success"
+              text={translate('cred-verified-banner')}
+              supportingText={translate('cred-verified-banner-desc')}
+              secondaryBtnLabel={translate('cred-dismiss')}
+              secondaryBtnAction={handleDismissVerified}
+            />
+          )
         )}
 
         <div className={css.container}>

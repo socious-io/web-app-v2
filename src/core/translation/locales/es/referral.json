@@ -1,5 +1,12 @@
 {
-  "referral-banner": "Para acceder a las recomendaciones, necesitas un DID de Atala PRISM y verificar tu identidad.",
+  "referral-not-verified-user-banner-desc": "Verifica tu identidad para empezar a invitar amigos y ganar recompensas.",
+  "referral-not-verified-org-banner-desc": "Verifica la identidad de tu organización para empezar a invitar y ganar recompensas.",
+  "referral-pending-org-banner": "Actualmente estamos verificando la identidad de tu organización.",
+  "referral-pending-org-banner-desc": "Te notificaremos cuando esto se haya completado.",
+  "referral-verified-banner": "¡Tu {{identity}} ha sido verificada!",
+  "referral-verified-user-banner-desc": "Ahora puedes invitar amigos y ganar recompensas.",
+  "referral-verified-org-banner-desc": "Comienza a invitar socios y gana recompensas.",
+  "referral-verified-dismiss-btn": "Descartar",
   "referral-header": "✨ Recomienda y gana",
   "referral-title": "Ayúdanos a generar un mayor impacto y obtén una participación en nuestra comunidad",
   "referral-subtitle": "Al compartir Socious con talentos prometedores y organizaciones de impacto, no solo estás expandiendo nuestra red, sino también acelerando el cambio.",

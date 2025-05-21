@@ -1,15 +1,16 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { CurrentIdentity, ImpactPoints, Organization, User, UserMeta } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { RootState } from 'src/store';
 
 export const useDashboard = () => {
-  const navigate = useNavigate();
   const { profileData, impactPointHistory } = useLoaderData() as {
     profileData: User | Organization;
     impactPointHistory: ImpactPoints;
   };
+  const [hideVerifyBanner, setHideVerifyBanner] = useState(localStorage.getItem('hideVerifiedBanner') === 'true');
 
   const { name, type, usernameVal } = getIdentityMeta(profileData);
 
@@ -21,8 +22,6 @@ export const useDashboard = () => {
   );
   const verified =
     type === 'users' ? (currentIdentity?.meta as UserMeta).identity_verified : (profileData as Organization).verified;
-
-  const event = type === 'users' ? (profileData as User).events?.[0] : null;
   const verificationStatus = currentIdentity?.verification_status;
   let hoursWorked = 0;
   let hoursVolunteered = 0;
@@ -39,23 +38,25 @@ export const useDashboard = () => {
       });
   }
 
-  const navigateToSearchEvent = () => {
-    if (!event) return;
-    const filter = { events: [event.id] };
-    localStorage.setItem('filter', JSON.stringify(filter));
-    navigate(`/search?q=&type=users&page=1`);
+  const handleDismissVerified = () => {
+    localStorage.setItem('hideVerifiedBanner', 'true');
+    setHideVerifyBanner(true);
   };
 
   return {
-    verified,
-    type,
-    profileData,
-    profileUrl,
-    hoursVolunteered,
-    hoursWorked,
-    name,
-    verificationStatus,
-    event,
-    navigateToSearchEvent,
+    data: {
+      verified,
+      type,
+      profileData,
+      profileUrl,
+      hoursVolunteered,
+      hoursWorked,
+      name,
+      verificationStatus,
+      hideVerifyBanner,
+    },
+    operations: {
+      handleDismissVerified,
+    },
   };
 };

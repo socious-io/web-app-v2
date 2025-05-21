@@ -1,5 +1,12 @@
 {
-  "referral-banner": "추천을 받으려면 Atala PRISM DID가 필요하며 신원을 확인해야 합니다.",
+  "referral-not-verified-user-banner-desc": "친구를 추천하고 보상을 받으려면 본인 인증을 완료하세요!",
+  "referral-not-verified-org-banner-desc": "조직의 신원을 확인하고 추천을 시작하여 보상을 받으세요!",
+  "referral-pending-org-banner": "현재 조직의 신원을 확인 중입니다.",
+  "referral-pending-org-banner-desc": "확인이 완료되면 알려드리겠습니다.",
+  "referral-verified-banner": "{{identity}} 인증이 완료되었습니다!",
+  "referral-verified-user-banner-desc": "이제 친구를 추천하고 보상을 받을 수 있습니다.",
+  "referral-verified-org-banner-desc": "파트너 추천을 시작하고 보상을 받으세요.",
+  "referral-verified-dismiss-btn": "닫기",
   "referral-header": "✨ 추천하고 보상받기",
   "referral-title": "더 큰 임팩트를 만들고, 커뮤니티의 일원이 되세요",
   "referral-subtitle": "유망한 인재와 임팩트 조직에게 Socious를 공유함으로써 네트워크를 확장할 뿐만 아니라 변화를 가속화할 수 있습니다.",
