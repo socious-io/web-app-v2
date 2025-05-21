@@ -1,18 +1,3 @@
-import {
-  BlockfrostProvider,
-  BrowserWallet,
-  IFetcher,
-  IWallet,
-  LanguageVersion,
-  MeshTxBuilder,
-  MeshWallet,
-  serializePlutusScript,
-  UTxO,
-  Asset,
-  deserializeDatum,
-  deserializeAddress,
-  pubKeyAddress,
-} from '@meshsdk/core';
 import { Contract, parseUnits } from 'ethers';
 import { config } from 'src/config';
 
@@ -44,11 +29,11 @@ export const escrow = async (params: EscrowParams) => {
       quantity: `${params.totalAmount * 1000000}`,
     });
     // more info need for release cardano escrow
-    console.log('-------------------------------------------');
     return {
       txHash,
       id: txHash,
       token,
+      varified: params.verifiedOrg,
       contributor: params.contributor,
       amount: params.totalAmount,
       fee: params.totalAmount - params.escrowAmount,
@@ -102,36 +87,27 @@ export const escrow = async (params: EscrowParams) => {
 };
 
 export const withdrawnEscrow = async (params: WithdrawnParams) => {
-  console.log(params.walletProvider, '-----------------------#####--');
   if (params.walletProvider?.isCIP30) {
-    const obj = {
-      tx: params.escrowId,
-      payouts: [
-        {
-          address: config.cardanoPayoutFeeAddress,
-          amount: params.meta?.fee as number,
-        },
-        {
-          address: params.meta.contributor,
-          amount: (params.meta?.amount - params.meta?.fee) as number,
-        },
-      ],
-    };
-    console.log(JSON.stringify(obj), '-------------------------@@@@@@@', CardanoEscrow.release);
+    let feePercent = 0.1;
+    if (params.meta.verifiedOrg) feePercent = 0.05;
+
+    const fee = params.meta.amount * (1 - feePercent) + params.meta?.fee;
+    const amount = params.meta.amount - fee;
+
     const tx = await CardanoEscrow.release({
       tx: params.escrowId,
       payouts: [
         {
           address: config.cardanoPayoutFeeAddress,
-          amount: params.meta?.fee as number,
+          amount: Math.trunc(fee * 1000000),
         },
         {
           address: params.meta.contributor,
-          amount: (params.meta?.amount - params.meta?.fee) as number,
+          amount: Math.trunc(amount * 1000000),
         },
       ],
     });
-    console.log(tx, '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+
     return tx;
   }
   const selectedNetwork = NETWORKS.filter(n => n.chain.id === params.chainId)[0];

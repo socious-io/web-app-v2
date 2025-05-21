@@ -13,9 +13,12 @@ const WalletModal: React.FC<WalletModalProps> = ({ open, handleClose, handleAcce
   const { isConnected, account, Web3Connect, walletProvider } = Dapp.useWeb3();
 
   useEffect(() => {
-    console.log('**********************@@@@@', walletAddress, account, '**************sssss@@@', walletProvider, isConnected);
     if (isConnected && walletProvider?.isCIP30) {
-      console.log(walletProvider, "*************************")
+      console.log(walletAddress, ' <---------------------> ', walletProvider.addresses[0]);
+      if (walletAddress != walletProvider.addresses[0]) {
+        updateWallet({ wallet_address: walletProvider.addresses[0] });
+        return;
+      }
     }
     if (isConnected && account && (!walletAddress || String(walletAddress) !== account)) {
       updateWallet({ wallet_address: account });

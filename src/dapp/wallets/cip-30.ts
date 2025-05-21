@@ -34,7 +34,6 @@ export class CIP30ToEIP1193Provider {
   async request({ method, params }: EIP1193RequestParams): Promise<any> {
     this.enabled = await this.provider.enable();
     const accounts = await this.getAccounts();
-    console.log(method, '-----------------');
     switch (method) {
       case 'eth_requestAccounts':
         this.emit('connect', { chainId: await this.enabled.getNetworkId() });
@@ -56,6 +55,10 @@ export class CIP30ToEIP1193Provider {
     if (addresses.length < 1) addresses = await this.enabled.getUnusedAddresses();
     this.addresses = addresses;
     return addresses;
+  }
+
+  async getChangeAddresses(): Promise<string[]> {
+    return this.enabled.getChangeAddress();
   }
 
   async getAccounts(): Promise<string> {

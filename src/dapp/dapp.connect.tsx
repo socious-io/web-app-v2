@@ -9,10 +9,10 @@ import { config } from 'src/config';
 import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 import { Chain, HttpTransport } from 'viem';
 import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
-
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
 import { laceWallet } from './wallets/lace';
+import { eternlWallet } from './wallets/eternl';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
 
@@ -37,7 +37,7 @@ const connectors = connectorsForWallets(
     },
     {
       groupName: 'Cardano',
-      wallets: [laceWallet(1215)],
+      wallets: [laceWallet(1215), eternlWallet(1215)],
     },
   ],
   {
@@ -82,9 +82,8 @@ export const useWeb3 = () => {
       setChainId(await connector.getChainId());
       const eipProvider = await connector.getProvider();
       setWalletProvider(eipProvider);
-      if (eipProvider.isCIP30) {
-        await CardanoEscrow.connectWallet(eipProvider?.name as string);
-      }
+
+      if (eipProvider.isCIP30) await CardanoEscrow.connectWallet(eipProvider?.name as string);
 
       const ethers = new BrowserProvider(eipProvider as Eip1193Provider);
       setProvider(ethers);

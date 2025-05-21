@@ -43,31 +43,36 @@ export const useSliderAwaiting = (contract: Contract) => {
     setDisabledPrimaryButton(true);
     const escrowId = contract?.escrowId || '';
     if (contract.payment === 'CRYPTO' && signer && chainId && escrowId) {
-      console.log('***************************************');
-      const result = await dapp.withdrawnEscrow({
-        walletProvider,
-        signer,
-        chainId,
-        escrowId,
-        meta: contract?.paymentObj?.meta,
-      });
+      try {
+        const result = await dapp.withdrawnEscrow({
+          walletProvider,
+          signer,
+          chainId,
+          escrowId,
+          meta: contract?.paymentObj?.meta,
+        });
 
-      if (!result) {
+        if (!result) {
+          setDisabledPrimaryButton(false);
+          return;
+        }
+      } catch (error) {
+        alert(error);
         setDisabledPrimaryButton(false);
         return;
       }
     }
 
-    // await completeContractAdaptor(contract.id);
-    /* dispatch(
-        updateStatus({
-          id: contract.id,
-          status: 'COMPLETED',
-          isCurrentProvider: identityType === contract.providerId,
-          type: contract.type,
-          paymentId: contract.paymentId,
-        }),
-      ); */
+    await completeContractAdaptor(contract.id);
+    dispatch(
+      updateStatus({
+        id: contract.id,
+        status: 'COMPLETED',
+        isCurrentProvider: identityType === contract.providerId,
+        type: contract.type,
+        paymentId: contract.paymentId,
+      }),
+    );
 
     setDisabledPrimaryButton(false);
   };
