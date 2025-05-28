@@ -55,7 +55,7 @@ describe('Create First Job', () => {
 
   it('it should open created jobs page and create the first job ', () => {
     // Visit jobs page
-    cy.visit(`${APP_URL}/jobs/created`);
+    cy.visit(`${APP_URL}jobs/created`);
     cy.get('#create-first-job').should('exist');
     cy.get('#create-first-job').click();
 
