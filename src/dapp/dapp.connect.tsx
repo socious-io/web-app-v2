@@ -7,12 +7,14 @@ import { BrowserProvider, Eip1193Provider, JsonRpcSigner } from 'ethers';
 import { useState, useEffect } from 'react';
 import { config } from 'src/config';
 import ConnectButton from 'src/modules/wallet/components/ConnectButton';
-import { Chain, HttpTransport } from 'viem';
+import { Chain } from 'viem';
 import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
+
 import { dappConfig } from './dapp.config';
 import { Network } from './dapp.types';
-import { laceWallet } from './wallets/lace';
+import { CIP30ToEIP1193Provider } from './wallets/cip-30';
 import { eternlWallet } from './wallets/eternl';
+import { laceWallet } from './wallets/lace';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
 
@@ -68,7 +70,7 @@ export const useWeb3 = () => {
   // const connectors = useConnectors()
   // const { walletProvider } = /useWeb3ModalProvider();
   const [provider, setProvider] = useState<BrowserProvider>();
-  const [walletProvider, setWalletProvider] = useState<unknown>();
+  const [walletProvider, setWalletProvider] = useState<CIP30ToEIP1193Provider>();
   const [connected, setConnected] = useState<boolean>(false);
   const [account, setAccount] = useState<string>();
   const [chainId, setChainId] = useState<number>(0);
@@ -80,10 +82,10 @@ export const useWeb3 = () => {
     const updateProvider = async () => {
       if (!connector?.getChainId) return;
       setChainId(await connector.getChainId());
-      const eipProvider = await connector.getProvider();
+      const eipProvider = (await connector.getProvider()) as CIP30ToEIP1193Provider;
       setWalletProvider(eipProvider);
 
-      if (eipProvider.isCIP30) await CardanoEscrow.connectWallet(eipProvider?.name as string);
+      if (eipProvider.isCIP30) await CardanoEscrow.connectWallet(eipProvider.name);
 
       const ethers = new BrowserProvider(eipProvider as Eip1193Provider);
       setProvider(ethers);

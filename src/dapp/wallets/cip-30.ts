@@ -31,7 +31,7 @@ export class CIP30ToEIP1193Provider {
    * EIP-1193 request method
    * Maps CIP-30 methods to EIP-1193 equivalent functionality.
    */
-  async request({ method, params }: EIP1193RequestParams): Promise<any> {
+  async request({ method }: EIP1193RequestParams): Promise<any> {
     this.enabled = await this.provider.enable();
     const accounts = await this.getAccounts();
     switch (method) {
@@ -61,7 +61,7 @@ export class CIP30ToEIP1193Provider {
     return this.enabled.getChangeAddress();
   }
 
-  async getAccounts(): Promise<string> {
+  async getAccounts(): Promise<string[]> {
     // Convert Cardano addresses to Ethereum-compatible addresses
     const ethereumAddresses = (await this.getCardanoAddresses()).map(address => {
       // Hash the Cardano address using Keccak-256
