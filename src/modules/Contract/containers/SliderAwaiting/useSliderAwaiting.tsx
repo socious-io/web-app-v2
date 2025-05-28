@@ -10,7 +10,7 @@ import { updateStatus } from 'src/store/reducers/contracts.reducer';
 
 export const useSliderAwaiting = (contract: Contract) => {
   const dispatch = useDispatch();
-  const { signer, chainId, Web3Connect, isConnected } = useWeb3();
+  const { signer, chainId, Web3Connect, isConnected, walletProvider } = useWeb3();
   const identity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(identity => identity.current),
   );
@@ -41,34 +41,39 @@ export const useSliderAwaiting = (contract: Contract) => {
   const onConfirm = async () => {
     setOpenAlert(false);
     setDisabledPrimaryButton(true);
-    try {
-      const escrowId = contract?.escrowId || '';
-      if (contract.payment === 'CRYPTO' && signer && chainId && escrowId) {
+    const escrowId = contract?.escrowId || '';
+    if (contract.payment === 'CRYPTO' && signer && chainId && escrowId) {
+      try {
         const result = await dapp.withdrawnEscrow({
+          walletProvider,
           signer,
           chainId,
           escrowId,
+          meta: contract?.paymentObj?.meta,
         });
 
         if (!result) {
           setDisabledPrimaryButton(false);
           return;
         }
+      } catch (error) {
+        alert(error);
+        setDisabledPrimaryButton(false);
+        return;
       }
-
-      await completeContractAdaptor(contract.id);
-      dispatch(
-        updateStatus({
-          id: contract.id,
-          status: 'COMPLETED',
-          isCurrentProvider: identityType === contract.providerId,
-          type: contract.type,
-          paymentId: contract.paymentId,
-        }),
-      );
-    } catch (e) {
-      console.log('Error in confirming contract', e);
     }
+
+    await completeContractAdaptor(contract.id);
+    dispatch(
+      updateStatus({
+        id: contract.id,
+        status: 'COMPLETED',
+        isCurrentProvider: identityType === contract.providerId,
+        type: contract.type,
+        paymentId: contract.paymentId,
+      }),
+    );
+
     setDisabledPrimaryButton(false);
   };
 

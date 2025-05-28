@@ -26,14 +26,14 @@ describe('User Application', () => {
     cy.intercept('POST', `${API_SERVER}/media/upload`, req => req.reply(200, UPLOAD));
     cy.intercept('GET', `${API_SERVER}/user/**/recommend/jobs*`, req => req.reply(200, PROJECTS)).as('getRecommended');
   });
-  Cypress.on('uncaught:exception', (err, runnable) => {
+  Cypress.on('uncaught:exception', () => {
     // returning false here prevents Cypress from
     // failing the test
     return false;
   });
   it('it should open job detail page and apply fill out the apply form', () => {
     // Visit jobs page
-    cy.visit(`${APP_URL}/jobs`);
+    cy.visit(`${APP_URL}jobs`);
 
     // Go to the job details
     // cy.wait(6000)

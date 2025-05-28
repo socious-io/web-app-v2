@@ -7,6 +7,9 @@ export type DepositReqMeta = {
   escrowId: string;
   token: string;
   txHash: string;
+  amount?: number;
+  fee?: number;
+  contributor?: string;
 };
 
 export type CurrencyPayloadMap = {

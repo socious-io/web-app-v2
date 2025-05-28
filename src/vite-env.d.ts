@@ -3,5 +3,8 @@
 interface Window {
   ethereum: any;
   evmproviders: any;
-  cardano?: { lace?: any };
+  cardano?: {
+    lace?: any;
+    eternl?: any;
+  };
 }

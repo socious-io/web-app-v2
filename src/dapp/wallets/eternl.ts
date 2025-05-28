@@ -8,18 +8,18 @@ export interface MyWalletOptions {
   projectId: string;
 }
 
-export const laceWallet =
+export const eternlWallet =
   (tmpChainId: number) =>
   ({ projectId }: MyWalletOptions): Wallet => ({
-    id: 'lace.wallet',
-    name: 'Lace',
-    iconUrl: '/lace.svg',
+    id: 'eternl.wallet',
+    name: 'Eternl',
+    iconUrl: '/eternl.svg',
     iconBackground: '#0000',
     downloadUrls: {
-      android: 'https://play.google.com/store/apps/details?id=lace',
-      ios: 'https://apps.apple.com/us/app/lace',
+      android: 'https://play.google.com/store/apps/details?id=io.ccvault.v1.main&pli=1',
+      ios: 'https://apps.apple.com/de/app/eternl-by-tastenkunst/id1603854385',
       chrome: 'https://chromewebstore.google.com/detail/lace/gafhhkghbfjjkeiendhlofajokpaflmk?hl=en',
-      qrCode: 'https://lace.io',
+      qrCode: 'https://eternl.io',
     },
     mobile: {
       getUri: (uri: string) => uri,
@@ -27,7 +27,7 @@ export const laceWallet =
     qrCode: {
       getUri: (uri: string) => uri,
       instructions: {
-        learnMoreUrl: 'https://lace.io',
+        learnMoreUrl: 'https://eternl.io',
         steps: [
           {
             description: 'We recommend putting My Wallet on your home screen for faster access to your wallet.',
@@ -44,7 +44,7 @@ export const laceWallet =
     },
     extension: {
       instructions: {
-        learnMoreUrl: 'https://lace.io',
+        learnMoreUrl: 'https://eternl.io',
         steps: [
           {
             description: 'We recommend pinning My Wallet to your taskbar for quicker access to your wallet.',
@@ -65,7 +65,7 @@ export const laceWallet =
         ],
       },
     },
-    createConnector: createInjectedConnector(new CIP30ToEIP1193Provider(window.cardano?.lace, 'lace', tmpChainId)),
+    createConnector: createInjectedConnector(new CIP30ToEIP1193Provider(window.cardano?.eternl, 'eternl', tmpChainId)),
   });
 
 function createInjectedConnector(provider) {

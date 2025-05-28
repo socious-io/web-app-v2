@@ -1,5 +1,5 @@
-import { config } from 'src/config';
 import { datadogRum } from '@datadog/browser-rum';
+import { config } from 'src/config';
 
 export function init(version: string) {
   if (config.datadogClientToken && config.datadogAppId) {

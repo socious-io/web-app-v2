@@ -82,7 +82,7 @@ describe('Sign up (User)', () => {
 
   it('it should check the sign up process for normal user', () => {
     //Approach the sign-up page
-    cy.visit(`${APP_URL}/intro`);
+    cy.visit(`${APP_URL}intro`);
     cy.contains('div', 'I am seeking impact work').parent().click();
     cy.contains('button', 'Continue').click();
 
@@ -141,7 +141,7 @@ describe('Sign up (User)', () => {
 
   it('it should check if email already exists', () => {
     //WIP!
-    cy.visit(`${APP_URL}/sign-up/user/email`);
+    cy.visit(`${APP_URL}sign-up/user/email`);
 
     // Fill in the username
     cy.get('input[name=email]').type('existingEmail@test.com');
@@ -149,6 +149,6 @@ describe('Sign up (User)', () => {
     // Click submit
     cy.contains('button', 'Continue').click();
     //cy.wait(2000);
-    cy.url().should('include', `${APP_URL}/sign-up/user/email`);
+    cy.url().should('include', `${APP_URL}sign-up/user/email`);
   });
 });

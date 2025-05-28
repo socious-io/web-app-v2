@@ -101,7 +101,7 @@ describe('User Application', () => {
       This lines of code will disable this feature!
       Errors from "Firebase" caused cypress to fail the tests even they are a right tests.
     */
-  Cypress.on('uncaught:exception', (err, runnable) => {
+  Cypress.on('uncaught:exception', () => {
     // returning false here prevents Cypress from
     // failing the test
     return false;
@@ -109,7 +109,7 @@ describe('User Application', () => {
 
   it('it should redirect user after the sign-up process to the very exact job details page [Normal User]', () => {
     // Visit jobs page
-    cy.visit(`${APP_URL}/jobs`);
+    cy.visit(`${APP_URL}jobs`);
 
     // Go to the job details
     cy.contains('a', 'Read more').click();

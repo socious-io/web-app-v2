@@ -1,7 +1,8 @@
 import { Contract, parseUnits } from 'ethers';
+import { config } from 'src/config';
 
 import { dappConfig } from './dapp.config';
-import { NETWORKS } from './dapp.connect';
+import { CardanoEscrow, NETWORKS } from './dapp.connect';
 import { AllowanceParams, EscrowParams, FlattenToken, WithdrawnParams } from './dapp.types';
 
 export const allowance = async (params: AllowanceParams) => {
@@ -16,10 +17,29 @@ export const allowance = async (params: AllowanceParams) => {
 };
 
 export const escrow = async (params: EscrowParams) => {
-  const { chainId, signer } = params;
+  const { chainId, signer, walletProvider } = params;
+
   const selectedNetwork = NETWORKS.filter(n => n.chain.id === chainId)[0];
   let token = params.token;
-  if (!token) token = selectedNetwork.tokens[0].address;
+  if (!token) token = selectedNetwork.tokens[0].address as string;
+
+  if (walletProvider?.isCIP30) {
+    const txHash = await CardanoEscrow.deposit({
+      unit: token,
+      quantity: `${params.totalAmount * 1000000}`,
+    });
+    // more info need for release cardano escrow
+    return {
+      txHash,
+      id: txHash,
+      token,
+      varified: params.verifiedOrg,
+      contributor: params.contributor,
+      amount: params.totalAmount,
+      fee: params.totalAmount - params.escrowAmount,
+    };
+  }
+
   const tokenConfig = selectedNetwork.tokens.find(t => t.address === token);
   if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
 
@@ -67,6 +87,29 @@ export const escrow = async (params: EscrowParams) => {
 };
 
 export const withdrawnEscrow = async (params: WithdrawnParams) => {
+  if (params.walletProvider?.isCIP30) {
+    let feePercent = 0.1;
+    if (params.meta.verifiedOrg) feePercent = 0.05;
+
+    const fee = params.meta.amount * (1 - feePercent) + params.meta?.fee;
+    const amount = params.meta.amount - fee;
+
+    const tx = await CardanoEscrow.release({
+      tx: params.escrowId,
+      payouts: [
+        {
+          address: config.cardanoPayoutFeeAddress,
+          amount: Math.trunc(fee * 1000000),
+        },
+        {
+          address: params.meta.contributor,
+          amount: Math.trunc(amount * 1000000),
+        },
+      ],
+    });
+
+    return tx;
+  }
   const selectedNetwork = NETWORKS.filter(n => n.chain.id === params.chainId)[0];
   const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
   const tx = await contract.withdrawn(params.escrowId);

@@ -1,6 +1,7 @@
-import React from 'react';
-import type { Preview } from '@storybook/react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import type { Preview } from '@storybook/react';
+import React from 'react';
+
 import { theme } from '../material.theme';
 import '../src/styles/icons.scss';
 import '../src/styles/tailwind.scss';
