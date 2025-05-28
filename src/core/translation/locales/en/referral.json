@@ -1,5 +1,12 @@
 {
-  "referral-banner": "In order to access referrals, you need to have a Atala PRISM DID and verify your identity.",
+  "referral-not-verified-user-banner-desc": "Verify your identity to start referring friends and earning rewards!",
+  "referral-not-verified-org-banner-desc": "Verify your organization’s identity to start referring and earning rewards!",
+  "referral-pending-org-banner": " We are currently verifying your organization's identity.",
+  "referral-pending-org-banner-desc": "We will notify you when this is completed.",
+  "referral-verified-banner": "Your {{identity}} has been verified!",
+  "referral-verified-user-banner-desc": "You can now refer friends and earn rewards.",
+  "referral-verified-org-banner-desc": "Start referring partners and earn rewards.",
+  "referral-verified-dismiss-btn": "Dismiss",
   "referral-header": "✨ Refer and earn",
   "referral-title": "Help us make a bigger impact, and gain a stake in our community",
   "referral-subtitle": "By sharing Socious with promising talent and impact organizations, you're not just expanding our network, you're also accelerating change.",
