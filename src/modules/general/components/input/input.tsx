@@ -1,6 +1,6 @@
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { AlertCircle } from 'public/icons/dynamic/alert-circle';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Icon } from 'src/modules/general/components/Icon';
 import { InputDropdown } from 'src/modules/general/components/input/InputDropdown';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -12,12 +12,10 @@ export const Input: React.FC<InputProps> = ({
   id,
   label,
   name,
-  required,
   errors,
   isValid,
   validMessage,
   prefix,
-  color,
   register,
   hints,
   startIcon,
@@ -112,11 +110,12 @@ export const Input: React.FC<InputProps> = ({
         fullWidth
         onKeyDown={handleKeydown}
         multiline={multiline}
-        minrows={minRows}
+        minRows={minRows}
         maxRows={maxRows}
         InputProps={{
           style: {
             height: props.customHeight ? props.customHeight : '44px',
+            alignItems: multiline ? 'flex-start' : 'center',
           },
           endAdornment: endAdornmentJSX,
 

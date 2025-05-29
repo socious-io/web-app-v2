@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -62,14 +62,15 @@ export const useCreateUpdateEducation = (
   education?: Education,
   onAddEducation?: (education: Education, isEdit: boolean) => void,
 ) => {
+  const dispatch = useDispatch();
   const user = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   }) as User;
-  const [schools, setSchools] = useState<Organization[]>([]);
   const [months, setMonths] = useState<OptionType[]>([]);
   const [years, setYears] = useState<OptionType[]>([]);
   const [dateError, setDateError] = useState('');
-  const dispatch = useDispatch();
+  const schoolsRef = useRef<Organization[]>([]);
+  const schools = schoolsRef.current;
 
   const mapMonthNames = () => {
     const options = monthNames.map((m, index) => {
@@ -158,7 +159,7 @@ export const useCreateUpdateEducation = (
     } else setDateError('');
   }, [startMonth, startYear, endMonth, endYear]);
 
-  const schoolToOption = (schoolList: Organization[], searchText: string) => {
+  const schoolToOption = (schoolList: Organization[]) => {
     const options = schoolList.map(list => ({
       value: list.id,
       label: list.name,
@@ -173,12 +174,13 @@ export const useCreateUpdateEducation = (
     }));
     return options;
   };
+
   const searchSchools = async (searchText: string, cb) => {
     try {
       if (searchText) {
         const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        setSchools(response.items as Organization[]);
-        cb(schoolToOption(response.items, searchText));
+        schoolsRef.current = response.items;
+        cb(schoolToOption(response.items));
       }
     } catch (error) {
       console.error('Error fetching city data:', error);
