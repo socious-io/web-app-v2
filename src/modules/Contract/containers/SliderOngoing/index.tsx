@@ -34,11 +34,15 @@ const SliderOngoing: React.FC<ContractSliderProps> = ({ disableMessage, redirect
         navigateToProfile(partnerUsername, partnerType as UserType);
       },
     },
-    {
-      iconName: 'message-alert-circle',
-      title: translate('cont-initiate-dispute'),
-      onClick: () => setOpenInitiateDisputeModal(true),
-    },
+    ...(contract.type !== 'VOLUNTEER'
+      ? [
+          {
+            iconName: 'message-alert-circle',
+            title: translate('cont-initiate-dispute'),
+            onClick: () => setOpenInitiateDisputeModal(true),
+          },
+        ]
+      : []),
     {
       iconName: 'x-circle',
       title: translate('cont-end'),

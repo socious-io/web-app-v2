@@ -65,11 +65,15 @@ const SliderAwaiting: React.FC<ContractSliderProps> = ({ contract, disableMessag
         navigateToProfile(partnerUsername, partnerType as UserType);
       },
     },
-    {
-      iconName: 'message-alert-circle',
-      title: translate('cont-initiate-dispute'),
-      onClick: () => setOpenInitiateDisputeModal(true),
-    },
+    ...(contract.type !== 'VOLUNTEER'
+      ? [
+          {
+            iconName: 'message-alert-circle',
+            title: translate('cont-initiate-dispute'),
+            onClick: () => setOpenInitiateDisputeModal(true),
+          },
+        ]
+      : []),
   ];
 
   return (
