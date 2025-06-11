@@ -6,10 +6,11 @@ dotenv.config();
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      config.env.api_server = process.env.VITE_BASE_URL;
-      config.env.app_url = process.env.VITE_APP_URL;
-
+      config.env.VITE_ENV = process.env.VITE_ENV || 'development';
       return config;
+    },
+    env: {
+      VITE_ENV: 'test',
     },
   },
 });
