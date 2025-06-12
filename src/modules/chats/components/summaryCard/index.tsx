@@ -42,8 +42,8 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
       className={`flex flex-col gap-4 p-4 w-full cursor-pointer ${isSelected ? 'bg-Gray-light-mode-50' : ''}`}
       onClick={() => handleSelect(chat.id)}
     >
-      <div className="w-full flex justify-between items-start">
-        <div className="flex items-center justify-start gap-3">
+      <div className="w-full flex justify-between items-start gap-3">
+        <div className="max-w-[12.5rem] flex items-center justify-start gap-3">
           <Dot
             size="small"
             color={Number(chat.unread_count) ? variables.color_primary_600 : 'transparent'}
@@ -51,7 +51,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ chat, handleSelect, is
           />
           <AvatarLabelGroup
             account={account}
-            customStyle="!w-fit !p-0"
+            customStyle="!p-0"
             justAvatarClickable
             handleClick={e => {
               e?.stopPropagation();
