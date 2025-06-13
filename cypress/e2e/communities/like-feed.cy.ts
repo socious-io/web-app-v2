@@ -1,6 +1,4 @@
-import { LIKE_RESPONSE } from './Like-response';
-import { COMMENT, FEEDS, REPOST_FEED } from './mocks';
-import { NOTIFICATIONS } from './notificationMock';
+import { COMMENT, FEEDS, REPOST_FEED, LIKE_RESPONSE, NOTIFICATIONS } from './mocks';
 import { APP_URL, FIRSTNAME, LASTNAME, USERNAME } from '../authentication/constants';
 import { User, generateRandomEmail } from '../authentication/utilities';
 
