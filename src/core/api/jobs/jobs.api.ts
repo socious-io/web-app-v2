@@ -61,6 +61,10 @@ export async function addQuestionJob(jobId: string, payload: QuestionReq): Promi
   return (await post<Question>(`projects/${jobId}/questions`, payload)).data;
 }
 
+export async function addAllQuestionsJob(jobId: string, payload: QuestionReq[]): Promise<Question> {
+  return (await post<Question>(`projects/${jobId}/questions/batch`, { questions: payload })).data;
+}
+
 export async function jobQuestions(jobId: string): Promise<QuestionsRes> {
   return (await get<QuestionsRes>(`projects/${jobId}/questions`)).data;
 }
