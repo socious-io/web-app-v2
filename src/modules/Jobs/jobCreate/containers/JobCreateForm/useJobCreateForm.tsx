@@ -14,7 +14,6 @@ import {
   Category,
   CurrentIdentity,
   Job,
-  JobCategoriesRes,
   JobReq,
   Location,
   OrgMeta,
@@ -25,7 +24,7 @@ import {
   ProjectType,
   QuestionReq,
   SocialCauses,
-  addQuestionJob,
+  addAllQuestionsJob,
   createJob,
   jobQuestions,
   removeQuestionJob,
@@ -257,20 +256,21 @@ export const useJobCreateForm = () => {
 
     try {
       const res = isEdit && jobDetail?.id ? await updateJob(jobDetail.id, jobPayload) : await createJob(jobPayload);
-      questions.forEach(async (q: Question) => {
-        if (q?.id) {
-          await updateQuestionJob(q?.project_id, q?.id, {
+      if (isEdit) {
+        const questionPromises = questions.map((q: Question) =>
+          updateQuestionJob(q?.project_id, q?.id, {
             question: q.question,
             required: q.required,
             options: q.options || undefined,
-          });
-        } else {
-          await addQuestionJob(res.id, q as QuestionReq);
-        }
-      });
+          }),
+        );
+        await Promise.all(questionPromises);
+      } else {
+        addAllQuestionsJob(res.id, questions as QuestionReq[]);
+      }
       setOpenSuccessModal(true);
     } catch (error) {
-      console.log('error in updating job', error);
+      console.log('Error in creating/updating job', error);
     }
   };
 
