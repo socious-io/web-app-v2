@@ -1,4 +1,4 @@
-import { ApplicantResp, QuestionsRes } from 'src/core/types';
+import { QuestionsRes } from 'src/core/types';
 
 import {
   JobCategoriesRes,
@@ -20,7 +20,7 @@ import {
   RejectReq,
 } from './jobs.types';
 import { post, get } from '../http';
-import { SuccessRes, PaginateReq, FilterReq } from '../types';
+import { SuccessRes, FilterReq } from '../types';
 
 export async function jobCategories(): Promise<JobCategoriesRes> {
   return (await get<JobCategoriesRes>('projects/categories')).data;
@@ -60,6 +60,10 @@ export async function closeJob(id: string): Promise<SuccessRes> {
 
 export async function addQuestionJob(jobId: string, payload: QuestionReq): Promise<Question> {
   return (await post<Question>(`projects/${jobId}/questions`, payload)).data;
+}
+
+export async function addAllQuestionsJob(jobId: string, payload: QuestionReq[]): Promise<Question> {
+  return (await post<Question>(`projects/${jobId}/questions/batch`, { questions: payload })).data;
 }
 
 export async function jobQuestions(jobId: string): Promise<QuestionsRes> {
