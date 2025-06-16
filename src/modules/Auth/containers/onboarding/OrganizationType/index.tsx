@@ -20,7 +20,7 @@ export const OrganizationType = () => {
         </div>
       </div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-8 ${css.footer}`}>
-        <Button disabled={!orgType} color="primary" block onClick={goNextPage}>
+        <Button data-testid="next-button" disabled={!orgType} color="primary" block onClick={goNextPage}>
           {translate('onboarding-next-social-causes')}
         </Button>
       </div>
