@@ -1,19 +1,19 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logout } from 'src/core/api';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
-import { useSignInForm } from 'src/modules/Auth/containers/signin/SignInForm/useSignInForm';
+// import { useSignInForm } from 'src/modules/Auth/containers/signin/SignInForm/useSignInForm';
 
 export const useAllowNotification = () => {
   const type = localStorage.getItem('registerFor');
   const { state } = useLocation();
   const { username } = state || '';
-  const { registerPushNotifications } = useSignInForm('');
+  // const { registerPushNotifications } = useSignInForm('');
   const filter = localStorage.getItem('filter');
   const { events } = filter ? (JSON.parse(filter) as { events: string[] }) : { events: [] };
   const navigate = useNavigate();
 
   const onAllowNotification = async () => {
-    await registerPushNotifications();
+    // await registerPushNotifications();
     onSkip();
   };
   const onSkip = () => {
