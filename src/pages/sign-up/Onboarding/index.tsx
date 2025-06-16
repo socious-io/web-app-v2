@@ -73,7 +73,7 @@ export const Onboarding = () => {
           store.dispatch(removeIdentityList());
           nonPermanentStorage.clear();
           localStorage.clear();
-          navigate('/sign-in');
+          navigate('/intro');
         } catch (e) {
           console.log('error in logout', e);
         }

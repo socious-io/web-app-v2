@@ -139,3 +139,30 @@ export interface AppleAuthResponse {
   identityToken: string;
   authorizationCode: string;
 }
+
+// Socious Id
+export interface Auth {
+  url: string;
+}
+
+export interface AuthRes {
+  error?: string;
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
+}
+
+export type AuthReq = {
+  redirect_url: string;
+};
+
+export interface AuthSession {
+  error?: string;
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
+}
+
+export type AuthSessionReq = {
+  code: string;
+};
