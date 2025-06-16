@@ -22,7 +22,7 @@ const Account = () => {
   const navigate = useNavigate();
   const closeAccount = async () => {
     await selfDelete({ reason: reasonbody });
-    navigate('/sign-in');
+    navigate('/intro');
   };
 
   return (

@@ -60,7 +60,7 @@ export const Footer: React.FC<FooterProps> = ({ open, logout, setOpen }) => {
         <LinkItem
           label={translate('nav-login')}
           navigateFunc={() => {
-            navigateFunction('/sign-in');
+            navigateFunction('/intro');
           }}
           iconName="log-in-01"
           menuOpen={open}

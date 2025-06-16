@@ -23,5 +23,6 @@
     "expiry": "Vencimiento",
     "ending": "termina en"
   },
-  "router-not-found": "Página no encontrada :("
+  "router-not-found": "Página no encontrada :(",
+  "general-success-continue": "Continuar"
 }

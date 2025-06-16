@@ -27,7 +27,6 @@
     "lint": "lint-staged"
   },
   "dependencies": {
-    "@capacitor-community/apple-sign-in": "^7.0.1",
     "@capacitor-firebase/messaging": "^7.2.0",
     "@capacitor/action-sheet": "^7.0.1",
     "@capacitor/android": "^7.2.0",

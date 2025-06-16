@@ -34,7 +34,7 @@ import {
   invitations,
   cards,
 } from 'src/core/api';
-import { events, search as searchReq } from 'src/core/api/site/site.api';
+import { search as searchReq } from 'src/core/api/site/site.api';
 import { translate } from 'src/core/utils';
 import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
@@ -718,57 +718,6 @@ export const blueprint: RouteObject[] = [
         path: 'user',
         children: [
           {
-            path: 'email',
-            loader: async ({ request }) => {
-              const url = new URL(request.url);
-              const eventName = url.searchParams.get('event_name');
-              if (eventName) {
-                return await events({ limit: 10, page: 1 });
-              } else {
-                return null;
-              }
-            },
-            async lazy() {
-              const { Email } = await import('src/pages/sign-up/Email');
-              return {
-                Component: Email,
-              };
-            },
-          },
-          {
-            path: 'verification',
-            async lazy() {
-              const { Verify } = await import('src/pages/sign-up/Verify');
-              return {
-                Component: Verify,
-              };
-            },
-          },
-          {
-            path: 'password',
-            async lazy() {
-              const { ChoosePassword } = await import('src/pages/sign-up/ChoosePassword');
-              return {
-                Component: ChoosePassword,
-              };
-            },
-          },
-          {
-            path: 'complete',
-            loader: async () => {
-              const currentProfile = await profile();
-              return {
-                currentProfile,
-              };
-            },
-            async lazy() {
-              const { Details } = await import('src/pages/sign-up/Details');
-              return {
-                Component: Details,
-              };
-            },
-          },
-          {
             path: 'congrats',
             async lazy() {
               const { Congrats } = await import('src/pages/sign-up/Congrats');
@@ -962,60 +911,13 @@ export const blueprint: RouteObject[] = [
     },
   },
   {
-    path: '/sign-in',
-    loader: async ({ request }) => {
-      const url = new URL(request.url);
-      const eventName = url.searchParams.get('event_name');
-      if (eventName) {
-        return await events({ limit: 10, page: 1 });
-      } else {
-        return null;
-      }
-    },
-    async lazy() {
-      const { SignIn } = await import('src/pages/sign-in');
-      return {
-        Component: SignIn,
-      };
-    },
-  },
-  {
     path: '/oauth',
     children: [
       {
-        path: 'google',
-        loader: async ({ request }) => {
-          const url = new URL(request.url);
-          const eventName = url.searchParams.get('event_name');
-          if (eventName) {
-            return await events({ limit: 10, page: 1 });
-          } else {
-            return null;
-          }
-        },
+        path: 'socious',
         async lazy() {
-          const { GoogleOauth2 } = await import('src/pages/oauth/google');
-          return {
-            Component: GoogleOauth2,
-          };
-        },
-      },
-      {
-        path: 'apple',
-        loader: async ({ request }) => {
-          const url = new URL(request.url);
-          const eventName = url.searchParams.get('event_name');
-          if (eventName) {
-            return await events({ limit: 10, page: 1 });
-          } else {
-            return null;
-          }
-        },
-        async lazy() {
-          const { AppleOauth2 } = await import('src/pages/oauth/apple');
-          return {
-            Component: AppleOauth2,
-          };
+          const { SociousID } = await import('src/pages/oauth/socious');
+          return { Component: SociousID };
         },
       },
     ],

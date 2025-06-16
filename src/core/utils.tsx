@@ -65,6 +65,7 @@ export const getIdentityMeta = (identity: User | Organization | Identity | UserM
       profileImage: undefined,
       type: undefined,
       website: undefined,
+      email: undefined,
     };
   // if type of identity is 'Identity'
 

@@ -23,5 +23,6 @@
     "expiry": "Expiry",
     "ending": "ending in"
   },
-  "router-not-found": "Page not found :("
+  "router-not-found": "Page not found :(",
+  "general-success-continue": "Continue"
 }
