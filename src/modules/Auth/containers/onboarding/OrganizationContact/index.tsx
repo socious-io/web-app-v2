@@ -1,4 +1,3 @@
-import { ORGANIZATION_SIZE } from 'src/constants/ORGANIZATION_SIZE';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
@@ -114,7 +113,13 @@ export const OrganizationContact = () => {
           prefix="https://"
         />
         <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
-          <Button disabled={!isFormValid} color="primary" block onClick={handleSubmit(onSubmit)}>
+          <Button
+            data-testid="next-button"
+            disabled={!isFormValid}
+            color="primary"
+            block
+            onClick={handleSubmit(onSubmit)}
+          >
             {translate('onboarding-continue')}
           </Button>
         </div>

@@ -61,7 +61,7 @@ export const OrganizationLogo = () => {
       />
       <div className={css.counter}>{bioCounter}/160</div>
       <div className={`fixed bottom-16 left-0 p-4 pb-0 w-full md:static md:p-0 md:mt-6 ${css.footer}`}>
-        <Button color="primary" block onClick={goNextPage}>
+        <Button data-testid="next-button" color="primary" block onClick={goNextPage}>
           {translate('onboarding-next-contact')}
         </Button>
       </div>
