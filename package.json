@@ -95,7 +95,7 @@
     "viem": "^2.28.4",
     "vite-plugin-node-polyfills": "^0.23.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "wagmi": "^2.15.2",
+    "wagmi": "^2.15.6",
     "yup": "^1.6.1"
   },
   "devDependencies": {
