@@ -1,4 +1,3 @@
-import { config } from 'src/config';
 import { addFiltersToSearch } from 'src/core/utils';
 
 import { CurrentIdentity, Device, DeviceReq, EventsRes, SearchReq, SkillRes } from './site.types';
@@ -9,10 +8,6 @@ import { PostsRes } from '../posts/posts.types';
 import { PaginateReq, PaginateRes, SuccessRes } from '../types';
 import { UsersRes } from '../users/users.types';
 
-const overwrittenConfigV3 = {
-  baseURL: config.baseURLV3,
-  withCredentials: false,
-};
 export async function search(payload: SearchReq, params: PaginateReq) {
   const { data } = await post<PaginateRes>('search/v2', addFiltersToSearch(payload), { params });
   switch (payload.type) {
@@ -37,7 +32,7 @@ export async function searchHistory(params: PaginateReq) {
 }
 
 export async function identities(): Promise<CurrentIdentity[]> {
-  return (await get<CurrentIdentity[]>('identities', overwrittenConfigV3)).data;
+  return (await get<CurrentIdentity[]>('identities')).data;
 }
 
 export async function devices(): Promise<Device[]> {

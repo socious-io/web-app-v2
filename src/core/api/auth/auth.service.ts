@@ -1,5 +1,4 @@
 import { config } from 'src/config';
-import { getIdentitiesAdaptor } from 'src/core/adaptors';
 import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import store from 'src/store';
 import { setIdentityList } from 'src/store/reducers/identity.reducer';
