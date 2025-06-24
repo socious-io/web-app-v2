@@ -3,17 +3,12 @@ import {
   addEducations,
   addExperiences,
   addLanguage,
-  CurrentIdentity,
   Education,
   Experience,
-  identities,
-  IdentityType,
   importLinkedin,
   LanguageCode,
-  OrgMeta,
   ProjectType,
   reviews,
-  UserMeta,
 } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -133,39 +128,5 @@ export const getReviewsAdaptor = async (page = 1, limit = 10): Promise<AdaptorRe
   } catch (error) {
     console.error('Error in getting reviews list: ', error);
     return { data: null, error: 'Error in getting reviews list' };
-  }
-};
-
-//Fix after implementing new identities v3
-export const getIdentitiesAdaptor = async (): Promise<AdaptorRes<CurrentIdentity[]>> => {
-  try {
-    const { identities: currentIdentities } = await identities();
-    const data = currentIdentities.map(identity => {
-      const {
-        name = '',
-        username = '',
-        usernameVal = '',
-        type = 'users',
-        profileImage = '',
-        email = '',
-      } = getIdentityMeta(identity);
-      return {
-        id: identity.id,
-        name,
-        username,
-        usernameVal,
-        img: profileImage,
-        email,
-        type: type as IdentityType,
-        current: identity.current || false,
-        verified:
-          type === 'users' ? !!(identity.meta as UserMeta).identity_verified_at : (identity.meta as OrgMeta).verified,
-        status: type === 'organizations' ? (identity.meta as OrgMeta).status : undefined,
-        impact_points: type === 'users' ? (identity.meta as UserMeta).impact_points : undefined,
-      };
-    });
-    return { data, error: null };
-  } catch {
-    return { data: null, error: 'Error is getting Identities' };
   }
 };

@@ -13,10 +13,10 @@ import {
   StripeProfileRes,
   PreRegisterRes,
   AuthRes,
-  Auth,
   AuthReq,
   AuthSession,
   AuthSessionReq,
+  SociousIDAuth,
 } from './auth.types';
 import { post, get } from '../http';
 import { CapacitorPlatform, SuccessRes } from '../types';
@@ -86,9 +86,9 @@ export async function appleOauth(
     .data;
 }
 
-///Socious Id
-export async function auth(payload: AuthReq): Promise<Auth> {
-  return (await post<Auth>(`auth`, payload, overwrittenConfigV3)).data;
+///Socious V3
+export async function auth(payload: AuthReq): Promise<SociousIDAuth> {
+  return (await post<SociousIDAuth>('auth', payload, overwrittenConfigV3)).data;
 }
 
 export async function sociousOauth(payload: AuthSessionReq): Promise<AuthSession> {
