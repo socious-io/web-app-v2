@@ -52,7 +52,10 @@ import { Cities } from '../types';
 import { translate } from '../utils';
 
 export function socialCausesToCategoryAdaptor() {
-  return Object.entries(SOCIAL_CAUSES).map(([, value]) => value);
+  return Object.entries(SOCIAL_CAUSES).map(([, socialCause]) => ({
+    value: socialCause.value,
+    label: translate(socialCause.value),
+  }));
 }
 
 export function socialCausesToDropdownAdaptor() {
