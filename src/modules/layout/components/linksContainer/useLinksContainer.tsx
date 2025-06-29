@@ -1,30 +1,23 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, identities, OrgMeta, UserMeta } from 'src/core/api';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { config } from 'src/config';
+import { getAuthUrlAdaptor } from 'src/core/adaptors';
+import { CurrentIdentity, OrgMeta, UserMeta } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
-import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { translate } from 'src/core/utils';
-import Badge from 'src/modules/general/components/Badge';
 import store, { RootState } from 'src/store';
-import { setIdentityList } from 'src/store/reducers/identity.reducer';
 import { getUnreadCount } from 'src/store/thunks/chat.thunk';
 
 import { MenuProps } from './linksContainer.types';
 
 export const useLinksContainer = (setOpen: (val: boolean) => void) => {
+  const { pathname } = useLocation();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
-  const allIdentities = useSelector<RootState, CurrentIdentity[]>(state => {
-    return state.identity.entities;
-  });
-  const unread = useSelector<RootState, string>(state => {
-    return state.chat.unreadCount;
-  });
   const userIsLoggedIn = !!currentIdentity;
   const joinedContributors = currentIdentity?.type === 'users' && (currentIdentity.meta as UserMeta).is_contributor;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -172,18 +165,18 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     if (isTouchDevice()) setOpen(false);
   };
 
-  const navigateToOnboarding = async () => {
+  const onCreateAccount = async () => {
     if (currentIdentity?.type === 'organizations') {
       localStorage.setItem('registerFor', 'user');
-      const userAccount = allIdentities.find(a => a.type === 'users');
-      if (userAccount?.id) await nonPermanentStorage.set({ key: 'identity', value: userAccount.id });
-      const identityList = await identities();
-      dispatch(setIdentityList(identityList));
+      const { error, data } = await getAuthUrlAdaptor(config.appBaseURL + 'oauth/socious');
+      if (error) return;
+      if (data) window.location.href = data.url;
     } else {
       localStorage.setItem('registerFor', 'organization');
+      window.location.href =
+        config.accountCenterURL + `organizations/register/pre?next=${config.appBaseURL}${pathname.slice(1)}`;
     }
-    navigate('/sign-up/user/onboarding');
   };
 
-  return { filteredMenu, userIsLoggedIn, onLogoClick, navigateFunction, navigateToOnboarding };
+  return { filteredMenu, userIsLoggedIn, onLogoClick, navigateFunction, onCreateAccount };
 };

@@ -22,7 +22,7 @@ export const Layout = () => {
     setOpen(false);
     nonPermanentStorage.clear();
     localStorage.clear();
-    navigate('/sign-in');
+    navigate('/intro');
   };
 
   return (

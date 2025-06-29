@@ -23,5 +23,6 @@
     "expiry": "유효기간",
     "ending": "끝자리"
   },
-  "router-not-found": "페이지를 찾을 수 없습니다 :("
+  "router-not-found": "페이지를 찾을 수 없습니다 :(",
+  "general-success-continue": "계속"
 }

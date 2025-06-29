@@ -124,6 +124,6 @@
 //     cy.getCookies().should('have.length', 1);
 
 //     // Check if the login failed
-//     cy.url().should('include', '/sign-in');
+//     cy.url().should('include', '/intro');
 //   });
 // });

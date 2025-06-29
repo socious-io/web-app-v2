@@ -53,6 +53,35 @@ export interface GoogleAuthRes extends AuthRes {
   registered?: boolean;
 }
 
+export interface AppleAuthResponse {
+  user: string | null;
+  email: string | null;
+  givenName: string | null;
+  familyName: string | null;
+  identityToken: string;
+  authorizationCode: string;
+}
+
+// Socious ID
+export interface SociousIDAuth {
+  auth_url: string;
+}
+
+export type AuthReq = {
+  redirect_url: string;
+};
+
+export interface AuthSession {
+  error?: string;
+  access_token: string;
+  refresh_token: string;
+  token_type: 'Bearer';
+}
+
+export type AuthSessionReq = {
+  code: string;
+};
+
 export interface PreRegisterRes {
   email?: 'EXISTS' | null;
   username?: 'EXISTS' | null;
@@ -129,13 +158,4 @@ export interface StripeProfileRes {
   payouts_enabled: boolean;
   type: string;
   status: string;
-}
-
-export interface AppleAuthResponse {
-  user: string | null;
-  email: string | null;
-  givenName: string | null;
-  familyName: string | null;
-  identityToken: string;
-  authorizationCode: string;
 }

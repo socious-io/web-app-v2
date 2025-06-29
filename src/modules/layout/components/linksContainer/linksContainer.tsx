@@ -7,8 +7,7 @@ import { useLinksContainer } from './useLinksContainer';
 import { LinkItem } from '../linkItem/LinkItem';
 
 export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen }) => {
-  const { filteredMenu, userIsLoggedIn, onLogoClick, navigateFunction, navigateToOnboarding } =
-    useLinksContainer(setOpen);
+  const { filteredMenu, userIsLoggedIn, onLogoClick, navigateFunction, onCreateAccount } = useLinksContainer(setOpen);
 
   return (
     <div className="flex flex-col justify-start items-center w-full h-fit pt-8 gap-6">
@@ -22,7 +21,7 @@ export const LinksContainer: React.FC<LinksContainerProps> = ({ open, setOpen })
       </div>
       {userIsLoggedIn && (
         <div className="md:hidden w-full h-fit px-4">
-          <AvatarDropDown displayOtherAccounts createAccountFunc={navigateToOnboarding} />
+          <AvatarDropDown displayOtherAccounts createAccountFunc={onCreateAccount} />
         </div>
       )}
 

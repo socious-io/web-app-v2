@@ -22,7 +22,7 @@ export const getLinkedinProfileAdaptor = async (file: File): Promise<AdaptorRes<
     const data = {
       languages: (res.body.Languages || []).map(language => ({
         id: uuidv4(),
-        name: Object.entries(Languages).find(([_, val]) => val === language.name)?.[0] as LanguageCode,
+        name: Object.entries(Languages).find(([, val]) => val === language.name)?.[0] as LanguageCode,
         level: LinkedInLanguageLevel[language.level],
       })),
       educations: (res.body.educations || []).map(education => ({
