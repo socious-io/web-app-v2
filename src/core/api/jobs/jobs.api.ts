@@ -1,5 +1,3 @@
-import { ApplicantResp, QuestionsRes } from 'src/core/types';
-
 import {
   JobCategoriesRes,
   Job,
@@ -18,9 +16,10 @@ import {
   HourlyWorkReq,
   JobMark,
   RejectReq,
+  QuestionsRes,
 } from './jobs.types';
 import { post, get } from '../http';
-import { SuccessRes, PaginateReq, FilterReq } from '../types';
+import { SuccessRes, FilterReq } from '../types';
 
 export async function jobCategories(): Promise<JobCategoriesRes> {
   return (await get<JobCategoriesRes>('projects/categories')).data;

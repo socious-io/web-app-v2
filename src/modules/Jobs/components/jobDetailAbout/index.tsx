@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { config } from 'src/config';
 import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
-import { closeJob, CurrentIdentity, Job } from 'src/core/api';
-import { QuestionsRes } from 'src/core/types';
+import { closeJob, CurrentIdentity, Job, QuestionsRes } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import { AuthGuard } from 'src/modules/authGuard';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
