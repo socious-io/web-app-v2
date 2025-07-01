@@ -720,25 +720,16 @@ export const blueprint: RouteObject[] = [
           {
             path: 'congrats',
             async lazy() {
-              const { Congrats } = await import('src/pages/sign-up/Congrats');
+              const { Congrats } = await import('src/pages/sign-up/congrats');
               return {
                 Component: Congrats,
               };
             },
           },
-          // {
-          //   path: 'welcome',
-          //   async lazy() {
-          //     const { Welcome } = await import('src/pages/sign-up/welcome/welcome');
-          //     return {
-          //       Component: Welcome,
-          //     };
-          //   },
-          // },
           {
             path: 'notification',
             async lazy() {
-              const { AllowNotification } = await import('src/pages/AllowNotification');
+              const { AllowNotification } = await import('src/pages/sign-up/allowNotification');
               return {
                 Component: AllowNotification,
               };
@@ -746,26 +737,13 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'onboarding',
-            // loader: async () => {
-            //   await store.dispatch(currentIdentities());
-            //   return null;
-            // },
             async lazy() {
-              const { Onboarding } = await import('src/pages/sign-up/Onboarding');
+              const { Onboarding } = await import('src/pages/sign-up/onboarding');
               return {
                 Component: Onboarding,
               };
             },
           },
-          // {
-          //   path: 'allow-notification',
-          //   async lazy() {
-          //     const { AllowNotification } = await import('src/pages/sign-up/AllowNotification');
-          //     return {
-          //       Component: AllowNotification,
-          //     };
-          //   },
-          // },
         ],
       },
     ],
@@ -806,88 +784,6 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
-    path: 'forget-password',
-    children: [
-      {
-        path: 'email',
-        async lazy() {
-          const { Email } = await import('src/pages/forget-password/email');
-          return {
-            Component: Email,
-          };
-        },
-      },
-      {
-        path: 'otp/*',
-        async lazy() {
-          const { Otp } = await import('src/pages/forget-password/otp');
-          return {
-            Component: Otp,
-          };
-        },
-      },
-      {
-        path: 'password/*',
-        async lazy() {
-          const { Password } = await import('src/pages/forget-password/password');
-          return {
-            Component: Password,
-          };
-        },
-      },
-      {
-        path: 'reset-completed',
-        async lazy() {
-          const { ResetCompleted } = await import('src/pages/forget-password/resetCompleted');
-          return {
-            Component: ResetCompleted,
-          };
-        },
-      },
-    ],
-  },
-  // {
-  //   path: 'change-password',
-  //   async lazy() {
-  //     const { ChangePasswordContainer } = await import('src/pages/change-password/change-password.container');
-  //     return {
-  //       Component: ChangePasswordContainer,
-  //     };
-  //   },
-  // },
-  // {
-  //   path: 'delete-profile',
-  //   children: [
-  //     {
-  //       path: 'delete',
-  //       async lazy() {
-  //         const { Delete } = await import('src/pages/delete-profile/delete/delete');
-  //         return {
-  //           Component: Delete,
-  //         };
-  //       },
-  //     },
-  //     {
-  //       path: 'password',
-  //       async lazy() {
-  //         const { Password } = await import('src/pages/delete-profile/password/password');
-  //         return {
-  //           Component: Password,
-  //         };
-  //       },
-  //     },
-  //     {
-  //       path: 'confirm',
-  //       async lazy() {
-  //         const { Confirm } = await import('src/pages/delete-profile/confirm/confirm');
-  //         return {
-  //           Component: Confirm,
-  //         };
-  //       },
-  //     },
-  //   ],
-  // },
-  {
     path: 'notifications/:id',
     loader: ({ params }) => {
       return {
@@ -904,7 +800,7 @@ export const blueprint: RouteObject[] = [
   {
     path: '/intro',
     async lazy() {
-      const { Intro } = await import('src/pages/Intro');
+      const { Intro } = await import('src/pages/intro');
       return {
         Component: Intro,
       };
