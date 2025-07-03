@@ -11,6 +11,7 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import css from './headerNavBar.module.scss';
 import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
+import NavPortal from '../NavPortal';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
 
@@ -91,7 +92,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
               handleHiring={handleHiring}
             />
           </div>
-
+          <NavPortal />
           <IconDropDown
             type={userType}
             img={image}
