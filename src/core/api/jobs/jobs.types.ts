@@ -96,7 +96,10 @@ export interface JobsRes extends PaginateRes {
 
 export interface Question extends QuestionReq {
   id: string;
-  created_at: Date;
+  old_id: number;
+  project_id: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface QuestionsRes {

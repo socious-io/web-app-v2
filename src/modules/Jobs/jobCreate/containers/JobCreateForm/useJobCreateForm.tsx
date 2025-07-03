@@ -14,7 +14,6 @@ import {
   Category,
   CurrentIdentity,
   Job,
-  JobCategoriesRes,
   JobReq,
   Location,
   OrgMeta,
@@ -25,15 +24,15 @@ import {
   ProjectType,
   QuestionReq,
   SocialCauses,
-  addQuestionJob,
+  addAllQuestionsJob,
   createJob,
   jobQuestions,
   removeQuestionJob,
   searchLocation,
   updateJob,
   updateQuestionJob,
+  Question,
 } from 'src/core/api';
-import { Question } from 'src/core/types';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
@@ -215,6 +214,7 @@ export const useJobCreateForm = () => {
     setQuestions(questions.concat(q as Question));
     setOpenCreateQuestion(false);
   };
+
   const onSubmit: SubmitHandler<Inputs> = async ({
     title,
     cause,
@@ -257,20 +257,35 @@ export const useJobCreateForm = () => {
 
     try {
       const res = isEdit && jobDetail?.id ? await updateJob(jobDetail.id, jobPayload) : await createJob(jobPayload);
-      questions.forEach(async (q: Question) => {
-        if (q?.id) {
-          await updateQuestionJob(q?.project_id, q?.id, {
-            question: q.question,
-            required: q.required,
-            options: q.options || undefined,
-          });
-        } else {
-          await addQuestionJob(res.id, q as QuestionReq);
+      if (isEdit) {
+        const updatePromises: Promise<Question>[] = [];
+        const newQuestions: QuestionReq[] = [];
+
+        questions.forEach(q => {
+          if (q?.id) {
+            updatePromises.push(
+              updateQuestionJob(q.project_id, q.id, {
+                question: q.question,
+                required: q.required,
+                options: q.options || undefined,
+              }),
+            );
+          } else {
+            newQuestions.push(q as QuestionReq);
+          }
+        });
+
+        await Promise.all(updatePromises);
+
+        if (newQuestions.length) {
+          await addAllQuestionsJob(res.id, newQuestions);
         }
-      });
+      } else {
+        await addAllQuestionsJob(res.id, questions as QuestionReq[]);
+      }
       setOpenSuccessModal(true);
     } catch (error) {
-      console.log('error in updating job', error);
+      console.log('Error in creating/updating job', error);
     }
   };
 

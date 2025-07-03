@@ -1,23 +1,18 @@
 import { Typography } from '@mui/material';
-import React from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { Answer, Job } from 'src/core/api';
-import { QuestionsRes } from 'src/core/types';
+import { Job, QuestionsRes } from 'src/core/api';
 import { Input } from 'src/modules/general/components/input/input';
 import { RadioGroup } from 'src/modules/general/components/RadioGroup';
 
-interface ApplyModalQuestionsProps {
-  answers: Answer[];
-  setAnswers: (newVal: Answer[]) => void;
-  questionErrors: { id: string; message: string }[];
-}
+import { ApplyModalQuestionsProps } from './index.types';
+
 const ApplyModalQuestions: React.FC<ApplyModalQuestionsProps> = ({ answers, setAnswers, questionErrors }) => {
   const { screeningQuestions } = useLoaderData() as {
     jobDetail: Job;
     screeningQuestions: QuestionsRes;
   };
+  const { questions = [] } = screeningQuestions || {};
 
-  const questions = screeningQuestions.questions.sort((a, b) => (a.id > b.id ? 1 : -1));
   const handleSelectOption = (questionId: string, selectedOption: number, answer: string) => {
     const answersCopy = [...answers];
     const idx = answersCopy.findIndex(item => item.id === questionId);
@@ -35,6 +30,7 @@ const ApplyModalQuestions: React.FC<ApplyModalQuestionsProps> = ({ answers, setA
     else answersCopy.push({ id: questionId, answer: value });
     setAnswers(answersCopy);
   };
+
   return (
     <div className="flex flex-col gap-4">
       <Typography variant="h4" className="text-Gray-light-mode-700">

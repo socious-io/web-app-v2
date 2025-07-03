@@ -116,6 +116,7 @@ export const Input: React.FC<InputProps> = ({
           style: {
             height: props.customHeight ? props.customHeight : '44px',
             alignItems: multiline ? 'flex-start' : 'center',
+            backgroundColor: props.disabled && variables.color_grey_50,
           },
           endAdornment: endAdornmentJSX,
 
