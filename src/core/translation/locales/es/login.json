@@ -1,20 +1,4 @@
 {
-  "login-title": "Inicia sesión en tu cuenta",
-  "login-subtitle": "¡Bienvenido de nuevo! Por favor, ingresa tus datos.",
-  "login-email": "Correo electrónico",
-  "login-email-placeholder": "Ingresa tu correo electrónico",
-  "login-email-error": "Ingresa un correo electrónico válido",
-  "login-password": "Contraseña",
-  "login-password-placeholder": "Ingresa tu contraseña",
-  "login-password-error": "Ingresa una contraseña válida",
-  "login-error-not-matched": "El usuario o la contraseña no coinciden",
-  "login-checkbox-keep-logged-in": "Mantener sesión iniciada",
-  "login-forget-password": "Olvidé mi contraseña",
-  "login-continue": "Continuar",
-  "login-continue-google": "Continuar con Google",
-  "login-not-account": "¿No tienes una cuenta?",
-  "login-sign-up": "Regístrate",
-  "login-tech-title": "Tech for Impact Summit 2024",
-  "login-tech-subtitle": "Amplía tu red en el summit con Socious",
-  "login-continue-apple": "Continuar con Apple"
+  "login-socious-id-button": "Crear o iniciar sesión con Socious ID",
+  "login-continue-button": "Continuar"
 }

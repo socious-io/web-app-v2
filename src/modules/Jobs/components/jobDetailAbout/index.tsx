@@ -6,7 +6,7 @@ import { COUNTRIES_DICT } from 'src/constants/COUNTRIES';
 import { closeJob, CurrentIdentity, Job } from 'src/core/api';
 import { QuestionsRes } from 'src/core/types';
 import { translate } from 'src/core/utils';
-import { AuthGuard } from 'src/modules/authGuard';
+import AuthGuard from 'src/modules/Auth/containers/AuthGuard';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { CountryFlag } from 'src/modules/general/components/countryFlag';
