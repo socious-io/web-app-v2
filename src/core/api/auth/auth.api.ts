@@ -86,7 +86,7 @@ export async function appleOauth(
     .data;
 }
 
-///Socious V3
+// Socious V3
 export async function auth(payload: AuthReq): Promise<SociousIDAuth> {
   return (await post<SociousIDAuth>('auth', payload, overwrittenConfigV3)).data;
 }
