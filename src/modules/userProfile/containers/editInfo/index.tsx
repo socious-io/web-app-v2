@@ -89,8 +89,7 @@ export const EditInfoModal: React.FC<EditInfoModalProps> = ({ open, handleClose 
         }}
       />
       <div className="flex flex-col gap-[6px]">
-        <Input
-          required
+        <Input          
           multiline
           customHeight="92px"
           id="bio"
