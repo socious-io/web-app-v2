@@ -1,6 +1,5 @@
 import { NotificationType as CoreNotificationType } from 'src/core/api';
 import { LanguageOption } from 'src/core/api/settings/settings.types';
-import { translate } from 'src/core/utils';
 
 export const SocialCauses = {
   SOCIAL: 'SOCIAL',
@@ -890,7 +889,7 @@ export const supportedLanguages: LanguageOption[] = [
     label: 'English (US)',
   },
   {
-    value: 'jp',
+    value: 'ja',
     label: 'Japanese 日本語',
   },
   {
@@ -898,7 +897,7 @@ export const supportedLanguages: LanguageOption[] = [
     label: 'Spanish Español',
   },
   {
-    value: 'kr',
+    value: 'ko',
     label: 'Korean 한국어',
   },
 ];
