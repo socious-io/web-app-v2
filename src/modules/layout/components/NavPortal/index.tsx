@@ -12,11 +12,6 @@ const NavPortal = () => {
 
   const products = [
     {
-      name: 'Work',
-      logo: '/images/logo/logo.svg',
-      link: config.appBaseURL,
-    },
-    {
       name: 'Verify',
       logo: '/images/logo/verify-logo.svg',
       link: config.verifyURL,
