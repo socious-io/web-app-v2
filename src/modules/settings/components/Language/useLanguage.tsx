@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import { useState } from 'react';
 import { supportedLanguages } from 'src/constants/constants';
 import useSwitchLanguage from 'src/core/hooks/useSwitchLanguage';
-import { translate } from 'src/core/utils';
 
 export const useLanguage = () => {
   const { switchLanguage, selectedLanguage: initialLanguage } = useSwitchLanguage();
