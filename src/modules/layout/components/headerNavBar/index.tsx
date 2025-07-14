@@ -73,7 +73,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           autoComplete="off"
         />
       </div>
-      {userIsLoggedIn && (
+      {userIsLoggedIn ? (
         <div className="flex w-fit h-10 gap-2 md:gap-4 items-center">
           <div className="flex gap-4 md:hidden mr-2" onClick={() => setOpenSearchModal(true)}>
             <Icon name="search-lg" fontSize={24} className="text-Gray-light-mode-500" />
@@ -105,8 +105,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             createItem
           />
         </div>
+      ) : (
+        <NavPortal />
       )}
-
       <Slider open={openNotifPanel} onClose={() => setOpenNotifPanel(false)} title="Notifications">
         <Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />
       </Slider>
