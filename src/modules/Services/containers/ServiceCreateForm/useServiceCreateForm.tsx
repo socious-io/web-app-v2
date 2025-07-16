@@ -81,8 +81,8 @@ export const useServiceCreateForm = () => {
   const serviceLength = translateServiceLength;
   const paymentModes = translatePaymentMode;
   const paymentCurrencies = PAYMENT_CURRENCIES;
-  const isEdit = !!pathname.includes('services/edit') ?? false;
-  const isDuplicate = !!pathname.includes('services/duplicate') ?? false;
+  const isEdit = !!pathname.includes('services/edit');
+  const isDuplicate = !!pathname.includes('services/duplicate');
   const {
     register,
     handleSubmit,

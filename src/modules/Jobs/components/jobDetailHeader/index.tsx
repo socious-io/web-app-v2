@@ -6,7 +6,7 @@ import { skillsToCategory, socialCausesToCategory } from 'src/core/adaptors';
 import { CurrentIdentity, Job } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
 import { getIdentityMeta, translate } from 'src/core/utils';
-import { AuthGuard } from 'src/modules/authGuard';
+import AuthGuard from 'src/modules/Auth/containers/AuthGuard';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { BackLink } from 'src/modules/general/components/BackLink';
 import { Button } from 'src/modules/general/components/Button';
@@ -96,7 +96,7 @@ export const JobDetailHeader: React.FC<JobDetailHeaderProps> = ({ job, applied, 
           {!applied && currentIdentity?.type !== 'organizations' && job.status === 'ACTIVE' && (
             <AuthGuard>
               <Button color="primary" variant="contained" customStyle="md:hidden w-full" onClick={handleOpenApplyModal}>
-                Apply now
+                {translate('job-apply')}
               </Button>
             </AuthGuard>
           )}

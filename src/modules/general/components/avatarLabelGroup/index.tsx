@@ -7,7 +7,7 @@ import { AvatarLabelGroupProps } from './avatarLabelGroup.types';
 
 export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = ({
   account,
-  avatarSize,
+  avatarSize = '40px',
   removeFull = false,
   justAvatarClickable = false,
   handleClick,
@@ -24,15 +24,15 @@ export const AvatarLabelGroup: React.FC<AvatarLabelGroupProps> = ({
       <Avatar
         img={account?.img || ''}
         type={account.type}
-        size={avatarSize || '40px'}
+        size={avatarSize}
         onClick={e => justAvatarClickable && handleClick?.(e)}
         isVerified={isVerified}
       />
-      <div className="flex flex-col">
+      <div className="min-w-0 flex flex-col">
         <Typography variant="subtitle2" color={variables.color_grey_900}>
           {account.name}
         </Typography>
-        <Typography variant="caption" color={variables.color_grey_600}>
+        <Typography variant="caption" color={variables.color_grey_600} className="text-ellipsis overflow-hidden">
           {account.username.includes('@') ? account.username : `@${account.username}`}
         </Typography>
       </div>

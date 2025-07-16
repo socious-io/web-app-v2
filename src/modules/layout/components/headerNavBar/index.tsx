@@ -11,6 +11,7 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import css from './headerNavBar.module.scss';
 import { useHeaderNavBar } from './useHeaderNavBar';
 import { Notifications } from '../../containers/notifications';
+import NavPortal from '../NavPortal';
 import NotifBellIcon from '../notifBellIcon';
 import { StatusDropDown } from '../statusDropDown';
 
@@ -72,7 +73,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
           autoComplete="off"
         />
       </div>
-      {userIsLoggedIn && (
+      {userIsLoggedIn ? (
         <div className="flex w-fit h-10 gap-2 md:gap-4 items-center">
           <div className="flex gap-4 md:hidden mr-2" onClick={() => setOpenSearchModal(true)}>
             <Icon name="search-lg" fontSize={24} className="text-Gray-light-mode-500" />
@@ -91,7 +92,7 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
               handleHiring={handleHiring}
             />
           </div>
-
+          <NavPortal />
           <IconDropDown
             type={userType}
             img={image}
@@ -104,8 +105,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = ({ setOpen, logout }) => {
             createItem
           />
         </div>
+      ) : (
+        <NavPortal />
       )}
-
       <Slider open={openNotifPanel} onClose={() => setOpenNotifPanel(false)} title="Notifications">
         <Notifications handleClose={() => setOpenNotifPanel(false)} list={notifList} />
       </Slider>

@@ -1,3 +1,5 @@
+import { config } from 'src/config';
+
 import {
   LoginReq,
   PreRegisterReq,
@@ -11,9 +13,18 @@ import {
   StripeProfileRes,
   PreRegisterRes,
   AuthRes,
+  AuthReq,
+  AuthSession,
+  AuthSessionReq,
+  SociousIDAuth,
 } from './auth.types';
 import { post, get } from '../http';
 import { CapacitorPlatform, SuccessRes } from '../types';
+
+const overwrittenConfigV3 = {
+  baseURL: config.baseURLV3,
+  withCredentials: false,
+};
 
 export async function login(payload: LoginReq, params?: { event_id: string }): Promise<AuthRes> {
   return (await post<AuthRes>('auth/login', payload, { params })).data;
@@ -21,10 +32,6 @@ export async function login(payload: LoginReq, params?: { event_id: string }): P
 
 export async function logout(): Promise<SuccessRes> {
   return (await post<SuccessRes>(`/auth/logout`, {})).data;
-}
-
-export async function refresh(payload: RefreshReq): Promise<AuthRes> {
-  return (await post<AuthRes>('auth/refresh', payload)).data;
 }
 
 export async function preRegister(payload: PreRegisterReq): Promise<PreRegisterRes> {
@@ -77,4 +84,17 @@ export async function appleOauth(
 ): Promise<AuthRes> {
   return (await get<AuthRes>('auth/apple', { params: { code, id_token, referrer_by: referrer, event_id, platform } }))
     .data;
+}
+
+// Socious V3
+export async function auth(payload: AuthReq): Promise<SociousIDAuth> {
+  return (await post<SociousIDAuth>('auth', payload, overwrittenConfigV3)).data;
+}
+
+export async function sociousOauth(payload: AuthSessionReq): Promise<AuthSession> {
+  return (await post<AuthSession>(`auth/session`, payload, overwrittenConfigV3)).data;
+}
+
+export async function refresh(payload: RefreshReq): Promise<AuthRes> {
+  return (await post<AuthRes>('auth/refresh', payload, overwrittenConfigV3)).data;
 }

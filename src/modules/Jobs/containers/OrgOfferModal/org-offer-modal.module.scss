@@ -41,6 +41,7 @@
     }
 }
 .content {
+    width: 540px;
     background-color: white;
     border-radius: 12px;
     @media screen and (max-width: 600px) {
@@ -49,7 +50,6 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }
-    width: 540px;
 }
 
 .row {

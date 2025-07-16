@@ -65,6 +65,7 @@ export const getContractsAdaptor = async (
             (currentIdentityId === contract.provider.id ? contract.provider_feedback : contract.client_feedback) ||
             false,
           escrowId: contract.payment?.meta?.escrowId || '',
+          paymentObj: contract.payment,
         }))
       : [];
     return {

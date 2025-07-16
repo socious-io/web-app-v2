@@ -1,6 +1,6 @@
 import { addFiltersToSearch } from 'src/core/utils';
 
-import { CurrentIdentity, Device, DeviceReq, EventsRes, SearchReq, Skill, SkillRes } from './site.types';
+import { CurrentIdentity, Device, DeviceReq, EventsRes, SearchReq, SkillRes } from './site.types';
 import { post, get } from '../http';
 import { ApplicantsRes, JobsRes } from '../jobs/jobs.types';
 import { OrganizationsRes } from '../organizations/organizations.types';
@@ -25,10 +25,12 @@ export async function search(payload: SearchReq, params: PaginateReq) {
       return data;
   }
 }
+
 export async function searchHistory(params: PaginateReq) {
   const { data } = await get<PaginateRes>('search/history', { params });
   return data;
 }
+
 export async function identities(): Promise<CurrentIdentity[]> {
   return (await get<CurrentIdentity[]>('identities')).data;
 }

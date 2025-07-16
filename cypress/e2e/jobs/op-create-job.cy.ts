@@ -55,7 +55,7 @@ describe('Create Job', () => {
 
   it('it should open created jobs page, view jobs listed and create the volunteer/fixed job ', () => {
     // Visit jobs page
-    cy.visit(`${APP_URL}/jobs/created`);
+    cy.visit(`${APP_URL}jobs/created`);
     cy.contains('button', 'Create job').click();
 
     cy.url().should('include', '/jobs/create');
@@ -113,7 +113,7 @@ describe('Create Job', () => {
 
   it('it should open created jobs page, view jobs listed and create the paid/fixed job ', () => {
     // Visit jobs page
-    cy.visit(`${APP_URL}/jobs/created`);
+    cy.visit(`${APP_URL}jobs/created`);
     cy.contains('button', 'Create job').click();
 
     cy.url().should('include', '/jobs/create');

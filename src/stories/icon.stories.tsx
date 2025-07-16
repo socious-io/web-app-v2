@@ -1,4 +1,4 @@
-import { Meta, Story, StoryFn } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import React from 'react';
 import { Icon } from 'src/modules/general/components/Icon';
 // Use docs/icons-reference.html for icons refrence

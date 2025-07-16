@@ -62,6 +62,9 @@ jobs:
           VITE_STRIPE_PUBLIC_KEY: ${{ vars.STRIPE_PUBLIC_KEY }}
           VITE_APPLE_OAUTH_CLIENT_ID: ${{ vars.APPLE_OAUTH_CLIENT_ID }}
           VITE_GOOGLE_OAUTH_CLIENT_ID_IOS: ${{ vars.GOOGLE_OAUTH_CLIENT_ID_IOS }}
+          VITE_ACCOUNT_CENTER_URL: ${{ vars.ACCOUNT_CENTER_URL }}
+          VITE_FUND_URL: ${{ vars.FUND_URL }}
+          VITE_VERIFY_URL: ${{ vars.VERIFY_URL }}
 
       - name: Get the latest version code using
         uses: Vacxe/google-play-cli-kt@0.4.8

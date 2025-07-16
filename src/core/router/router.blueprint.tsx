@@ -34,7 +34,7 @@ import {
   invitations,
   cards,
 } from 'src/core/api';
-import { events, search as searchReq } from 'src/core/api/site/site.api';
+import { search as searchReq } from 'src/core/api/site/site.api';
 import { translate } from 'src/core/utils';
 import { Layout as NowruzLayout } from 'src/modules/layout';
 import FallBack from 'src/pages/fallback/fallback';
@@ -718,78 +718,18 @@ export const blueprint: RouteObject[] = [
         path: 'user',
         children: [
           {
-            path: 'email',
-            loader: async ({ request }) => {
-              const url = new URL(request.url);
-              const eventName = url.searchParams.get('event_name');
-              if (eventName) {
-                return await events({ limit: 10, page: 1 });
-              } else {
-                return null;
-              }
-            },
-            async lazy() {
-              const { Email } = await import('src/pages/sign-up/Email');
-              return {
-                Component: Email,
-              };
-            },
-          },
-          {
-            path: 'verification',
-            async lazy() {
-              const { Verify } = await import('src/pages/sign-up/Verify');
-              return {
-                Component: Verify,
-              };
-            },
-          },
-          {
-            path: 'password',
-            async lazy() {
-              const { ChoosePassword } = await import('src/pages/sign-up/ChoosePassword');
-              return {
-                Component: ChoosePassword,
-              };
-            },
-          },
-          {
-            path: 'complete',
-            loader: async () => {
-              const currentProfile = await profile();
-              return {
-                currentProfile,
-              };
-            },
-            async lazy() {
-              const { Details } = await import('src/pages/sign-up/Details');
-              return {
-                Component: Details,
-              };
-            },
-          },
-          {
             path: 'congrats',
             async lazy() {
-              const { Congrats } = await import('src/pages/sign-up/Congrats');
+              const { Congrats } = await import('src/pages/sign-up/congrats');
               return {
                 Component: Congrats,
               };
             },
           },
-          // {
-          //   path: 'welcome',
-          //   async lazy() {
-          //     const { Welcome } = await import('src/pages/sign-up/welcome/welcome');
-          //     return {
-          //       Component: Welcome,
-          //     };
-          //   },
-          // },
           {
             path: 'notification',
             async lazy() {
-              const { AllowNotification } = await import('src/pages/AllowNotification');
+              const { AllowNotification } = await import('src/pages/sign-up/allowNotification');
               return {
                 Component: AllowNotification,
               };
@@ -797,26 +737,13 @@ export const blueprint: RouteObject[] = [
           },
           {
             path: 'onboarding',
-            // loader: async () => {
-            //   await store.dispatch(currentIdentities());
-            //   return null;
-            // },
             async lazy() {
-              const { Onboarding } = await import('src/pages/sign-up/Onboarding');
+              const { Onboarding } = await import('src/pages/sign-up/onboarding');
               return {
                 Component: Onboarding,
               };
             },
           },
-          // {
-          //   path: 'allow-notification',
-          //   async lazy() {
-          //     const { AllowNotification } = await import('src/pages/sign-up/AllowNotification');
-          //     return {
-          //       Component: AllowNotification,
-          //     };
-          //   },
-          // },
         ],
       },
     ],
@@ -857,88 +784,6 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
-    path: 'forget-password',
-    children: [
-      {
-        path: 'email',
-        async lazy() {
-          const { Email } = await import('src/pages/forget-password/email');
-          return {
-            Component: Email,
-          };
-        },
-      },
-      {
-        path: 'otp/*',
-        async lazy() {
-          const { Otp } = await import('src/pages/forget-password/otp');
-          return {
-            Component: Otp,
-          };
-        },
-      },
-      {
-        path: 'password/*',
-        async lazy() {
-          const { Password } = await import('src/pages/forget-password/password');
-          return {
-            Component: Password,
-          };
-        },
-      },
-      {
-        path: 'reset-completed',
-        async lazy() {
-          const { ResetCompleted } = await import('src/pages/forget-password/resetCompleted');
-          return {
-            Component: ResetCompleted,
-          };
-        },
-      },
-    ],
-  },
-  // {
-  //   path: 'change-password',
-  //   async lazy() {
-  //     const { ChangePasswordContainer } = await import('src/pages/change-password/change-password.container');
-  //     return {
-  //       Component: ChangePasswordContainer,
-  //     };
-  //   },
-  // },
-  // {
-  //   path: 'delete-profile',
-  //   children: [
-  //     {
-  //       path: 'delete',
-  //       async lazy() {
-  //         const { Delete } = await import('src/pages/delete-profile/delete/delete');
-  //         return {
-  //           Component: Delete,
-  //         };
-  //       },
-  //     },
-  //     {
-  //       path: 'password',
-  //       async lazy() {
-  //         const { Password } = await import('src/pages/delete-profile/password/password');
-  //         return {
-  //           Component: Password,
-  //         };
-  //       },
-  //     },
-  //     {
-  //       path: 'confirm',
-  //       async lazy() {
-  //         const { Confirm } = await import('src/pages/delete-profile/confirm/confirm');
-  //         return {
-  //           Component: Confirm,
-  //         };
-  //       },
-  //     },
-  //   ],
-  // },
-  {
     path: 'notifications/:id',
     loader: ({ params }) => {
       return {
@@ -955,27 +800,9 @@ export const blueprint: RouteObject[] = [
   {
     path: '/intro',
     async lazy() {
-      const { Intro } = await import('src/pages/Intro');
+      const { Intro } = await import('src/pages/intro');
       return {
         Component: Intro,
-      };
-    },
-  },
-  {
-    path: '/sign-in',
-    loader: async ({ request }) => {
-      const url = new URL(request.url);
-      const eventName = url.searchParams.get('event_name');
-      if (eventName) {
-        return await events({ limit: 10, page: 1 });
-      } else {
-        return null;
-      }
-    },
-    async lazy() {
-      const { SignIn } = await import('src/pages/sign-in');
-      return {
-        Component: SignIn,
       };
     },
   },
@@ -983,39 +810,10 @@ export const blueprint: RouteObject[] = [
     path: '/oauth',
     children: [
       {
-        path: 'google',
-        loader: async ({ request }) => {
-          const url = new URL(request.url);
-          const eventName = url.searchParams.get('event_name');
-          if (eventName) {
-            return await events({ limit: 10, page: 1 });
-          } else {
-            return null;
-          }
-        },
+        path: 'socious',
         async lazy() {
-          const { GoogleOauth2 } = await import('src/pages/oauth/google');
-          return {
-            Component: GoogleOauth2,
-          };
-        },
-      },
-      {
-        path: 'apple',
-        loader: async ({ request }) => {
-          const url = new URL(request.url);
-          const eventName = url.searchParams.get('event_name');
-          if (eventName) {
-            return await events({ limit: 10, page: 1 });
-          } else {
-            return null;
-          }
-        },
-        async lazy() {
-          const { AppleOauth2 } = await import('src/pages/oauth/apple');
-          return {
-            Component: AppleOauth2,
-          };
+          const { SociousID } = await import('src/pages/oauth/socious');
+          return { Component: SociousID };
         },
       },
     ],

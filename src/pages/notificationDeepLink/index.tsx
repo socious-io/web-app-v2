@@ -19,12 +19,11 @@ export const NotificationDeepLink = () => {
       if (error.response?.data.error === 'Not matched') {
         dispatch(removeIdentityList());
         await logout();
-        navigate('/sign-in');
       } else if (error.response.data.error === 'Unauthorized') {
         const path = location.pathname;
         nonPermanentStorage.set({ key: 'savedLocation', value: path });
-        navigate('/sign-in');
       }
+      navigate('/intro');
     }
   };
 

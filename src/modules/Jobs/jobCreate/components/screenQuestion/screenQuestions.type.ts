@@ -1,4 +1,4 @@
-import { Question } from 'src/core/types';
+import { Question } from 'src/core/api';
 
 export interface ScreenQuestionProps {
   question: Question;

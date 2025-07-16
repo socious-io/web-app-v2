@@ -32,7 +32,7 @@ const schema = yup.object().shape({
 
 export const useServicePaymentFlow = () => {
   const navigate = useNavigate();
-  const { isConnected, account, signer, chainId, Web3Connect } = Dapp.useWeb3();
+  const { isConnected, account, signer, chainId, Web3Connect, walletProvider } = Dapp.useWeb3();
   const { serviceDetail: service, cards } = useLoaderData() as { serviceDetail: Service; cards: Card[] };
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
@@ -114,6 +114,7 @@ export const useServicePaymentFlow = () => {
       }
 
       const result = await Dapp.escrow({
+        walletProvider,
         signer,
         chainId,
         totalAmount: contract.amounts?.total || 0,

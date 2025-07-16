@@ -1,6 +1,6 @@
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { AlertCircle } from 'public/icons/dynamic/alert-circle';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Icon } from 'src/modules/general/components/Icon';
 import { InputDropdown } from 'src/modules/general/components/input/InputDropdown';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -12,12 +12,10 @@ export const Input: React.FC<InputProps> = ({
   id,
   label,
   name,
-  required,
   errors,
   isValid,
   validMessage,
   prefix,
-  color,
   register,
   hints,
   startIcon,
@@ -27,12 +25,15 @@ export const Input: React.FC<InputProps> = ({
   postfixDropdown,
   onEnter,
   containerClassName = '',
+  multiline = false,
+  minRows = 1,
+  maxRows = 4,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [endIcon, setEndIcon] = useState<React.ReactNode>('');
   const [inputType, setInputType] = useState(props.type || 'text');
-  const [showEyeIcon, setshowEyeIcon] = useState(false);
+  const [showEyeIcon, setShowEyeIcon] = useState(false);
 
   useEffect(() => {
     if (errors) setEndIcon(<AlertCircle width={14} height={14} stroke={`${variables.color_error_600}`} />);
@@ -59,14 +60,17 @@ export const Input: React.FC<InputProps> = ({
       val = val.trim();
     }
     if (props.type === 'password')
-      if (val.length) setshowEyeIcon(true);
-      else setshowEyeIcon(false);
+      if (val.length) setShowEyeIcon(true);
+      else setShowEyeIcon(false);
     return val;
   };
 
-  const handleKeydown = (e: ChangeEvent<unknown>) => {
+  const handleKeydown = (e: React.KeyboardEvent) => {
     const value = (e.target as HTMLInputElement)?.value;
-    if ('key' in e && e.key === 'Enter') {
+    const isValidValue = !!value.trim();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!isValidValue) return;
       onEnter?.(value);
     }
   };
@@ -105,9 +109,14 @@ export const Input: React.FC<InputProps> = ({
         className={`${css.default} ${errors ? css.errorColor : css.defaultColor}`}
         fullWidth
         onKeyDown={handleKeydown}
+        multiline={multiline}
+        minRows={minRows}
+        maxRows={maxRows}
         InputProps={{
           style: {
             height: props.customHeight ? props.customHeight : '44px',
+            alignItems: multiline ? 'flex-start' : 'center',
+            backgroundColor: props.disabled && variables.color_grey_50,
           },
           endAdornment: endAdornmentJSX,
 

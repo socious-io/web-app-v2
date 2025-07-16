@@ -11,13 +11,13 @@ const resources = {
   en: {
     translation: generateTranslationFile(),
   },
-  jp: {
+  ja: {
     translation: generateJPTranslationFile(),
   },
   es: {
     translation: generateESTranslationFile(),
   },
-  kr: {
+  ko: {
     translation: generateKRTranslationFile(),
   },
 };
@@ -27,7 +27,7 @@ i18next
   .use(initReactI18next)
   .init({
     resources,
-    lng: localStorage.getItem('language') || 'en',
+    lng: localStorage.getItem('i18nextLng') || navigator.language || 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

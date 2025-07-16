@@ -9,6 +9,9 @@ export const config = {
   stripePublicKey: import.meta.env.VITE_STRIPE_PUBLIC_KEY,
   jpStripePublicKey: import.meta.env.VITE_JP_STRIPE_PUBLIC_KEY,
   appBaseURL: import.meta.env.VITE_APP_URL,
+  accountCenterURL: import.meta.env.VITE_ACCOUNT_CENTER_URL,
+  fundURL: import.meta.env.VITE_FUND_URL,
+  verifyURL: import.meta.env.VITE_VERIFY_URL,
   webTokenClientId: import.meta.env.VITE_CLIENT_SECRET_TOKEN_CLIENT_ID,
   webTokenRedirectURL: import.meta.env.VITE_CLIENT_SECRET_TOKEN_REDIRECT_URL,
   logDiscordWebHook: import.meta.env.VITE_LOG_DISCORD_WEBHOOK,
@@ -19,6 +22,8 @@ export const config = {
   appleOauthClientId: import.meta.env.VITE_APPLE_OAUTH_CLIENT_ID,
   googleRecaptchaSiteKey: import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY,
   appleOauthClientIdIOS: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID_IOS,
+  blocfrostProjectId: import.meta.env.VITE_BLOCKFROST_PROJECT_ID,
+  cardanoPayoutFeeAddress: import.meta.env.VITE_CARDANO_PAYOUT_ADERESS,
 };
 
 export const isTestingEnvironment = config.env === 'test';

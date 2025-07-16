@@ -170,19 +170,6 @@ export type CategoriesResp = {
   }[];
 };
 
-export type QuestionsRes = {
-  questions: {
-    created_at: string;
-    id: string;
-    old_id: number;
-    options: null | string[];
-    project_id: string;
-    question: string;
-    required: boolean;
-    updated_at: string;
-  }[];
-};
-
 export type Cities = {
   country_code: string;
   id: number;
@@ -424,12 +411,6 @@ export type CreatePostPayload = {
   payment_currency: string;
 };
 
-export type CreateQuestionPayload = {
-  question: string;
-  required: boolean;
-  options?: string[];
-};
-
 export type SettingsRes = {
   type: string;
   in_app: boolean;
@@ -529,13 +510,3 @@ export type Profile = {
 };
 export type FcmListResp = Array<{ meta: { os: 'ANDROID' | 'IOS' }; user_id: string; token: string }>;
 export type CreateFcmPayload = { meta: { os: 'ANDROID' | 'IOS' }; token: string };
-export type Question = {
-  created_at: string;
-  id: string;
-  old_id: number;
-  options: null | string[];
-  project_id: string;
-  question: string;
-  required: boolean;
-  updated_at: string;
-};

@@ -1,28 +1,34 @@
-import { AnyAction } from '@reduxjs/toolkit';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selfDelete } from 'src/core/api';
+import { nonPermanentStorage } from 'src/core/storage/non-permanent';
 import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Input } from 'src/modules/general/components/input/input';
 import { Modal } from 'src/modules/general/components/modal';
 import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
+import { removeIdentityList } from 'src/store/reducers/identity.reducer';
 
 import css from './account.module.scss';
 
 const Account = () => {
-  const [modalVisibility, setModalVisibility] = useState(false);
-  let reasonbody = '';
-
-  const onChangeTextHandler = (e: AnyAction) => {
-    reasonbody = e.target.value;
-  };
-
   const navigate = useNavigate();
-  const closeAccount = async () => {
-    await selfDelete({ reason: reasonbody });
-    navigate('/sign-in');
+  const dispatch = useDispatch();
+  const [modalVisibility, setModalVisibility] = useState(false);
+  const [reason, setReason] = useState('');
+
+  const onCloseAccount = async () => {
+    try {
+      await selfDelete({ reason });
+      dispatch(removeIdentityList());
+      nonPermanentStorage.clear();
+      localStorage.clear();
+      navigate('/intro');
+    } catch (e) {
+      console.error('Error in deleting account: ', e);
+    }
   };
 
   return (
@@ -109,20 +115,15 @@ const Account = () => {
               multiline
               label={translate('account.closeAccount.reason')}
               customHeight="160px"
-              onChange={onChangeTextHandler}
+              onChange={e => setReason(e.target.value)}
               placeholder={translate('account.closeAccount.placeholder')}
             />
           </div>
           <div className="flex mt-8 justify-end gap-2">
-            <Button
-              onClick={() => {
-                setModalVisibility(false);
-              }}
-              color="info"
-            >
+            <Button onClick={() => setModalVisibility(false)} color="info">
               {translate('account.closeAccount.buttons.cancel')}
             </Button>
-            <Button onClick={() => closeAccount()} color="error">
+            <Button onClick={onCloseAccount} color="error">
               {translate('account.closeAccount.buttons.delete')}
             </Button>
           </div>
