@@ -32,7 +32,8 @@ export const SociousID = () => {
 
   const determineUserLandingPath = (userProfile: User) => {
     const isOnboardingIncomplete = checkOnboardingMandatoryFields(userProfile);
-    if (isOnboardingIncomplete) {
+    const isUserIdentity = userProfile.id === identityId;
+    if (isUserIdentity && isOnboardingIncomplete) {
       return '/sign-up/user/onboarding';
     }
     return '/';
