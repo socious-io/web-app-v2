@@ -58,8 +58,8 @@ export const Onboarding = () => {
       id: primary?.id || '',
       type: 'users',
       name: primary?.meta.name || '',
-      username: (primary?.meta as UserMeta).username || (primary?.meta as OrgMeta).shortname,
-      img: (primary?.meta as UserMeta).avatar || (primary?.meta as OrgMeta).image,
+      username: (primary?.meta as UserMeta)?.username || (primary?.meta as OrgMeta)?.shortname || '',
+      img: (primary?.meta as UserMeta)?.avatar || (primary?.meta as OrgMeta)?.image || '',
       selected: true,
     },
   ];
