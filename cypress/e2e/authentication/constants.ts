@@ -1,5 +1,6 @@
 //Server
 export const API_SERVER = Cypress.env('api_server');
+export const API_SERVER_V3 = Cypress.env('api_server_v3');
 export const APP_URL = Cypress.env('app_url');
 
 //Credentials
