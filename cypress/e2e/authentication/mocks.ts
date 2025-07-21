@@ -809,3 +809,221 @@ export const EMPTY_NOTIFICATIONS = {
   total_count: 0,
   items: [],
 };
+
+export const SESSION = {
+  access_token: "VALID_ACCESS_TOKEN",
+  refresh_token: "VALID_REFRESH_TOKEN",
+  token_type: "Bearer"
+}
+
+export const PROFILE = {
+    id:"035f724e-5824-4129-8ed6-96c6dda81a3a",
+    username:"imshantik5140",
+    first_name:"Shant",
+    last_name:"Isaghoolian",
+    city:"Tehran",
+    country:"IR",
+    geoname_id:null,
+    mission:null,
+    bio:null,
+    impact_points:33,
+    skills:[
+        "C#",
+        "GIT",
+        "HTML",
+        "JQUERY",
+        "JSON",
+        "SOFTWARE_ENGINEERING"
+    ],
+    followers:1,
+    followings:3,
+    created_at:"2025-02-27T10:59:24.278Z",
+    wallet_address:"01a64dbdd28d90860c0115ddc5bfc97113cfc2503e5c67ae97279671d05909a573f878276173c08284de1a0aebc4174dcd7bab0e2a4f298133",
+    proofspace_connect_id:null,
+    phone:null,
+    address:null,
+    social_causes:[
+        "POVERTY"
+    ],
+    avatar:null,
+    cover_image:null,
+    reported:false,
+    following:false,
+    follower:false,
+    connection_status:null,
+    connection_id:null,
+    mobile_country_code:null,
+    open_to_work:false,
+    open_to_volunteer:true,
+    is_contributor:null,
+    identity_verified:true,
+    events:null,
+    portfolios:null,
+    certificates:null,
+    recommendations:null,
+    languages:[
+        {
+            id:"7b12a7cc-e3b6-44ad-842e-3e5c9099f2b6",
+            name:"IT",
+            level:"BASIC"
+        },
+        {
+            id:"45e0692d-9579-4a6f-8546-ba9613a1dd22",
+            name:"FA",
+            level:"FLUENT"
+        },
+        {
+            id:"57939cbd-4680-4f2f-a7bc-f39c57ab6c12",
+            name:"HY",
+            level:"NATIVE"
+        },
+        {
+            id:"59c72a8f-ff26-4714-9d5c-9b48cf882d9e",
+            name:"EN",
+            level:"FLUENT"
+        }
+    ],
+    experiences:[
+        {
+            id:"fc4114dc-58f3-4239-9cd1-b2529fc5cee6",
+            org:{
+                id:"ce3e1c48-a4de-4131-9b9b-15bf35468161",
+                bio:null,
+                city:null,
+                name:"Socious",
+                image:{
+                    id:null,
+                    url:null
+                },
+                country:null,
+                shortname:"socious1803",
+                created_at:"2024-03-25T02:27:29.798786+00:00",
+                updated_at:"2024-03-25T02:27:29.798786+00:00",
+                description:null
+            },
+            city:"Tokyo",
+            title:"QA Engineer",
+            end_at:null,
+            skills:null,
+            country:" Japan",
+            start_at:"2025-02-01T00:00:00",
+            credential:null,
+            description:null,
+            job_category:{
+                id:null,
+                name:null
+            },
+            employment_type:"FULL_TIME"
+        },
+        {
+            id:"e56ecde3-6595-48ac-905b-26183f25468c",
+            org:{
+                id:"183ebf62-e79e-4a75-acd4-433ce9f4cd87",
+                bio:null,
+                city:null,
+                name:"EIED",
+                image:{
+                    id:null,
+                    url:null
+                },
+                country:null,
+                shortname:"eied7257",
+                created_at:"2025-03-03T13:35:16.513411+00:00",
+                updated_at:"2025-03-03T13:35:16.513411+00:00",
+                description:null
+            },
+            city:"Tehran",
+            title:"Software Engineer",
+            end_at:null,
+            skills:null,
+            country:" Tehran Province",
+            start_at:"2024-01-01T00:00:00",
+            credential:null,
+            description:null,
+            job_category:{
+                id:null,
+                name:null
+            },
+            employment_type:"FULL_TIME"
+        },
+        {
+            id:"dca60f63-1859-474f-a7e1-7309b60bd51a",
+            org:{
+                id:"0d982480-4522-463e-8602-482ec76392af",
+                bio:null,
+                city:null,
+                name:"BEMAN Branding Agency",
+                image:{
+                    id:null,
+                    url:null
+                },
+                country:null,
+                shortname:"beman_branding_agency4259",
+                created_at:"2025-03-03T13:35:16.555931+00:00",
+                updated_at:"2025-03-03T13:35:16.555931+00:00",
+                description:null
+            },
+            city:"Tehran",
+            title:"Software Engineer",
+            end_at:"2023-11-01T00:00:00",
+            skills:null,
+            country:" Tehran Province",
+            start_at:"2023-09-01T00:00:00",
+            credential:null,
+            description:" left for a fair-pay job",
+            job_category:{
+                id:null,
+                name:null
+            },
+            employment_type:"FULL_TIME"
+        }
+    ],
+    educations:[
+        {
+            id:"e0554af0-81be-491d-85aa-70486ce09187",
+            org:{
+                id:"76238a90-16c7-4824-a621-30cfafb92ea6",
+                bio:null,
+                city:null,
+                name:"Islamic Azad University",
+                image:null,
+                country:null,
+                shortname:"islamic_azad_university9248",
+                created_at:"2025-03-03T13:35:16.588199+00:00",
+                updated_at:"2025-03-03T13:35:16.588199+00:00",
+                description:null
+            },
+            grade:"Master's degree",
+            title:"Islamic Azad University",
+            degree:"Computer Software Engineering",
+            end_at:null,
+            start_at:"1970-01-01T00:00:02.025",
+            credential:null,
+            description:null
+        },
+        {
+            id:"2ced788a-85a5-4594-b25c-7e63f750dcf7",
+            org:{
+                id:"c8460ee5-4420-4470-b316-eaae78be00ee",
+                bio:null,
+                city:null,
+                name:"Rudehen azad university",
+                image:null,
+                country:null,
+                shortname:"rudehen_azad_university9496",
+                created_at:"2025-03-03T13:35:16.606317+00:00",
+                updated_at:"2025-03-03T13:35:16.606317+00:00",
+                description:null
+            },
+            grade:"Bachelore",
+            title:"Rudehen azad university",
+            degree:"Computer Engineering",
+            end_at:null,
+            start_at:"1970-01-01T00:00:02.025",
+            credential:null,
+            description:null
+        }
+    ],
+    connections:0,
+    rate:null
+}
