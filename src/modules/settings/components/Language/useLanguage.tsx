@@ -1,9 +1,10 @@
-import i18next from 'i18next';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supportedLanguages } from 'src/constants/constants';
 import useSwitchLanguage from 'src/core/hooks/useSwitchLanguage';
 
 export const useLanguage = () => {
+  const { i18n } = useTranslation();
   const { switchLanguage, selectedLanguage: initialLanguage } = useSwitchLanguage();
   const getLanguageOption = lang => {
     const languageMap = supportedLanguages.reduce((map, { value, label }) => {
@@ -22,7 +23,7 @@ export const useLanguage = () => {
   // Reset the selected language to the last saved state
   const onCancel = () => {
     setUnsavedValue(unsavedValue);
-    i18next.changeLanguage(unsavedValue.value);
+    i18n.changeLanguage(unsavedValue.value);
   };
 
   return { onSave, onCancel, unsavedValue, setUnsavedValue };
