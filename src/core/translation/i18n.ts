@@ -22,12 +22,17 @@ const resources = {
   },
 };
 
+const savedLang = localStorage.getItem('lang');
+const browserLang = navigator.language.split('-')[0];
+
+const language = savedLang || browserLang || 'en';
+
 i18next
   .use(detector)
   .use(initReactI18next)
   .init({
     resources,
-    lng: localStorage.getItem('i18nextLng') || navigator.language || 'en',
+    lng: language,
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
