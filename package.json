@@ -61,7 +61,7 @@
     "cardano-bridge": "github:socious-io/cardano-bridge#v0.0.6",
     "country-flag-icons": "^1.5.19",
     "dotenv": "^16.5.0",
-    "ethers": "^6.14.0",
+    "ethers": "^6.15.0",
     "firebase": "^11.10.0",
     "i18next-browser-languagedetector": "^8.1.0",
     "iso-country-currency": "^0.7.2",
