@@ -67,7 +67,7 @@
     "iso-country-currency": "^0.7.2",
     "js-base64": "^3.7.7",
     "js-cookie": "^3.0.5",
-    "markdown-to-jsx": "^7.7.6",
+    "markdown-to-jsx": "^7.7.12",
     "moment": "^2.30.1",
     "qrcode.react": "^4.2.0",
     "ramda": "^0.31.3",
