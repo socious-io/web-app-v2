@@ -135,7 +135,7 @@
     "@vitejs/plugin-react-swc": "^3.11.0",
     "autoprefixer": "^10.4.21",
     "babel-loader": "^10.0.0",
-    "cypress": "^14.3.3",
+    "cypress": "^14.5.3",
     "cypress-file-upload": "^5.0.8",
     "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.8",
