@@ -1,40 +1,18 @@
-import React from 'react';
 import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
-import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
-import { Input } from 'src/modules/general/components/input/input';
+import CopyLink from 'src/modules/general/containers/CopyLink';
 import variables from 'src/styles/constants/_exports.module.scss';
 
-import css from './referCard.module.scss';
 import { useReferCard } from './useReferCard';
-import EmailInvitation from '../emailInvitation';
 
 interface ReferCardProps {
   type: 'organization' | 'talent';
 }
 
 export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
-  const {
-    openEmailModal,
-    setOpenEmailModal,
-    handleCopy,
-    title,
-    subtitle,
-    verified,
-    sendInviteEmail,
-    url,
-    emails,
-    setEmails,
-    openSentModal,
-    setOpenSentModal,
-  } = useReferCard(type);
-  const inputJSX = (
-    <button id="copy-button" className={css.copyBtn} onClick={handleCopy}>
-      <Icon name="copy-01" fontSize={20} className="text-Gray-light-mode-700" />
-      <span>{translate('referral-copy')}</span>
-    </button>
-  );
+  const { handleCopy, title, subtitle, verified, url, openSentModal, setOpenSentModal } = useReferCard(type);
+
   return (
     <>
       <div
@@ -49,18 +27,17 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
         </div>
         {!!verified && (
           <div className="px-4 md:px-6 flex flex-col gap-3">
-            <Input className="bg-Base-White" id="copy-url" value={url} postfix={inputJSX} />
-            <div className="w-full flex gap-3">
+            <CopyLink link={url} onCopy={handleCopy} className="bg-Base-White" />
+            {/* <div className="w-full flex gap-3">
               <Button
                 fullWidth
                 customStyle="bg-Base-White"
                 variant="outlined"
                 color="secondary"
                 onClick={() => setOpenEmailModal(true)}
-              >
-                <Icon name="mail-01" fontSize={24} className="text-Gray-light-mode-700" />
-              </Button>
-              {/*<Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
+                startIcon={<Icon name="mail-01" fontSize={24} className="text-Gray-light-mode-700" />}
+              />
+              <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
                 <Icon name="share-01" fontSize={24} className="text-Gray-light-mode-700" />
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
@@ -68,8 +45,8 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
               </Button>
               <Button fullWidth customStyle="bg-Base-White" variant="outlined" color="secondary">
                 <Icon name="telegram" fontSize={24} color="#26a5e5" />
-              </Button> */}
-            </div>
+              </Button>
+            </div> */}
           </div>
         )}
         <div
@@ -77,7 +54,7 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
             type === 'organization' ? 'border-Wild_blue-500' : 'border-Dark_vanilla-500'
           } `}
         >
-          <span className="text-lg font-semibold text-Gray-light-mode-900">{translate('referral-you-get')}</span>
+          <span className="text-lg font-semibold text-Gray-light-mode-900">{translate('refer-you-get')}</span>
           <div className="flex gap-3">
             <div
               className="h-5 w-5 rounded-lg flex items-center justify-center"
@@ -89,10 +66,10 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
               <Icon name="tick" fontSize={10} className="text-Base-White" />
             </div>
             <span className="text-sm font-normal text-Gray-light-mode-600">
-              {type === 'organization' ? translate('referral-org-desc') : translate('referral-user-desc')}
+              {type === 'organization' ? translate('refer-org-desc') : translate('refer-user-desc')}
             </span>
           </div>
-          <span className="text-lg font-semibold text-Gray-light-mode-900">{translate('referral-they-get')}</span>
+          <span className="text-lg font-semibold text-Gray-light-mode-900">{translate('refer-they-get')}</span>
           <div className="flex gap-3">
             <div
               className="h-5 w-5 rounded-lg flex items-center justify-center"
@@ -103,24 +80,24 @@ export const ReferCard: React.FC<ReferCardProps> = ({ type }) => {
             >
               <Icon name="tick" fontSize={10} className="text-Base-White" />
             </div>
-            <span className="text-sm font-normal text-Gray-light-mode-600">{translate('referral-discount')}</span>
+            <span className="text-sm font-normal text-Gray-light-mode-600">{translate('refer-discount')}</span>
           </div>
         </div>
       </div>
-      <EmailInvitation
+      {/* <EmailInvitation
         open={openEmailModal}
         handleClose={() => setOpenEmailModal(false)}
         handleSend={sendInviteEmail}
         emails={emails}
         setEmails={setEmails}
-      />
+      /> */}
       <AlertModal
         open={openSentModal}
         onClose={() => setOpenSentModal(false)}
-        title={translate('referral-sent')}
-        message={translate('referral-tell-contacts')}
+        title={translate('refer-sent')}
+        message={translate('refer-tell-contacts')}
         closeButtn={true}
-        closeButtonLabel={translate('referral-close')}
+        closeButtonLabel={translate('refer-close')}
       />
     </>
   );
