@@ -650,7 +650,7 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
-            path: 'referral',
+            path: 'refer',
             async lazy() {
               const { Refer } = await import('src/pages/refer');
               return {
@@ -749,41 +749,6 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
-    path: 'referral',
-    children: [
-      {
-        path: ':username/talent',
-        loader: async ({ params }) => {
-          if (params.username) {
-            localStorage.setItem('registerFor', 'user');
-            const user = await otherProfileByUsername(params.username);
-            localStorage.setItem(
-              'referrer',
-              JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
-            );
-            return null;
-          }
-        },
-        element: <Navigate to="/sign-up/user/email" />,
-      },
-      {
-        path: ':username/org',
-        loader: async ({ params }) => {
-          if (params.username) {
-            localStorage.setItem('registerFor', 'organization');
-            const user = await otherProfileByUsername(params.username);
-            localStorage.setItem(
-              'referrer',
-              JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
-            );
-            return null;
-          }
-        },
-        element: <Navigate to="/sign-up/user/email" />,
-      },
-    ],
-  },
-  {
     path: 'notifications/:id',
     loader: ({ params }) => {
       return {
@@ -817,6 +782,13 @@ export const blueprint: RouteObject[] = [
         },
       },
     ],
+  },
+  {
+    path: '/referral',
+    async lazy() {
+      const { Referral } = await import('src/pages/refer/referral');
+      return { Component: Referral };
+    },
   },
   {
     path: 'privacy-policy',

@@ -23,7 +23,7 @@ import organization from './organization.json';
 import payments from './payments.json';
 import preferences from './preferences.json';
 import profile from './profile.json';
-import referral from './referral.json';
+import refer from './refer.json';
 import reviews from './reviews.json';
 import search from './search.json';
 import services from './services.json';
@@ -51,7 +51,7 @@ export function generateTranslationFile() {
     dashboard,
     kyc,
     profile,
-    referral,
+    refer,
     navigation,
     header,
     jobs,

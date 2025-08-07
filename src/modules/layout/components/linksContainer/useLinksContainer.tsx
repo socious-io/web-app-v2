@@ -100,7 +100,7 @@ export const useLinksContainer = (setOpen: (val: boolean) => void) => {
     },
     {
       label: translate('nav-refer'),
-      route: '/referral',
+      route: '/refer',
       iconName: 'star-06',
       public: false,
     },
