@@ -1,4 +1,4 @@
-import { MESSAGES, SEARCH_FOLLOWINGS, SENT_MESSAGE, SUMMARY, USER_IDENTTITY, NOTIFICATIONS } from './mocks';
+import { MESSAGES, SEARCH_FOLLOWINGS, SENT_MESSAGE, SUMMARY, NOTIFICATIONS } from './mocks';
 import { API_SERVER, APP_URL, FIRSTNAME, LASTNAME, USERNAME } from '../authentication/constants';
 import { User, generateRandomEmail } from '../authentication/utilities';
 
