@@ -607,9 +607,9 @@ export const blueprint: RouteObject[] = [
               return { connections };
             },
             async lazy() {
-              const { Connctions } = await import('src/pages/connections');
+              const { Connections } = await import('src/pages/connections');
               return {
-                Component: Protect(Connctions, 'both'),
+                Component: Protect(Connections, 'both'),
               };
             },
           },

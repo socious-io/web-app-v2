@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 import { Connection, CurrentIdentity, connectRequestAccept, connectRequestReject, connections } from 'src/core/api';
 import { RootState } from 'src/store';
 
-export const useRequestTab = () => {
+import { RequestTabProps } from './index.types';
+
+export const useRequestTab = (requestType: RequestTabProps['requestType']) => {
+  const PER_PAGE = 10;
+  const isRequestedType = requestType === 'REQUESTED';
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state =>
     state.identity.entities.find(item => item.current),
   );
@@ -11,16 +15,15 @@ export const useRequestTab = () => {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [openAcceptModal, setOpenAcceptModal] = useState(false);
-  const [requestedId, setRequestedId] = useState('');
-  const [selectedRequest, setselectedRequest] = useState<Connection>();
-  const PER_PAGE = 10;
+  const [selectedRequest, setSelectedRequest] = useState<Connection>();
+  const selectedId = selectedRequest?.id || '';
 
   const fetchData = async () => {
     const requestRes = await connections({
       page,
       limit: PER_PAGE,
       'filter.status': 'PENDING',
-      'filter.requested_id': currentIdentity?.id,
+      [isRequestedType ? 'filter.requested_id' : 'filter.requester_id']: currentIdentity?.id,
     });
 
     setConnectRequests(requestRes.items);
@@ -29,11 +32,12 @@ export const useRequestTab = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page]);
+  }, [page, isRequestedType]);
 
   const handleAccept = async () => {
+    if (!selectedId) return;
     try {
-      await connectRequestAccept(requestedId);
+      await connectRequestAccept(selectedId);
       await fetchData();
     } catch (e) {
       console.log(e);
@@ -42,8 +46,9 @@ export const useRequestTab = () => {
   };
 
   const handleReject = async (id?: string) => {
+    const connectionId = id || selectedId;
+    if (!connectionId) return;
     try {
-      const connectionId = id || requestedId;
       await connectRequestReject(connectionId);
       await fetchData();
     } catch (e) {
@@ -53,10 +58,13 @@ export const useRequestTab = () => {
   };
 
   const handleOpenAcceptModal = (id: string) => {
-    setRequestedId(id);
     const req = connectRequests.find(item => item.id === id);
-    setselectedRequest(req);
+    setSelectedRequest(req);
     setOpenAcceptModal(true);
+  };
+
+  const getAccount = (request: Connection | undefined) => {
+    return isRequestedType ? request?.requester : request?.requested;
   };
 
   return {
@@ -71,5 +79,7 @@ export const useRequestTab = () => {
     setOpenAcceptModal,
     handleOpenAcceptModal,
     selectedRequest,
+    isRequestedType,
+    getAccount,
   };
 };
