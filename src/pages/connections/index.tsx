@@ -4,7 +4,7 @@ import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 import css from './connections.module.scss';
 import { useConnections } from './useConnections';
 
-export const Connctions = () => {
+export const Connections = () => {
   const { tabs, activeIndex } = useConnections();
   return (
     <div className={css.container}>
