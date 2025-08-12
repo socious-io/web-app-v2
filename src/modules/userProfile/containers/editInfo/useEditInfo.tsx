@@ -210,6 +210,7 @@ export const useEditInfo = (handleClose: () => void) => {
       city: getValues().city.label,
       country: getValues().country,
       social_causes: getValues().socialCauses?.map(item => item.value),
+      languages: languages.map(language => ({ name: language.name, level: language.level })),
     };
 
     const promises: Promise<any>[] = [];
