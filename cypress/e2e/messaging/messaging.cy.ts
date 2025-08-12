@@ -5,14 +5,14 @@ import { User, generateRandomEmail } from '../authentication/utilities';
 const SIGNINGUP_EMAIL = generateRandomEmail();
 const user = new User(FIRSTNAME, LASTNAME, SIGNINGUP_EMAIL, USERNAME);
 
-describe('Messagung feature', () => {
+describe('Messaging feature', () => {
   beforeEach(() => {
     cy.intercept('GET', `${API_SERVER}/chats/summary*t=*&page=*`, req => {
       req.reply(200, SUMMARY);
     }).as('getSummary');
-     cy.intercept('GET', `${API_SERVER}/identities*`, req => {
-          req.reply(user.getIdentity());
-        }).as('getIdentities');
+    cy.intercept('GET', `${API_SERVER}/identities*`, req => {
+      req.reply(user.getIdentity());
+    }).as('getIdentities');
     cy.intercept('GET', `${API_SERVER}/notifications*t=*`, req => {
       req.reply(200, NOTIFICATIONS);
     }).as('getNotifications');
