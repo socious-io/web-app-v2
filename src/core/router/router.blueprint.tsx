@@ -35,9 +35,9 @@ import {
   cards,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
-import { translate } from 'src/core/utils';
 import { Layout as NowruzLayout } from 'src/modules/layout';
-import FallBack from 'src/pages/fallback/fallback';
+import FallBack from 'src/pages/error/fallback/fallback';
+import { NotFound } from 'src/pages/error/notFound';
 import { RootState } from 'src/store';
 
 import { getReviewsAdaptor, getUserDetailsAdaptor } from '../adaptors/users/index.adaptors';
@@ -812,7 +812,7 @@ export const blueprint: RouteObject[] = [
   },
   {
     path: '*',
-    element: <div>{translate('router-not-found')}</div>,
+    element: <NotFound />,
   },
 ];
 
