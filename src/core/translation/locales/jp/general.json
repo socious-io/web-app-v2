@@ -23,6 +23,15 @@
     "expiry": "有効期限",
     "ending": "下4桁"
   },
-  "router-not-found": "ページが見つかりません :(",
-  "general-success-continue": "続行"
+  "general-success-continue": "続行",
+  "general-error-not-found": {
+    "header": "404 - ページが見つかりません",
+    "subheader": "お探しのページは存在しません",
+    "go-to-home-btn": "ホームに戻る"
+  },
+  "general-error-internal": {
+    "header": "内部サーバーエラー",
+    "subheader": "ご不便をおかけして申し訳ありません。後でもう一度お試しください",
+    "home-btn": "ホームページ"
+  }
 }
