@@ -1,0 +1,30 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 3rem 1.5rem;
+    text-align: center;
+
+    .header {
+        font-size: 3rem;
+        font-weight: 800;
+        color: $color-primary-700;
+    }
+
+    .subheader {
+        font-size: 1rem;
+        color: $color-grey-700;
+        margin-bottom: 1rem;
+    }
+
+    .brand {
+        font-weight: 600;
+        color: $color-grey-900;
+    }
+}
