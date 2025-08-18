@@ -159,7 +159,7 @@
     "sass": "^1.87.0",
     "storybook": "^8.6.14",
     "tailwindcss": "^3.4.17",
-    "ts-jest": "^29.3.4",
+    "ts-jest": "^29.4.1",
     "tsc-files": "^1.1.4",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
