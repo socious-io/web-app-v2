@@ -97,6 +97,8 @@ jobs:
           VITE_ACCOUNT_CENTER_URL: ${{ vars.ACCOUNT_CENTER_URL }}
           VITE_FUND_URL: ${{ vars.FUND_URL }}
           VITE_VERIFY_URL: ${{ vars.VERIFY_URL }}
+          VITE_BLOCKFROST_PROJECT_ID: ${{ vars.BLOCKFROST_PROJECT_ID }}
+          VITE_CARDANO_PAYOUT_ADERESS: ${{ vars.CARDANO_PAYOUT_ADERESS }}
 
       - name: Extracting Google Service plist
         run: |
