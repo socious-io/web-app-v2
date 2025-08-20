@@ -97,6 +97,8 @@ jobs:
           VITE_ACCOUNT_CENTER_URL: ${{ vars.ACCOUNT_CENTER_URL }}
           VITE_FUND_URL: ${{ vars.FUND_URL }}
           VITE_VERIFY_URL: ${{ vars.VERIFY_URL }}
+          VITE_BLOCKFROST_PROJECT_ID: ${{ vars.BLOCKFROST_PROJECT_ID }}
+          VITE_CARDANO_PAYOUT_ADERESS: ${{ vars.CARDANO_PAYOUT_ADERESS }}
 
       - name: Extracting Google Service plist
         run: |
@@ -108,7 +110,7 @@ jobs:
 
       - name: Extracting provisioning profile (Distribution)
         run: |
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          mkdir -p ${{env.MOBILE_PROVISIONING_PATH}}
           echo ${{ env.IOS_PROVISIONING_PROFILE_BASE64 }} | base64 --decode > ${{env.MOBILE_PROVISIONING_PATH}}/socious-provisioing-profile-distribution-appstore.mobileprovision
 
       - name: Extracting auth key file (Apple API)
@@ -122,7 +124,7 @@ jobs:
 
       - name: Extracting signing certificate
         run: |
-          echo ${{ env.IOS_DISTRIBUTION_CERT_BASE64 }} | base64 --decode > $SIGNING_CERTIFICATE_PATH
+          echo ${{ env.IOS_DISTRIBUTION_CERT_BASE64 }} | base64 --decode > ${{ env.SIGNING_CERTIFICATE_PATH }}
 
       - name: Extracting and Installing signing certificate (.p12)
         env:
