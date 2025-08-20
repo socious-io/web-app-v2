@@ -24,6 +24,7 @@
     "eslint:fix": "eslint --fix",
     "typecheck": "tsc",
     "typecheck:staged": "tsc-files",
+    "generate:translations": "node src/core/generate-languages.js",
     "lint": "lint-staged"
   },
   "dependencies": {
@@ -60,7 +61,7 @@
     "axios": "^1.10.0",
     "cardano-bridge": "github:socious-io/cardano-bridge#v0.0.6",
     "country-flag-icons": "^1.5.19",
-    "dotenv": "^16.5.0",
+    "dotenv": "^16.6.1",
     "ethers": "^6.15.0",
     "firebase": "^11.10.0",
     "i18next-browser-languagedetector": "^8.1.0",
@@ -176,6 +177,9 @@
       "npm run eslint:fix",
       "npm run prettier:fix"
     ],
-    "*.{css,scss,md}": "npm run prettier:fix"
+    "*.{css,scss,md}": "npm run prettier:fix",
+    "src/core/translation/locales/en/**/*.json": [
+      "npm run generate:translations"
+    ]
   }
 }
