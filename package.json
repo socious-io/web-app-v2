@@ -24,6 +24,7 @@
     "eslint:fix": "eslint --fix",
     "typecheck": "tsc",
     "typecheck:staged": "tsc-files",
+    "generate:translations": "node src/core/generate-languages.js",
     "lint": "lint-staged"
   },
   "dependencies": {
@@ -176,6 +177,9 @@
       "npm run eslint:fix",
       "npm run prettier:fix"
     ],
-    "*.{css,scss,md}": "npm run prettier:fix"
+    "*.{css,scss,md}": "npm run prettier:fix",
+    "src/core/translation/locales/en/**/*.json": [
+      "npm run generate:translations"
+    ]
   }
 }
