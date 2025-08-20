@@ -110,7 +110,7 @@ jobs:
 
       - name: Extracting provisioning profile (Distribution)
         run: |
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          mkdir -p ${{env.MOBILE_PROVISIONING_PATH}}
           echo ${{ env.IOS_PROVISIONING_PROFILE_BASE64 }} | base64 --decode > ${{env.MOBILE_PROVISIONING_PATH}}/socious-provisioing-profile-distribution-appstore.mobileprovision
 
       - name: Extracting auth key file (Apple API)
@@ -124,7 +124,7 @@ jobs:
 
       - name: Extracting signing certificate
         run: |
-          echo ${{ env.IOS_DISTRIBUTION_CERT_BASE64 }} | base64 --decode > $SIGNING_CERTIFICATE_PATH
+          echo ${{ env.IOS_DISTRIBUTION_CERT_BASE64 }} | base64 --decode > ${{ env.SIGNING_CERTIFICATE_PATH }}
 
       - name: Extracting and Installing signing certificate (.p12)
         env:
