@@ -34,6 +34,8 @@ jobs:
           VITE_DAPP_ENV: testnet
           VITE_GOOGLE_OAUTH_CLIENT_ID: id
           VITE_GOOGLE_RECAPTCHA_SITE_KEY: secret
+          VITE_BLOCKFROST_PROJECT_ID: id
+          VITE_CARDANO_PAYOUT_ADERESS: address
 
       - name: Check Status
         if: failure()
