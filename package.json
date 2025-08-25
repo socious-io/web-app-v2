@@ -87,7 +87,7 @@
     "react-qr-code": "^2.0.18",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.3",
-    "react-select": "^5.10.1",
+    "react-select": "^5.10.2",
     "socket.io-client": "^4.8.1",
     "ssi-auth-lib": "^0.0.12",
     "uuid": "^11.1.0",
