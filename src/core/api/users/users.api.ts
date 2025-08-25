@@ -1,3 +1,4 @@
+import { config } from 'src/config';
 import { post, get } from 'src/core/api/http';
 import { ApplicantsRes, JobsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
 import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
@@ -24,6 +25,11 @@ import {
   ImportRes,
   Reviews,
 } from './users.types';
+
+const overwrittenConfigV3 = {
+  baseURL: config.baseURLV3,
+  withCredentials: false,
+};
 
 export async function profile(): Promise<User> {
   return (await get<User>('user/profile')).data;
@@ -58,7 +64,7 @@ export async function updateProfile(payload: UpdateProfileReq): Promise<User> {
 }
 
 export async function updateWallet(payload: UpdateWalletReq): Promise<User> {
-  return (await post<User>('user/update/wallet', payload)).data;
+  return (await post<User>('users/wallets', payload, overwrittenConfigV3)).data;
 }
 
 export async function openToWork(): Promise<boolean> {
