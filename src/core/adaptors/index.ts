@@ -17,6 +17,7 @@ export interface CurrencyDetail {
 
 export interface CustomError {
   response: { data: { error: string } };
+  message?: string;
 }
 
 export interface SuccessRes {

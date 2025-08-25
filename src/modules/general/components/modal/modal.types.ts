@@ -13,9 +13,9 @@ export interface ModalProps {
   mobileCentered?: boolean;
   headerDivider?: boolean;
   footerDivider?: boolean;
-  customStyle?: string;
   id?: string;
   inlineTitle?: boolean;
+  customStyle?: string;
   contentClassName?: string;
   closeButtonClassName?: string;
   className?: string;

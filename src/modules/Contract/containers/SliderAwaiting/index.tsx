@@ -6,6 +6,7 @@ import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { ThreeDotButton } from 'src/modules/general/components/threeDotButton';
 import { MenuItem } from 'src/modules/general/components/threeDotButton/threeDotButton.types';
+import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 
 import { useSliderAwaiting } from './useSliderAwaiting';
 import { ContractSliderProps } from '../ContractDetailsSlider/index.types';
@@ -15,7 +16,6 @@ const SliderAwaiting: React.FC<ContractSliderProps> = ({ contract, disableMessag
   const {
     data: {
       currentIdentityIsClient,
-      Web3Connect,
       disabledPrimaryButton,
       allowConfirm,
       openAlert,
@@ -115,7 +115,7 @@ const SliderAwaiting: React.FC<ContractSliderProps> = ({ contract, disableMessag
       >
         {contract.payment === 'CRYPTO' && (
           <div className="mb-6">
-            <Web3Connect />
+            <ConnectButton />
           </div>
         )}
       </AlertModal>

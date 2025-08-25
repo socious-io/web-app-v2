@@ -1,0 +1,10 @@
+{
+  "wallet-title": "Cartera Cripto",
+  "wallet-connect": "Conecta tu cartera",
+  "wallet-connect-btn": "Conectar cartera",
+  "wallet-disconnect": "Desconectar",
+  "wallet-copy": "Copiar dirección",
+  "wallet-not-installed-error": "No se detectó una cartera Cardano o EVM. Por favor instala una cartera compatible.",
+  "wallet-not-connected-error": "No se pudo conectar tu cartera {{walletName}}. Por favor intenta de nuevo.",
+  "wallet-failed": "Error"
+}

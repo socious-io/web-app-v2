@@ -5,18 +5,17 @@ import {
   addLanguage,
   Education,
   Experience,
-  getUserDetails,
   importLinkedin,
   LanguageCode,
   ProjectType,
   reviews,
-  UserDetails,
+  updateWallet,
 } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AdaptorRes, SuccessRes } from '..';
-import { ImportLinkedInRes, ReviewsRes } from './index.types';
+import { ImportLinkedInRes, ReviewsRes, WalletReq } from './index.types';
 
 export const getLinkedinProfileAdaptor = async (file: File): Promise<AdaptorRes<ImportLinkedInRes>> => {
   try {
@@ -133,13 +132,17 @@ export const getReviewsAdaptor = async (page = 1, limit = 10): Promise<AdaptorRe
   }
 };
 
-//FIXME Use this type after migrating to v3
-export const getUserDetailsAdaptor = async (username: string): Promise<AdaptorRes<UserDetails>> => {
+export const updateWalletAdaptor = async (payload: WalletReq): Promise<AdaptorRes<SuccessRes>> => {
   try {
-    const data = await getUserDetails(username);
-    return { data, error: null };
+    const newPayload = {
+      address: payload.account,
+      network: payload.networkName,
+      testnet: payload.testnet,
+    };
+    await updateWallet(newPayload);
+    return { data: { message: 'succeed' }, error: null };
   } catch (error) {
-    console.error('Error in getting user details: ', error);
-    return { data: null, error: 'Error in getting user details' };
+    console.error('Error in updating user wallet', error);
+    return { data: null, error: 'Error in updating user wallet' };
   }
 };

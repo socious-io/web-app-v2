@@ -1,0 +1,10 @@
+{
+  "wallet-title": "암호화폐 지갑",
+  "wallet-connect": "지갑을 연결하세요",
+  "wallet-connect-btn": "지갑 연결",
+  "wallet-disconnect": "연결 해제",
+  "wallet-copy": "주소 복사",
+  "wallet-not-installed-error": "Cardano 또는 EVM 지갑이 감지되지 않았습니다. 호환 지갑을 설치해 주세요.",
+  "wallet-not-connected-error": "{{walletName}} 지갑 연결에 실패했습니다. 다시 시도해 주세요.",
+  "wallet-failed": "실패함"
+}
