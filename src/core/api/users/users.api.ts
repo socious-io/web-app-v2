@@ -65,7 +65,7 @@ export async function updateProfile(payload: UpdateProfileReq): Promise<User> {
 }
 
 export async function updateWallet(payload: UpdateWalletReq): Promise<User> {
-  return (await post<User>('user/update/wallet', payload)).data;
+  return (await post<User>('users/wallets', payload, overwrittenConfigV3)).data;
 }
 
 export async function openToWork(): Promise<boolean> {
