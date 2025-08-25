@@ -1,4 +1,4 @@
-import { ModalProps } from '../Modal/index.types';
+import { ModalProps } from 'src/modules/general/components/modal/modal.types';
 
 export type Wallet = {
   name: string;

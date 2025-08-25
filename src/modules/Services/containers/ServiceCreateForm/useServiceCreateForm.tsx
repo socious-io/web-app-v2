@@ -6,11 +6,17 @@ import { useLoaderData, useLocation, useNavigate, useParams } from 'react-router
 import { PAYMENT_CURRENCIES } from 'src/constants/PAYMENT_CURRENCY';
 import { translatePaymentMode } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { translateServiceLength } from 'src/constants/SERVICE_LENGTH';
-import { createOrUpdateServiceAdaptor, OptionType, Service, skillsToCategory } from 'src/core/adaptors';
-import { CurrentIdentity, updateWallet, uploadMedia, PaymentMode } from 'src/core/api';
+import {
+  createOrUpdateServiceAdaptor,
+  OptionType,
+  Service,
+  skillsToCategory,
+  updateWalletAdaptor,
+} from 'src/core/adaptors';
+import { CurrentIdentity, uploadMedia, PaymentMode } from 'src/core/api';
 import { useTokens } from 'src/core/hooks/useTokens';
 import { getIdentityMeta, translate } from 'src/core/utils';
-import Dapp from 'src/dapp';
+import dapp from 'src/dapp';
 import { Files } from 'src/modules/general/components/FileUploader/index.types';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
@@ -69,8 +75,8 @@ export const useServiceCreateForm = () => {
   });
   const { usernameVal } = getIdentityMeta(currentIdentity);
   const walletAddress = currentIdentity?.meta.wallet_address;
-  const { Web3Connect, isConnected, chainId, account } = Dapp.useWeb3();
-  const tokens = useTokens(isConnected, chainId);
+  const { connected, account, network, networkName, testnet } = dapp.useWeb3();
+  const tokens = useTokens(connected, network);
   const [openModal, setOpenModal] = useState<{ name: 'publish' | 'cancel' | 'stripe' | ''; open: boolean }>({
     name: '',
     open: false,
@@ -100,18 +106,18 @@ export const useServiceCreateForm = () => {
   const selectedPaymentMethod = watch('payment') || paymentModes[0].value;
   const selectedCurrency = getValues('currency') || paymentCurrencies[0].value;
   const selectedSkills = getValues('skills') || [];
-  const disabledButton = selectedPaymentMethod === 'CRYPTO' && !isConnected;
+  const disabledButton = selectedPaymentMethod === 'CRYPTO' && !connected;
 
   useEffect(() => {
     if (
       currentIdentity?.type === 'users' &&
-      isConnected &&
+      connected &&
       account &&
       (!walletAddress || String(walletAddress) !== account)
     ) {
-      updateWallet({ wallet_address: account });
+      updateWalletAdaptor({ account, networkName, testnet });
     }
-  }, [isConnected, account]);
+  }, [connected, account]);
 
   const initCurrencyValue = (service: Service) => {
     if (!service) {
@@ -249,7 +255,6 @@ export const useServiceCreateForm = () => {
       handleCloseModal,
       onCancelClick,
       onBack,
-      Web3Connect,
       handleSubmit,
       onSubmit,
       onSelectSearchDropdown,
