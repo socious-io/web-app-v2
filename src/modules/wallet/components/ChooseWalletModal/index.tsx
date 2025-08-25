@@ -1,6 +1,5 @@
-import { translate } from 'src/core/helpers/utils';
-import Image from 'src/modules/general/components/Image';
-import Modal from 'src/modules/general/components/Modal';
+import { translate } from 'src/core/utils';
+import { Modal } from 'src/modules/general/components/modal';
 
 import styles from './index.module.scss';
 import { ChooseWalletModalProps } from './index.types';
@@ -8,7 +7,7 @@ import { ChooseWalletModalProps } from './index.types';
 const ChooseWalletModal: React.FC<ChooseWalletModalProps> = ({
   open,
   handleClose,
-  title = translate('payments-method-crypto-wallet.connect'),
+  title = translate('wallet-connect'),
   headerDivider = false,
   footerDivider = false,
   mobileCentered = false,
@@ -26,6 +25,7 @@ const ChooseWalletModal: React.FC<ChooseWalletModalProps> = ({
       footerDivider={footerDivider}
       mobileCentered={mobileCentered}
       mobileFullHeight={mobileFullHeight}
+      customTitleStyle="text-center"
       customStyle="md:max-w-[480px] md:!max-h-[504px]"
       contentClassName="py-4 md:py-6"
       {...props}
@@ -33,7 +33,7 @@ const ChooseWalletModal: React.FC<ChooseWalletModalProps> = ({
       <div className={styles['wallets']}>
         {wallets.map(wallet => (
           <div key={wallet.name} className={styles['wallet']} onClick={() => onWalletSelect(wallet)}>
-            <Image
+            <img
               src={wallet.type === 'evm' ? `/images/wallets/${wallet.icon}.svg` : wallet.icon}
               alt={wallet.name}
               width={42}

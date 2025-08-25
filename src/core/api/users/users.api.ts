@@ -1,5 +1,5 @@
 import { config } from 'src/config';
-import { post, get } from 'src/core/api/http';
+import { post, get, put } from 'src/core/api/http';
 import { ApplicantsRes, JobsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
 import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
 
@@ -65,7 +65,7 @@ export async function updateProfile(payload: UpdateProfileReq): Promise<User> {
 }
 
 export async function updateWallet(payload: UpdateWalletReq): Promise<User> {
-  return (await post<User>('users/wallets', payload, overwrittenConfigV3)).data;
+  return (await put<User>('users/wallets', payload, overwrittenConfigV3)).data;
 }
 
 export async function openToWork(): Promise<boolean> {

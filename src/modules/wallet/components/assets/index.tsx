@@ -5,10 +5,11 @@ import { Icon } from 'src/modules/general/components/Icon';
 import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 
 import { useAssets } from './useAssets';
+import ConnectButton from '../ConnectButton';
 import { StripeAccountItem } from '../stripeAccountItem';
 
 export const Assets = () => {
-  const { stripeAccounts, openAddAccount, setOpenAddAccount, Web3Connect } = useAssets();
+  const { stripeAccounts, openAddAccount, setOpenAddAccount } = useAssets();
 
   return (
     <>
@@ -27,7 +28,7 @@ export const Assets = () => {
         ))}
         <Divider />
         <div className="text-lg font-semibold leading-7 text-Gray-light-mode-900">{translate('pay-wallet')}</div>
-        <Web3Connect />
+        <ConnectButton />
       </div>
       <AddPayoutAccount open={openAddAccount} handleClose={() => setOpenAddAccount(false)} />
     </>

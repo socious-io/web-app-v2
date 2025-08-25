@@ -1,7 +1,6 @@
-import { translate } from 'src/core/helpers/utils';
+import { translate } from 'src/core/utils';
 import { Icon } from 'src/modules/general/components/Icon';
-import Image from 'src/modules/general/components/Image';
-import Modal from 'src/modules/general/components/Modal';
+import { Modal } from 'src/modules/general/components/modal';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import styles from './index.module.scss';
@@ -29,7 +28,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({
       contentClassName={styles['modal__content']}
     >
       <>
-        <Image src={`/icons/token-symbols/${symbol}.png`} width={48} height={48} alt={symbol} />
+        <img src={`/icons/token-symbols/${symbol}.png`} width={48} height={48} alt={symbol} />
         <div className={styles['address']}>
           {address}
           <span className={styles['balance']}>
@@ -39,11 +38,11 @@ const ConnectModal: React.FC<ConnectModalProps> = ({
         <div className={styles['buttons']}>
           <button onClick={handleDisconnect} className={styles['button']}>
             <Icon name="x-close" fontSize={20} color={variables.color_grey_700} />
-            {translate('payments-method-crypto-wallet.disconnect')}
+            {translate('wallet-disconnect')}
           </button>
           <button onClick={handleCopy} className={styles['button']}>
             <Icon name="copy-02" fontSize={20} color={variables.color_grey_700} />
-            {translate('payments-method-crypto-wallet.copy')}
+            {translate('wallet-copy')}1
           </button>
         </div>
       </>
