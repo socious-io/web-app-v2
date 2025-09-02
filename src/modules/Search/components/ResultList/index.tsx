@@ -35,7 +35,7 @@ export const ResultList: React.FC<ResultListProps> = ({ list, onClose }) => {
   return (
     <div className="h-full w-full overflow-y-auto flex flex-col ">
       {list.map((item, index) => (
-        <div key={item.id} className="flex flex-row items-start">
+        <div data-testid="search-result" key={item.id} className="flex flex-row items-start">
           <div
             ref={index === hoveredRowIndex ? selectedRef : null}
             className={`${css.rows} ${selectedRowIndex === index ? css.selected : ''}  ${
