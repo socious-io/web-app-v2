@@ -17,22 +17,21 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
     register,
     handleSubmit,
     onSubmit,
+    onSelectValue,
     errors,
-    onSelectPaymentType,
-    onSelectPaymentTerm,
-    onSelectPaymentMethod,
     isCrypto,
     isNonPaid,
     paymentMethodOptions,
-    setSelected,
+    currency,
     preventArrow,
+    disabled,
   } = useOrgOffer(applicant, onClose, onSuccess);
 
   const paymentMode = PROJECT_PAYMENT_MODE;
   const paymentType = [...PROJECT_PAYMENT_TYPE].reverse();
   const paymentScheme = [...PROJECT_PAYMENT_SCHEME].reverse();
 
-  const renderfieldInfo = (title: string, description: string) => {
+  const renderFieldInfo = (title: string, description: string) => {
     return (
       <div className="mb-1.5">
         <div className={css.title}>{title}</div>
@@ -40,6 +39,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
       </div>
     );
   };
+
   return (
     <>
       <Modal open={open} onClose={onClose} className={css.container}>
@@ -53,7 +53,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
           <div className={css.body}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className={css.row}>
-                {renderfieldInfo('Contract title*', '')}
+                {renderFieldInfo('Contract title*', '')}
                 <Input
                   id="title"
                   name="title"
@@ -63,26 +63,26 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                 />
               </div>
               <div className={css.row}>
-                {renderfieldInfo('Payment type', 'Is it a paid or volunteer job?')}
+                {renderFieldInfo('Payment type', 'Is it a paid or volunteer job?')}
 
                 <RadioGroup
                   defaultValue={paymentType[0].value}
                   items={paymentType}
                   errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
-                  onChange={type => onSelectPaymentType(type.value)}
+                  onChange={type => onSelectValue('paymentType', type.value as string)}
                 />
               </div>
               <div className={css.row}>
-                {renderfieldInfo('Payment terms', 'Is it a fixed or hourly job?')}
+                {renderFieldInfo('Payment terms', 'Is it a fixed or hourly job?')}
                 <RadioGroup
                   defaultValue={paymentScheme[0].value}
                   items={paymentScheme}
-                  onChange={term => onSelectPaymentTerm(term.value)}
+                  onChange={term => onSelectValue('paymentTerm', term.value as string)}
                   errors={errors['paymentTerm']?.message ? [errors['paymentTerm']?.message.toString()] : undefined}
                 />
               </div>
               <div className={css.row}>
-                {renderfieldInfo('Estimated total hours*', '')}
+                {renderFieldInfo('Estimated total hours*', '')}
                 <Input
                   name="hours"
                   register={register}
@@ -97,9 +97,9 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
               </div>
               {!isNonPaid && (
                 <div className={css.row}>
-                  {renderfieldInfo('Payment method', 'Payment in fiat or crypto?')}
+                  {renderFieldInfo('Payment method', 'Payment in fiat or crypto?')}
                   <RadioGroup
-                    onChange={option => onSelectPaymentMethod(option.value)}
+                    onChange={option => onSelectValue('paymentMethod', option.value as string)}
                     items={paymentMode}
                     defaultValue={paymentMode[0].value}
                     errors={
@@ -110,7 +110,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
               )}
               {!isNonPaid && (
                 <div className={css.row}>
-                  {isCrypto && renderfieldInfo('Your wallet', 'Connect wallet to send an offer')}
+                  {isCrypto && renderFieldInfo('Your wallet', 'Connect wallet to send an offer')}
                   {isCrypto && (
                     <div className="flex justify-center my-5 z-30">
                       <ConnectButton />
@@ -127,14 +127,15 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                       errors={errors['total']?.message ? [errors['total']?.message.toString()] : undefined}
                       postfixDropdown={{
                         options: paymentMethodOptions,
-                        onChange: currency => setSelected(currency),
+                        value: paymentMethodOptions.find(option => option.value === currency) || null,
+                        onChange: currency => onSelectValue('currency', currency),
                       }}
                     />
                   </div>
                 </div>
               )}
               <div className={`${css.row} border-b-none`}>
-                {renderfieldInfo('Description*', '')}
+                {renderFieldInfo('Description*', '')}
                 <Input
                   name="description"
                   register={register}
@@ -150,7 +151,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
             <Button color="secondary" variant="outlined" onClick={() => onClose()} block>
               Cancel
             </Button>
-            <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)} block>
+            <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)} block disabled={disabled}>
               Continue
             </Button>
           </div>
