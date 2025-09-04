@@ -26,6 +26,7 @@
     "subheader": "Cuéntanos más sobre tu servicio",
     "error-message": "Este campo es obligatorio",
     "error-positive-message": "El valor debe ser un número positivo",
+    "error-min-price": "El precio debe ser al menos {{minValue}}.",
     "name": "Nombre del servicio",
     "name-description": "Agrega un nombre claro y conciso para el servicio que deseas ofrecer",
     "name-placeholder": "Ejemplo: Diseño de logotipo",
