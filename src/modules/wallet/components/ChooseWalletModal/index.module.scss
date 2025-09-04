@@ -1,0 +1,36 @@
+@import 'src/styles/constants/_primitives.scss';
+
+.wallets {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0 1.5rem;
+
+    @media (max-width: $width-xl) {
+        padding: 0 1rem;
+    }
+
+    .wallet {
+        width: calc(50% - 0.5rem);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: $color-grey-700;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-grey-100;
+        }
+
+        @media (max-width: $width-xl) {
+            width: 100%;
+        }
+    }
+}

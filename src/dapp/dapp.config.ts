@@ -7,6 +7,7 @@ export const dappConfig: DappConfig = {
   testnet: [
     {
       chain: bscTestnet,
+      name: 'bsc',
       escrow: '0xE6b7fdf37b4D297d7E4BcB055Df06AF5DDbf82Ce',
       logic: '0xE6b7fdf37b4D297d7E4BcB055Df06AF5DDbf82Ce',
       tokens: [
@@ -26,6 +27,7 @@ export const dappConfig: DappConfig = {
     },
     {
       chain: sepolia,
+      name: 'sepolia',
       escrow: '0x383fdB2917B1bB02841116811f94159D9263D53d',
       logic: '0x383fdB2917B1bB02841116811f94159D9263D53d',
       tokens: [
@@ -48,6 +50,7 @@ export const dappConfig: DappConfig = {
         },
       },
       escrow: '',
+      name: 'cardano',
       tokens: [
         {
           name: 'ADA',
@@ -61,6 +64,7 @@ export const dappConfig: DappConfig = {
   mainet: [
     {
       chain: bsc,
+      name: 'bsc',
       escrow: '0x2Bdf475Bf5353cF52Aa4339A0FA308B4e1e22C3A',
       logic: '0x2Bdf475Bf5353cF52Aa4339A0FA308B4e1e22C3A',
       tokens: [

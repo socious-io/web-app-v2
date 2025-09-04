@@ -31,6 +31,7 @@ import skills from './skills.json';
 import socialCauses from './socialCauses.json';
 import termsCondition from './termsCondition.json';
 import userTeam from './userTeam.json';
+import wallet from './wallet.json';
 
 export function generateTranslationFile() {
   return Object.assign(
@@ -68,5 +69,6 @@ export function generateTranslationFile() {
     userTeam,
     contribute,
     reviews,
+    wallet,
   );
 }

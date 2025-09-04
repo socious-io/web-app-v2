@@ -1,24 +1,31 @@
-import '@rainbow-me/rainbowkit/styles.css';
-import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { metaMaskWallet, walletConnectWallet, trustWallet, ledgerWallet } from '@rainbow-me/rainbowkit/wallets';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { Escrow } from 'cardano-bridge';
-import { BrowserProvider, Eip1193Provider, JsonRpcSigner } from 'ethers';
+import { BrowserWallet } from '@meshsdk/core';
+import { QueryClient } from '@tanstack/react-query';
+import { BrowserProvider, Eip1193Provider } from 'ethers';
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { config } from 'src/config';
-import ConnectButton from 'src/modules/wallet/components/ConnectButton';
+import { CustomError } from 'src/core/adaptors';
+import { RootState } from 'src/store';
+import { resetWalletState, setWalletState } from 'src/store/reducers/wallet.reducer';
 import { Chain } from 'viem';
-import { useAccount, WagmiProvider, createConfig, http } from 'wagmi';
+import {
+  Connector,
+  createConfig,
+  CreateConnectorFn,
+  http,
+  useAccount,
+  useBalance,
+  useChainId,
+  useConnect,
+  useDisconnect,
+} from 'wagmi';
+import { metaMask, walletConnect } from 'wagmi/connectors';
 
 import { dappConfig } from './dapp.config';
+import { getCardanoEscrow } from './dapp.service';
 import { Network } from './dapp.types';
-import { CIP30ToEIP1193Provider } from './wallets/cip-30';
-import { eternlWallet } from './wallets/eternl';
-import { laceWallet } from './wallets/lace';
 
 export const NETWORKS: Network[] = config.dappENV === 'mainet' ? dappConfig.mainet : dappConfig.testnet;
-
-export const CardanoEscrow = new Escrow({ blockfrost: config.blocfrostProjectId });
 
 const chains = NETWORKS.map(n => n.chain);
 
@@ -31,84 +38,155 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 };
 
-const connectors = connectorsForWallets(
-  [
-    {
-      groupName: 'Recommended',
-      wallets: [metaMaskWallet, walletConnectWallet, trustWallet, ledgerWallet],
-    },
-    {
-      groupName: 'Cardano',
-      wallets: [laceWallet(1215), eternlWallet(1215)],
-    },
-  ],
-  {
-    appName: metadata.name,
-    projectId,
-  },
-);
-
-const wagmiConfig = createConfig({
+export const wagmiConfig = createConfig({
   chains: chains as [Chain, ...Chain[]],
+  connectors: [walletConnect({ projectId, metadata }), metaMask()],
   transports: Object.fromEntries(chains.map(chain => [chain.id, http(chain.rpcUrls.default?.http[0])])),
-  connectors,
 });
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
-const RainbowKitWrapper = ({ children }) => {
-  return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>{children}</RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  );
-};
+const WALLET_TYPES = {
+  EVM: 'evm',
+  CARDANO: 'cardano',
+} as const;
 
 export const useWeb3 = () => {
-  // const connectors = useConnectors()
-  // const { walletProvider } = /useWeb3ModalProvider();
-  const [provider, setProvider] = useState<BrowserProvider>();
-  const [walletProvider, setWalletProvider] = useState<CIP30ToEIP1193Provider>();
-  const [connected, setConnected] = useState<boolean>(false);
-  const [account, setAccount] = useState<string>();
-  const [chainId, setChainId] = useState<number>(0);
-  const [signer, setSigner] = useState<JsonRpcSigner>();
-
-  const Button: React.FC = () => {
-    const { address, isConnected, connector } = useAccount();
-
-    const updateProvider = async () => {
-      if (!connector?.getChainId) return;
-      setChainId(await connector.getChainId());
-      const eipProvider = (await connector.getProvider()) as CIP30ToEIP1193Provider;
-      setWalletProvider(eipProvider);
-
-      if (eipProvider.isCIP30) await CardanoEscrow.connectWallet(eipProvider.name);
-
-      const ethers = new BrowserProvider(eipProvider as Eip1193Provider);
-      setProvider(ethers);
-      setSigner(await ethers.getSigner());
-    };
-
-    useEffect(() => {
-      setConnected(isConnected);
-      setAccount(address);
-
-      if (isConnected && connector?.getChainId && !chainId) updateProvider();
-    }, [isConnected, address, connector]);
-
-    return <ConnectButton />;
+  const initialState = {
+    wallet: null,
+    walletProvider: null,
+    provider: null,
+    signer: null,
+    account: '',
+    chainId: null,
+    connected: false,
+    network: null,
+    networkName: '',
+    testnet: config.dappENV === 'testnet',
+    balance: null,
   };
+  const dispatch = useDispatch();
+  const walletState = useSelector((state: RootState) => state.wallet);
+  const [pendingConnector, setPendingConnector] = useState<Connector<CreateConnectorFn> | null>(walletState.wallet);
 
-  const Web3Connect: React.FC = () => {
-    return (
-      <RainbowKitWrapper>
-        <Button />
-      </RainbowKitWrapper>
+  const { address: evmAddress, isConnected: isEvmConnected, connector: evmConnector } = useAccount();
+  const { connect: evmConnect } = useConnect();
+  const { disconnect: disconnectEvm } = useDisconnect();
+  const evmChainId = useChainId();
+  const { data: evmBalance } = useBalance({ address: evmAddress, chainId: evmChainId });
+
+  const savedWallet = localStorage.getItem('selectedWallet');
+  const savedType = localStorage.getItem('walletType');
+
+  const finalizeEvmConnection = async (connector: Connector<CreateConnectorFn>) => {
+    if (!connector) return;
+
+    const evmFormat = 1e18;
+    const eipProvider = (await connector.getProvider()) as Eip1193Provider;
+    const ethersProvider = new BrowserProvider(eipProvider);
+    const signer = await ethersProvider.getSigner();
+    const network = NETWORKS.find(n => n.chain.id === evmChainId);
+
+    dispatch(
+      setWalletState({
+        wallet: connector,
+        walletProvider: eipProvider,
+        provider: ethersProvider,
+        signer,
+        account: evmAddress ?? '',
+        chainId: evmChainId,
+        connected: !!evmAddress || isEvmConnected,
+        network,
+        networkName: network?.name || '',
+        testnet: network?.chain.testnet || false,
+        balance: {
+          symbol: evmBalance?.symbol || '',
+          value: Number(evmBalance?.value ?? 0) / evmFormat,
+        },
+      }),
     );
+    localStorage.setItem('walletType', WALLET_TYPES.EVM);
+    localStorage.setItem('selectedWallet', connector.name || '');
   };
 
-  return { Web3Connect, account, provider, isConnected: connected, signer, chainId, walletProvider };
+  const setupEvmConnection = async (connector: Connector<CreateConnectorFn>) => {
+    try {
+      await evmConnect({ connector });
+      // Wait until evmAddress updates via useAccount
+      setPendingConnector(connector);
+    } catch (error: unknown) {
+      console.error((error as CustomError).message);
+    }
+  };
+
+  const setupCardanoConnection = async (name: string) => {
+    try {
+      const cardanoFormat = 1_000_000;
+      const wallet = await BrowserWallet.enable(name);
+      const account = await wallet.getChangeAddress();
+      const utxos = await wallet.getUtxos();
+      const totalLovelace = utxos?.reduce((sum, utxo) => {
+        const lovelace = utxo.output.amount.find(a => a.unit === 'lovelace');
+        return sum + BigInt(lovelace?.quantity || '0');
+      }, BigInt(0));
+      const ada = Number(totalLovelace) / cardanoFormat;
+      const network = NETWORKS.find(n => n.name === 'cardano');
+
+      const cardanoEscrow = getCardanoEscrow();
+      if (!cardanoEscrow) return;
+      await cardanoEscrow.connectWallet(name);
+
+      dispatch(
+        setWalletState({
+          wallet,
+          walletProvider: wallet,
+          provider: null,
+          signer: null,
+          account,
+          chainId: null,
+          connected: true,
+          network,
+          networkName: network?.name || '',
+          testnet: network?.chain.testnet || false,
+          balance: { symbol: 'ADA', value: ada },
+        }),
+      );
+      localStorage.setItem('walletType', WALLET_TYPES.CARDANO);
+      localStorage.setItem('selectedWallet', name);
+    } catch (err) {
+      console.error('Failed to connect Cardano wallet:', err);
+    }
+  };
+
+  const disconnect = () => {
+    if (savedType === 'evm') disconnectEvm();
+
+    dispatch(resetWalletState());
+    localStorage.removeItem('walletType');
+    localStorage.removeItem('selectedWallet');
+    setWalletState(initialState);
+  };
+
+  useEffect(() => {
+    if (!savedWallet) return;
+
+    if (savedType === WALLET_TYPES.CARDANO) setupCardanoConnection(savedWallet);
+    if (savedType === WALLET_TYPES.EVM && evmConnector) setupEvmConnection(evmConnector);
+  }, []);
+
+  useEffect(() => {
+    if (isEvmConnected && evmAddress && evmBalance && pendingConnector) {
+      finalizeEvmConnection(pendingConnector);
+      setPendingConnector(null);
+    }
+  }, [isEvmConnected, evmAddress, evmBalance, pendingConnector]);
+
+  return {
+    ...walletState,
+    walletName: savedWallet,
+    walletType: savedType,
+    setupCardanoConnection,
+    setupEvmConnection,
+    disconnect,
+  };
 };

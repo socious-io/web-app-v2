@@ -48,6 +48,7 @@ export default defineConfig([
     rules: {
       'i18next/no-literal-string': 2,
       '@typescript-eslint/no-explicit-any': 1,
+      '@typescript-eslint/no-unused-expressions': 0,
       semi: 'error',
       'eol-last': ['error', 'always'],
       'react/react-in-jsx-scope': 'off',

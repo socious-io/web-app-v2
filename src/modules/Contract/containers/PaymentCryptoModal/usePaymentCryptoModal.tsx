@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react';
 import { Contract, depositContractAdaptor } from 'src/core/adaptors';
 import { OrgMeta } from 'src/core/api';
 import { translate } from 'src/core/utils';
-import Dapp from 'src/dapp';
+import dapp from 'src/dapp';
 
 export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (contract: Contract) => void) => {
-  const { chainId, signer, isConnected, Web3Connect, walletProvider } = Dapp.useWeb3();
-  const [disabledPayment, setDisabledPayment] = useState(!isConnected);
+  const { connected, signer, network } = dapp.useWeb3();
+  const [disabledPayment, setDisabledPayment] = useState(!connected);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    setDisabledPayment(!contract.id || !isConnected);
-  }, [isConnected, contract]);
+    setDisabledPayment(!contract.id || !connected);
+  }, [connected, contract]);
 
   const onProceedCryptoPayment = async () => {
     try {
       const contributor = contract.client?.meta.wallet_address;
-      if (!signer || !chainId) {
+      if (!connected) {
         setErrorMessage(translate('cont-wallet-not-connected'));
         return;
       }
@@ -27,10 +27,9 @@ export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (co
       }
 
       setDisabledPayment(true);
-      const result = await Dapp.escrow({
-        walletProvider,
+      const result = await dapp.escrow({
         signer,
-        chainId,
+        network,
         totalAmount: contract.amounts?.total || 0,
         escrowAmount: contract.amounts?.amount || 0,
         contributor,
@@ -42,6 +41,7 @@ export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (co
         applyContFeeDiscount: contract.amounts?.user_fee_discount || false,
         addressReferringCont: contract.amounts?.user_referrer_wallet,
       });
+      if (!result) return;
       const { error, data } = await depositContractAdaptor(contract.id, result.txHash, contract.payment, {
         amount: result.amount,
         contributor: result.contributor,
@@ -64,7 +64,6 @@ export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (co
 
   return {
     data: {
-      Web3Connect,
       disabledPayment,
       errorMessage,
     },

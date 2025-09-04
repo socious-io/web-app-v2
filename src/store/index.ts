@@ -8,6 +8,7 @@ import { linkedInSlice } from './reducers/linkedin.reducer';
 import { profileSlice } from './reducers/profile.reducer';
 import { skillsSlice } from './reducers/skills.reducer';
 import { spinnerSlice } from './reducers/spinner.reducer';
+import { walletSlice } from './reducers/wallet.reducer';
 
 const store = configureStore({
   reducer: {
@@ -19,11 +20,13 @@ const store = configureStore({
     skills: skillsSlice.reducer,
     events: eventsSlice.reducer,
     linkedin: linkedInSlice.reducer,
+    wallet: walletSlice.reducer,
   },
   middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['modals/openModal'],
+        ignoredActions: ['modals/openModal', 'wallet/setWalletState'],
+        ignoredPaths: ['wallet.wallet', 'wallet.walletProvider'],
       },
     });
   },

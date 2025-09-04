@@ -9,18 +9,11 @@ import {
   depositContractAdaptor,
   Service,
   submitRequirementsAdaptor,
+  updateWalletAdaptor,
 } from 'src/core/adaptors';
-import {
-  Card,
-  CurrentIdentity,
-  OrgMeta,
-  ProjectPaymentType,
-  removeCard,
-  updateWallet,
-  uploadMedia,
-} from 'src/core/api';
+import { Card, CurrentIdentity, OrgMeta, ProjectPaymentType, removeCard, uploadMedia } from 'src/core/api';
 import { translate } from 'src/core/utils';
-import Dapp from 'src/dapp';
+import dapp from 'src/dapp';
 import { Files } from 'src/modules/general/components/FileUploader/index.types';
 import { OrderStatus } from 'src/modules/Services/components/ServiceOrderDetail/index.types';
 import { RootState } from 'src/store';
@@ -32,7 +25,7 @@ const schema = yup.object().shape({
 
 export const useServicePaymentFlow = () => {
   const navigate = useNavigate();
-  const { isConnected, account, signer, chainId, Web3Connect, walletProvider } = Dapp.useWeb3();
+  const { connected, account, network, networkName, testnet, signer } = dapp.useWeb3();
   const { serviceDetail: service, cards } = useLoaderData() as { serviceDetail: Service; cards: Card[] };
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
@@ -59,13 +52,13 @@ export const useServicePaymentFlow = () => {
     mode: 'all',
     resolver: yupResolver(schema),
   });
-  const isValidPayStep = paymentIsFiat ? !selectedCardId : !isConnected;
+  const isValidPayStep = paymentIsFiat ? !selectedCardId : !connected;
 
   useEffect(() => {
-    if (!paymentIsFiat && isConnected && account && (!walletAddress || String(walletAddress) !== account)) {
-      updateWallet({ wallet_address: account });
+    if (!paymentIsFiat && connected && account && (!walletAddress || String(walletAddress) !== account)) {
+      updateWalletAdaptor({ account, networkName, testnet });
     }
-  }, [paymentIsFiat, isConnected, account]);
+  }, [paymentIsFiat, connected, account]);
 
   const onRemoveCard = async (cardId: string) => {
     const filteredCard = cardsList.filter(card => card.id !== cardId);
@@ -103,7 +96,7 @@ export const useServicePaymentFlow = () => {
   const handleCryptoPayment = async (contract: Contract) => {
     try {
       const contributor = contract.client?.meta.wallet_address;
-      if (!signer || !chainId) {
+      if (!connected) {
         setErrorMessage(translate('cont-wallet-not-connected'));
         return;
       }
@@ -113,10 +106,9 @@ export const useServicePaymentFlow = () => {
         return;
       }
 
-      const result = await Dapp.escrow({
-        walletProvider,
+      const result = await dapp.escrow({
         signer,
-        chainId,
+        network,
         totalAmount: contract.amounts?.total || 0,
         escrowAmount: contract.amounts?.amount || 0,
         contributor,
@@ -143,7 +135,9 @@ export const useServicePaymentFlow = () => {
       if (!contract) return;
 
       let identifier = '';
-      let result: { txHash: any; token: string | undefined; id: string } | undefined = undefined;
+      let result:
+        | { id: string; txHash: string; token?: string; amount?: number; fee?: number; contributor?: string }
+        | undefined = undefined;
 
       if (paymentIsFiat) {
         identifier = selectedCardId;
@@ -153,11 +147,15 @@ export const useServicePaymentFlow = () => {
         identifier = result?.txHash || '';
       }
 
+      if (!result) return;
       const { error: depositError, data: depositData } = await depositContractAdaptor(
         contract.id,
         identifier,
         service.payment,
-        result && {
+        {
+          amount: result.amount,
+          contributor: result.contributor,
+          fee: result.fee,
           escrowId: result.id,
           token: result?.token || '',
           txHash: result.txHash,
@@ -211,7 +209,6 @@ export const useServicePaymentFlow = () => {
       cardsList,
       selectedCardId,
       openAddCardModal,
-      Web3Connect,
       errorMessage,
       orderStatus,
       register,
