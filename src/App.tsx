@@ -1,14 +1,16 @@
 import { ThemeProvider } from '@emotion/react';
 import { StyledEngineProvider } from '@mui/material';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { theme } from 'material.theme';
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import router from 'src/core/router';
 import { currentIdentities } from 'src/store/thunks/identity.thunks';
+import { WagmiProvider } from 'wagmi';
 
 import { setupInterceptors } from './core/api';
-import { DeepLinks } from './core/deepLinks';
+import { queryClient, wagmiConfig } from './dapp/dapp.connect';
 import { Spinner } from './modules/general/components/spinner/spinner';
 import store from './store';
 
@@ -34,7 +36,11 @@ function App() {
     <StyledEngineProvider injectFirst>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <RouterProvider router={router.routes} />
+          <WagmiProvider config={wagmiConfig}>
+            <QueryClientProvider client={queryClient}>
+              <RouterProvider router={router.routes} />
+            </QueryClientProvider>
+          </WagmiProvider>
         </ThemeProvider>
         {/* <ModalPlaceholder /> */}
         <Spinner />

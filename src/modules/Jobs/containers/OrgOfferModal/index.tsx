@@ -3,10 +3,10 @@ import React from 'react';
 import { PROJECT_PAYMENT_MODE } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { PROJECT_PAYMENT_SCHEME } from 'src/constants/PROJECT_PAYMENT_SCHEME';
 import { PROJECT_PAYMENT_TYPE } from 'src/constants/PROJECT_PAYMENT_TYPE';
-import Dapp from 'src/dapp';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';
 import { RadioGroup } from 'src/modules/general/components/RadioGroup';
+import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 
 import css from './org-offer-modal.module.scss';
 import { OrgOfferModalProps } from './OrgOfferModal.types';
@@ -26,7 +26,6 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
     paymentMethodOptions,
     setSelected,
     preventArrow,
-    Web3Connect,
   } = useOrgOffer(applicant, onClose, onSuccess);
 
   const paymentMode = PROJECT_PAYMENT_MODE;
@@ -114,7 +113,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                   {isCrypto && renderfieldInfo('Your wallet', 'Connect wallet to send an offer')}
                   {isCrypto && (
                     <div className="flex justify-center my-5 z-30">
-                      <Web3Connect />
+                      <ConnectButton />
                     </div>
                   )}
                   <div>

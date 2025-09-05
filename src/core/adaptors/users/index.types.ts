@@ -19,3 +19,9 @@ export interface Review {
 }
 
 export type ReviewsRes = PaginateRes<Review>;
+
+export interface WalletReq {
+  account: string;
+  networkName: string;
+  testnet: boolean;
+}

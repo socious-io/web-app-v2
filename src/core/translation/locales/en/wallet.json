@@ -1,0 +1,10 @@
+{
+  "wallet-title": "Crypto Wallet",
+  "wallet-connect": "Connect your wallet",
+  "wallet-connect-btn": "Connect wallet",
+  "wallet-disconnect": "Disconnect",
+  "wallet-copy": "Copy Address",
+  "wallet-not-installed-error": "No Cardano or EVM wallet detected. Please install a compatible wallet.",
+  "wallet-not-connected-error": "Failed to connect your {{walletName}} wallet. Please try again.",
+  "wallet-failed": "Failed"
+}

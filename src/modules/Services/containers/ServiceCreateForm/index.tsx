@@ -10,6 +10,7 @@ import { SearchDropdown } from 'src/modules/general/components/SearchDropdown';
 import AddPayoutAccount from 'src/modules/general/containers/AddPayoutAccount';
 import ConfirmModal from 'src/modules/general/containers/ConfirmModal';
 import ServiceCreateHeader from 'src/modules/Services/components/ServiceCreateHeader';
+import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import styles from './index.module.scss';
@@ -41,7 +42,6 @@ const ServiceCreateForm = () => {
       handleCloseModal,
       onCancelClick,
       onBack,
-      Web3Connect,
       handleSubmit,
       onSubmit,
       onSelectSearchDropdown,
@@ -81,7 +81,7 @@ const ServiceCreateForm = () => {
         <div className={styles['row__right']}>
           <>
             <div className="flex-1">
-              <Web3Connect />
+              <ConnectButton />
             </div>
             <Input
               register={register}

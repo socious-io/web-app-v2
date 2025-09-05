@@ -9,12 +9,13 @@ import {
   LanguageCode,
   ProjectType,
   reviews,
+  updateWallet,
 } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AdaptorRes, SuccessRes } from '..';
-import { ImportLinkedInRes, ReviewsRes } from './index.types';
+import { ImportLinkedInRes, ReviewsRes, WalletReq } from './index.types';
 
 export const getLinkedinProfileAdaptor = async (file: File): Promise<AdaptorRes<ImportLinkedInRes>> => {
   try {
@@ -128,5 +129,20 @@ export const getReviewsAdaptor = async (page = 1, limit = 10): Promise<AdaptorRe
   } catch (error) {
     console.error('Error in getting reviews list: ', error);
     return { data: null, error: 'Error in getting reviews list' };
+  }
+};
+
+export const updateWalletAdaptor = async (payload: WalletReq): Promise<AdaptorRes<SuccessRes>> => {
+  try {
+    const newPayload = {
+      address: payload.account,
+      network: payload.networkName,
+      testnet: payload.testnet,
+    };
+    await updateWallet(newPayload);
+    return { data: { message: 'succeed' }, error: null };
+  } catch (error) {
+    console.error('Error in updating user wallet', error);
+    return { data: null, error: 'Error in updating user wallet' };
   }
 };

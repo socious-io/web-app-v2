@@ -3,7 +3,7 @@ import { KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Applicant, ProjectPaymentType, offerByApplicant } from 'src/core/api';
 import { removeValuesFromObject } from 'src/core/utils';
-import Dapp from 'src/dapp';
+import dapp from 'src/dapp';
 import * as yup from 'yup';
 
 type Inputs = {
@@ -38,7 +38,7 @@ const schema = yup.object().shape({
   description: yup.string().required('Description is required'),
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
-  const { chainId, isConnected, Web3Connect } = Dapp.useWeb3();
+  const { connected, network } = dapp.useWeb3();
   const [tokens, setTokens] = useState<
     {
       value: string;
@@ -67,9 +67,8 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
 
   useEffect(() => {
     const getTokens = async () => {
-      if (isConnected) {
-        const selectedNetwork = Dapp.NETWORKS.filter(n => n.chain.id === chainId)[0];
-        const mapTokens = selectedNetwork.tokens.map(token => {
+      if (connected && network) {
+        const mapTokens = network.tokens.map(token => {
           return {
             value: token?.address || '',
             label: token.name,
@@ -81,7 +80,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       }
     };
     getTokens();
-  }, [isConnected, chainId]);
+  }, [connected, network]);
 
   const onSelectPaymentType = paymentType => {
     setValue('paymentType', paymentType);
@@ -170,6 +169,5 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     paymentMethodOptions,
     setSelected,
     preventArrow,
-    Web3Connect,
   };
 };
