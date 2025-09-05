@@ -5,6 +5,11 @@ import { config } from 'src/config';
 import { dappConfig } from './dapp.config';
 import { AllowanceParams, EscrowParams, FlattenToken, WithdrawnParams } from './dapp.types';
 
+// Fee constants
+const VERIFIED_ORG_FEE_PERCENT = 0.05; // 5% fee for verified organizations
+const UNVERIFIED_ORG_FEE_PERCENT = 0.1; // 10% fee for unverified organizations
+const CARDANO_DECIMAL_FACTOR = 1_000_000; // Lovelace conversion factor
+
 let cardanoEscrow: Escrow | null = null;
 export const getCardanoEscrow = () => {
   if (config.blockfrostProjectId && !cardanoEscrow) {
@@ -58,19 +63,21 @@ export const escrow = async (params: EscrowParams) => {
   // Handle Cardano
   if (selectedNetwork.name === 'cardano') {
     const cardanoEscrow = getCardanoEscrow();
-    if (!cardanoEscrow) return;
+    if (!cardanoEscrow) {
+      throw new Error('Cardano escrow service not available');
+    }
 
     const txHash = await cardanoEscrow.deposit({
       unit: token || 'lovelace',
-      quantity: `${totalAmount * 1_000_000}`,
+      quantity: `${totalAmount * CARDANO_DECIMAL_FACTOR}`,
     });
 
-    // more info need for release cardano escrow
+    // Store metadata for release
     return {
       txHash,
       id: txHash,
       token,
-      varified: verifiedOrg,
+      verified: verifiedOrg,
       contributor,
       amount: totalAmount,
       fee: totalAmount - escrowAmount,
@@ -131,30 +138,44 @@ export const withdrawnEscrow = async (params: WithdrawnParams) => {
 
   // Handle Cardano
   if (selectedNetwork.name === 'cardano') {
-    let feePercent = 0.1;
-    if (meta.verifiedOrg) feePercent = 0.05;
+    try {
+      // Determine fee percentage based on organization verification status
+      const feePercent = meta.verifiedOrg ? VERIFIED_ORG_FEE_PERCENT : UNVERIFIED_ORG_FEE_PERCENT;
 
-    const fee = meta.amount * (1 - feePercent) + meta?.fee;
-    const amount = meta.amount - fee;
+      // FIXED: Calculate fee correctly (percentage of amount + any additional fees)
+      const platformFee = meta.amount * feePercent;
+      const totalFee = platformFee + (meta?.fee || 0);
+      const contributorAmount = meta.amount - totalFee;
 
-    const cardanoEscrow = getCardanoEscrow();
-    if (!cardanoEscrow) return;
+      // Validate amounts
+      if (contributorAmount <= 0) {
+        throw new Error('Invalid amount: fee exceeds total amount');
+      }
 
-    const tx = await cardanoEscrow.release({
-      tx: escrowId,
-      payouts: [
-        {
-          address: config.cardanoPayoutFeeAddress,
-          amount: Math.trunc(fee * 1000000),
-        },
-        {
-          address: meta.contributor,
-          amount: Math.trunc(amount * 1000000),
-        },
-      ],
-    });
+      const cardanoEscrow = getCardanoEscrow();
+      if (!cardanoEscrow) {
+        throw new Error('Cardano escrow service not available');
+      }
 
-    return tx;
+      const tx = await cardanoEscrow.release({
+        tx: escrowId,
+        payouts: [
+          {
+            address: config.cardanoPayoutFeeAddress,
+            amount: Math.trunc(totalFee * CARDANO_DECIMAL_FACTOR),
+          },
+          {
+            address: meta.contributor,
+            amount: Math.trunc(contributorAmount * CARDANO_DECIMAL_FACTOR),
+          },
+        ],
+      });
+
+      return tx;
+    } catch (error) {
+      console.error('Cardano escrow release failed:', error);
+      throw new Error(`Failed to release Cardano escrow: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }
 
   // Handle EVM
