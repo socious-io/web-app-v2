@@ -117,7 +117,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
                     </div>
                   )}
                   <div>
-                    <div className={css.title}>Offer amount*</div>
+                    {renderFieldInfo('Offer amount*', '')}
                     <Input
                       name="total"
                       register={register}
