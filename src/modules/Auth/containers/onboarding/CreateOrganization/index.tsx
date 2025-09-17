@@ -21,6 +21,7 @@ export const CreateOrganization = () => {
           </div>
         </div>
         <Input
+          data-testid="org-name-input"
           id="name"
           value={orgName}
           label={translate('onboarding-org-name')}
