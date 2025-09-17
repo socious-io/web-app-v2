@@ -3,6 +3,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { BrowserProvider, Eip1193Provider } from 'ethers';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { MIDNIGHT_DECIMAL_FACTOR } from 'socious-midnight/escrow-cli/src/wallet-types';
 import { config } from 'src/config';
 import { CustomError } from 'src/core/adaptors';
 import { RootState } from 'src/store';
@@ -49,6 +50,7 @@ export const queryClient = new QueryClient();
 const WALLET_TYPES = {
   EVM: 'evm',
   CARDANO: 'cardano',
+  MIDNIGHT: 'midnight',
 } as const;
 
 export const useWeb3 = () => {
@@ -158,6 +160,57 @@ export const useWeb3 = () => {
     }
   };
 
+  const setupMidnightConnection = async (walletName: string = 'mnLace') => {
+    try {
+      // Check if Midnight wallet is available
+      if (!window.midnight || !window.midnight[walletName]) {
+        throw new Error(`Midnight wallet ${walletName} not found`);
+      }
+
+      const midnightWallet = await window.midnight[walletName];
+      console.log('Midnight wallet structure before enable:', midnightWallet); // Debug log
+
+      // Enable the wallet connection FIRST - this is required to access the API
+      if (!midnightWallet.enable) {
+        throw new Error(`Midnight wallet ${walletName} does not have an enable method`);
+      }
+      const walletApi = await midnightWallet.enable();
+      // Get wallet state using the state() method
+      const walletState = await walletApi.state();
+
+      const account = walletState.address;
+      const networkId = walletState.network;
+
+      // Parse balance if available
+      let dustBalance = 0;
+      if (walletState.balance) {
+        dustBalance = Number(BigInt(walletState.balance.value || '0')) / MIDNIGHT_DECIMAL_FACTOR;
+      }
+
+      const network = NETWORKS.find(n => n.name === 'midnight');
+
+      dispatch(
+        setWalletState({
+          wallet: midnightWallet,
+          walletProvider: walletApi,
+          provider: null,
+          signer: null,
+          account,
+          chainId: null,
+          connected: true,
+          network,
+          networkName: network?.name || '',
+          testnet: networkId === 'testnet' || networkId === 'devnet',
+          balance: { symbol: 'tDUST', value: dustBalance },
+        }),
+      );
+      localStorage.setItem('walletType', WALLET_TYPES.MIDNIGHT);
+      localStorage.setItem('selectedWallet', walletName);
+    } catch (err) {
+      console.error('Failed to connect Midnight wallet:', err);
+    }
+  };
+
   const disconnect = () => {
     if (savedType === 'evm') disconnectEvm();
 
@@ -171,6 +224,7 @@ export const useWeb3 = () => {
     if (!savedWallet) return;
 
     if (savedType === WALLET_TYPES.CARDANO) setupCardanoConnection(savedWallet);
+    if (savedType === WALLET_TYPES.MIDNIGHT) setupMidnightConnection(savedWallet);
     if (savedType === WALLET_TYPES.EVM && evmConnector) setupEvmConnection(evmConnector);
   }, []);
 
@@ -186,6 +240,7 @@ export const useWeb3 = () => {
     walletName: savedWallet,
     walletType: savedType,
     setupCardanoConnection,
+    setupMidnightConnection,
     setupEvmConnection,
     disconnect,
   };

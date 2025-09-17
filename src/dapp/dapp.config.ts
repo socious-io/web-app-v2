@@ -60,6 +60,33 @@ export const dappConfig: DappConfig = {
         },
       ],
     },
+    {
+      chain: {
+        id: 2000000, // Custom ID for Midnight network
+        name: 'Midnight Testnet',
+        nativeCurrency: {
+          decimals: 9,
+          name: 'Test DUST',
+          symbol: 'tDUST',
+        },
+        rpcUrls: {
+          default: {
+            http: ['https://rpc.testnet.midnight.network'], // Update with actual RPC URL when available
+          },
+        },
+        testnet: true,
+      },
+      escrow: '020071b65c62afee02899fe65d5b8b775488968c4122db1926130b5685c73341108d', // Testnet contract address from socious-midnight
+      name: 'midnight',
+      tokens: [
+        {
+          name: 'Test DUST',
+          symbol: 'tDUST',
+          address: 'dust', // Native token identifier
+          decimals: 9,
+        },
+      ],
+    },
   ],
   mainet: [
     {

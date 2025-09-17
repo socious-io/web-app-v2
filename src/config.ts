@@ -24,6 +24,9 @@ export const config = {
   appleOauthClientIdIOS: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID_IOS,
   blockfrostProjectId: import.meta.env.VITE_BLOCKFROST_PROJECT_ID,
   cardanoPayoutFeeAddress: import.meta.env.VITE_CARDANO_PAYOUT_ADERESS,
+  midnightFeeAddress:
+    import.meta.env.VITE_MIDNIGHT_FEE_ADDRESS ||
+    'mn_shield-addr_test1jd0aflk4dvjw7vy7e0vnqt82clwvclapahx58renk8tnpa5zz9tqxqq72uj2aqws25fqnymxsefxwfdpw7wkyftglm5ldlk4075rcpmn3ggmqedu',
 };
 
 export const isTestingEnvironment = config.env === 'test';

@@ -1,5 +1,6 @@
 import { BrowserWallet, Wallet } from '@meshsdk/core';
 import { useState } from 'react';
+import { type MidnightWallet } from 'socious-midnight/escrow-cli/src/wallet-types';
 import { truncateFromMiddle } from 'src/core/stringTransformation';
 import { translate } from 'src/core/utils';
 import Dapp from 'src/dapp';
@@ -19,13 +20,14 @@ export const ConnectButton: React.FC<ConnectButtonProps> = ({ defaultAddress = '
     connected,
     balance,
     setupCardanoConnection,
+    setupMidnightConnection,
     setupEvmConnection,
     disconnect,
   } = Dapp.useWeb3();
 
   const { connectors: evmConnectors } = useConnect();
 
-  const [availableWallets, setAvailableWallets] = useState<(CardanoWallet | EVMWallet)[]>([]);
+  const [availableWallets, setAvailableWallets] = useState<(CardanoWallet | EVMWallet | MidnightWallet)[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [error, setError] = useState('');
@@ -46,9 +48,23 @@ export const ConnectButton: React.FC<ConnectButtonProps> = ({ defaultAddress = '
       connector: connector,
       type: 'evm',
     }));
+
+    // Check for Midnight wallets
+    const midnightWallets: MidnightWallet[] = [];
+    if (window.midnight) {
+      Object.keys(window.midnight).forEach(walletName => {
+        midnightWallets.push({
+          name: walletName,
+          icon: '/lace.svg',
+          type: 'midnight',
+        });
+      });
+    }
+
     const wallets = [
       ...(cardanoWallets.map(wallet => ({ ...wallet, type: 'cardano' })) as CardanoWallet[]),
       ...evmWallets,
+      ...midnightWallets,
     ];
 
     if (!wallets.length) {
@@ -57,9 +73,13 @@ export const ConnectButton: React.FC<ConnectButtonProps> = ({ defaultAddress = '
     }
     if (wallets.length === 1) {
       const wallet = wallets[0];
-      wallet.type === 'cardano'
-        ? setupCardanoConnection(wallet.name)
-        : setupEvmConnection((wallet as EVMWallet).connector);
+      if (wallet.type === 'cardano') {
+        setupCardanoConnection(wallet.name);
+      } else if (wallet.type === 'midnight') {
+        setupMidnightConnection(wallet.name);
+      } else {
+        setupEvmConnection((wallet as EVMWallet).connector);
+      }
     } else {
       setAvailableWallets(wallets);
       setIsModalOpen(true);
@@ -111,9 +131,13 @@ export const ConnectButton: React.FC<ConnectButtonProps> = ({ defaultAddress = '
             handleClose={() => setIsModalOpen(false)}
             wallets={availableWallets}
             onWalletSelect={wallet => {
-              wallet.type === 'cardano'
-                ? setupCardanoConnection(wallet.name)
-                : setupEvmConnection((wallet as EVMWallet).connector);
+              if (wallet.type === 'cardano') {
+                setupCardanoConnection(wallet.name);
+              } else if (wallet.type === 'midnight') {
+                setupMidnightConnection(wallet.name);
+              } else {
+                setupEvmConnection((wallet as EVMWallet).connector);
+              }
               setIsModalOpen(false);
             }}
           />

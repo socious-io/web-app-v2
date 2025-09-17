@@ -1,10 +1,11 @@
 import { BrowserWallet } from '@meshsdk/core';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { BrowserProvider, Eip1193Provider, JsonRpcSigner } from 'ethers';
+import { type MidnightWalletApi } from 'socious-midnight/escrow-cli/src/wallet-types';
 
 export type WalletState = {
   wallet: any | null;
-  walletProvider: Eip1193Provider | BrowserWallet | null;
+  walletProvider: Eip1193Provider | BrowserWallet | MidnightWalletApi | null;
   provider: BrowserProvider | null;
   signer: JsonRpcSigner | null;
   account: string;
