@@ -40,7 +40,7 @@ const getSchema = tokens => {
           .typeError('Offer amount is required')
           .required('Offer amount is required')
           .test('is-positive', 'Offer amount should be positive', value => typeof value === 'number' && value > 0)
-          .min(minValue, minValue !== undefined ? `Offer amount must be at least ${minValue}.` : '');
+          .min(minValue || 0, minValue !== undefined ? `Offer amount must be at least ${minValue}.` : '');
       }),
     currency: yup.string().when(['paymentType', 'paymentMethod'], ([paymentType, paymentMethod], schema) => {
       if (paymentType === 'VOLUNTEER') {
