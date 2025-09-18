@@ -23,7 +23,6 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
     isNonPaid,
     paymentMethodOptions,
     currency,
-    preventArrow,
     disabled,
   } = useOrgOffer(applicant, onClose, onSuccess);
 
@@ -43,7 +42,7 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
   return (
     <>
       <Modal open={open} onClose={onClose} className={css.container}>
-        <div className={css.content}>
+        <form className={css.content} onSubmit={handleSubmit(onSubmit)}>
           <div className={css.header}>
             <h1 className={css.title}>Send an offer</h1>
             <div className="mt-1">
@@ -51,111 +50,103 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
             </div>
           </div>
           <div className={css.body}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className={css.row}>
-                {renderFieldInfo('Contract title*', '')}
-                <Input
-                  id="title"
-                  name="title"
-                  register={register}
-                  placeholder="e.g. Product Manager"
-                  errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
-                />
-              </div>
-              <div className={css.row}>
-                {renderFieldInfo('Payment type', 'Is it a paid or volunteer job?')}
+            <div className={css.row}>
+              {renderFieldInfo('Contract title*', '')}
+              <Input
+                id="title"
+                name="title"
+                register={register}
+                placeholder="e.g. Product Manager"
+                errors={errors['title']?.message ? [errors['title']?.message.toString()] : undefined}
+              />
+            </div>
+            <div className={css.row}>
+              {renderFieldInfo('Payment type', 'Is it a paid or volunteer job?')}
 
-                <RadioGroup
-                  defaultValue={paymentType[0].value}
-                  items={paymentType}
-                  errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
-                  onChange={type => onSelectValue('paymentType', type.value as string)}
-                />
-              </div>
+              <RadioGroup
+                defaultValue={paymentType[0].value}
+                items={paymentType}
+                errors={errors['paymentType']?.message ? [errors['paymentType']?.message.toString()] : undefined}
+                onChange={type => onSelectValue('paymentType', type.value as string)}
+              />
+            </div>
+            <div className={css.row}>
+              {renderFieldInfo('Payment terms', 'Is it a fixed or hourly job?')}
+              <RadioGroup
+                defaultValue={paymentScheme[0].value}
+                items={paymentScheme}
+                onChange={term => onSelectValue('paymentTerm', term.value as string)}
+                errors={errors['paymentTerm']?.message ? [errors['paymentTerm']?.message.toString()] : undefined}
+              />
+            </div>
+            <div className={css.row}>
+              {renderFieldInfo('Estimated total hours*', '')}
+              <Input
+                name="hours"
+                register={register}
+                placeholder="0"
+                postfix={<p>hours</p>}
+                noBorderPostfix
+                errors={errors['hours']?.message ? [errors['hours']?.message.toString()] : undefined}
+                inputProps={{ style: { textAlign: 'right' } }}
+              />
+            </div>
+            {!isNonPaid && (
               <div className={css.row}>
-                {renderFieldInfo('Payment terms', 'Is it a fixed or hourly job?')}
+                {renderFieldInfo('Payment method', 'Payment in fiat or crypto?')}
                 <RadioGroup
-                  defaultValue={paymentScheme[0].value}
-                  items={paymentScheme}
-                  onChange={term => onSelectValue('paymentTerm', term.value as string)}
-                  errors={errors['paymentTerm']?.message ? [errors['paymentTerm']?.message.toString()] : undefined}
+                  onChange={option => onSelectValue('paymentMethod', option.value as string)}
+                  items={paymentMode}
+                  defaultValue={paymentMode[0].value}
+                  errors={errors['paymentMethod']?.message ? [errors['paymentMethod']?.message.toString()] : undefined}
                 />
               </div>
+            )}
+            {!isNonPaid && (
               <div className={css.row}>
-                {renderFieldInfo('Estimated total hours*', '')}
-                <Input
-                  name="hours"
-                  register={register}
-                  placeholder="0"
-                  type="number"
-                  postfix={<p>hours</p>}
-                  noBorderPostfix
-                  onKeyDown={preventArrow}
-                  errors={errors['hours']?.message ? [errors['hours']?.message.toString()] : undefined}
-                  inputProps={{ style: { textAlign: 'right' } }}
-                />
-              </div>
-              {!isNonPaid && (
-                <div className={css.row}>
-                  {renderFieldInfo('Payment method', 'Payment in fiat or crypto?')}
-                  <RadioGroup
-                    onChange={option => onSelectValue('paymentMethod', option.value as string)}
-                    items={paymentMode}
-                    defaultValue={paymentMode[0].value}
-                    errors={
-                      errors['paymentMethod']?.message ? [errors['paymentMethod']?.message.toString()] : undefined
-                    }
+                {isCrypto && renderFieldInfo('Your wallet', 'Connect wallet to send an offer')}
+                {isCrypto && (
+                  <div className="flex justify-center my-5 z-30">
+                    <ConnectButton />
+                  </div>
+                )}
+                <div>
+                  {renderFieldInfo('Offer amount*', '')}
+                  <Input
+                    name="total"
+                    register={register}
+                    placeholder="0"
+                    errors={errors['total']?.message ? [errors['total']?.message.toString()] : undefined}
+                    postfixDropdown={{
+                      options: paymentMethodOptions,
+                      value: paymentMethodOptions.find(option => option.value === currency) || null,
+                      onChange: currency => onSelectValue('currency', currency),
+                    }}
                   />
                 </div>
-              )}
-              {!isNonPaid && (
-                <div className={css.row}>
-                  {isCrypto && renderFieldInfo('Your wallet', 'Connect wallet to send an offer')}
-                  {isCrypto && (
-                    <div className="flex justify-center my-5 z-30">
-                      <ConnectButton />
-                    </div>
-                  )}
-                  <div>
-                    {renderFieldInfo('Offer amount*', '')}
-                    <Input
-                      name="total"
-                      register={register}
-                      type="number"
-                      placeholder={'0'}
-                      onKeyDown={preventArrow}
-                      errors={errors['total']?.message ? [errors['total']?.message.toString()] : undefined}
-                      postfixDropdown={{
-                        options: paymentMethodOptions,
-                        value: paymentMethodOptions.find(option => option.value === currency) || null,
-                        onChange: currency => onSelectValue('currency', currency),
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-              <div className={`${css.row} border-b-none`}>
-                {renderFieldInfo('Description*', '')}
-                <Input
-                  name="description"
-                  register={register}
-                  customHeight="128px"
-                  placeholder="e.g. “Lead product development from idea to launch...”."
-                  multiline
-                  errors={errors['description']?.message ? [errors['description']?.message.toString()] : undefined}
-                />
               </div>
-            </form>
+            )}
+            <div className={`${css.row} border-b-none`}>
+              {renderFieldInfo('Description*', '')}
+              <Input
+                name="description"
+                register={register}
+                customHeight="128px"
+                placeholder="e.g. “Lead product development from idea to launch...”."
+                multiline
+                errors={errors['description']?.message ? [errors['description']?.message.toString()] : undefined}
+              />
+            </div>
           </div>
           <div className={css.footer}>
             <Button color="secondary" variant="outlined" onClick={() => onClose()} block>
               Cancel
             </Button>
-            <Button color="primary" variant="contained" onClick={handleSubmit(onSubmit)} block disabled={disabled}>
+            <Button type="submit" color="primary" variant="contained" block disabled={disabled}>
               Continue
             </Button>
           </div>
-        </div>
+        </form>
       </Modal>
     </>
   );
