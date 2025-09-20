@@ -3,6 +3,7 @@ declare global {
     ethereum: any;
     evmproviders: any;
     cardano?: { lace?: any };
+    midnight?: { mnLace?: any };
   }
 }
 declare module '*.module.css' {

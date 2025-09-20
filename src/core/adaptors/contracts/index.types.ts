@@ -34,6 +34,15 @@ export interface Contract {
   type?: ProjectPaymentType;
   projectId?: string;
   client?: Identity;
+  client_wallet?: {
+    id: string;
+    user_id: string;
+    address: string;
+    network: string;
+    testnet: boolean;
+    created_at: string;
+    updated_at: string;
+  };
   clientId?: string;
   paymentId?: string;
   provider?: Identity;
@@ -47,6 +56,7 @@ export interface Contract {
   feedback?: boolean;
   escrowId?: string;
   paymentObj?: Payment;
+  crypto_network?: string;
 }
 
 export type ContractRes = PaginateRes<Contract>;

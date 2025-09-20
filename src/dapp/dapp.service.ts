@@ -1,7 +1,7 @@
 import { httpClientProofProvider } from '@midnight-ntwrk/midnight-js-http-client-proof-provider';
 import { indexerPublicDataProvider } from '@midnight-ntwrk/midnight-js-indexer-public-data-provider';
 import { levelPrivateStateProvider } from '@midnight-ntwrk/midnight-js-level-private-state-provider';
-import { NodeZkConfigProvider } from '@midnight-ntwrk/midnight-js-node-zk-config-provider';
+import { ZKConfigProvider } from '@midnight-ntwrk/midnight-js-types';
 import { Escrow } from 'cardano-bridge';
 import { Contract, parseUnits } from 'ethers';
 import {
@@ -38,33 +38,80 @@ let midnightEscrowAPI: EscrowContractAPI | null = null;
 export const getMidnightEscrow = () => {
   // Initialize the Midnight escrow API if not already done
   const initializeAPI = async () => {
-    if (midnightEscrowAPI) return midnightEscrowAPI;
+    console.log('[Midnight Init] Starting API initialization...');
+
+    if (midnightEscrowAPI) {
+      console.log('[Midnight Init] API already initialized, returning cached instance');
+      return midnightEscrowAPI;
+    }
 
     // Get wallet provider from window.midnight
+    console.log('[Midnight Init] Checking for Midnight wallet...');
     const midnightWallet = window.midnight?.mnLace;
     if (!midnightWallet) {
+      console.error('[Midnight Init] Midnight wallet not found in window.midnight');
       throw new Error('Midnight wallet not found. Please connect your wallet first.');
     }
+    console.log('[Midnight Init] Midnight wallet found');
 
     // Enable wallet if needed
-    if (midnightWallet.enable && !(await midnightWallet.isEnabled())) {
-      await midnightWallet.enable();
+    console.log('[Midnight Init] Checking if wallet is enabled...');
+    if (midnightWallet.enable) {
+      const isEnabled = await midnightWallet.isEnabled();
+      console.log('[Midnight Init] Wallet enabled status:', isEnabled);
+
+      if (!isEnabled) {
+        console.log('[Midnight Init] Enabling wallet...');
+        await midnightWallet.enable();
+        console.log('[Midnight Init] Wallet enabled successfully');
+      }
     }
 
+    console.log('[Midnight Init] Getting wallet API...');
     const walletApi = await midnightWallet.enable();
+    console.log('[Midnight Init] Wallet API obtained');
 
     // Set up providers for testnet
-    const indexerUrl = 'https://indexer.testnet.midnight.network/api/v1/graphql';
-    const indexerWsUrl = 'wss://indexer.testnet.midnight.network/api/v1/graphql/ws';
-    const nodeUrl = 'https://rpc.testnet.midnight.network';
-    const proofServerUrl = 'https://prover.testnet.midnight.network';
+    const indexerUrl = 'https://indexer.testnet-02.midnight.network/api/v1/graphql';
+    const indexerWsUrl = 'wss://indexer.testnet-02.midnight.network/api/v1/graphql/ws';
+    const nodeUrl = 'https://rpc.testnet-02.midnight.network';
+    // Use Socious-hosted proof server
+    const proofServerUrl = 'https://midnight-proofserver.socious.io';
 
+    console.log('[Midnight Init] Setting up providers...');
+    console.log('[Midnight Init] Indexer URL:', indexerUrl);
+    console.log('[Midnight Init] Node URL:', nodeUrl);
+    console.log('[Midnight Init] Proof Server URL:', proofServerUrl);
+
+    // Note: In development, you may need to accept the SSL certificate for the indexer
+    // by visiting https://indexer.testnet.midnight.network/api/v1/graphql in your browser
     const publicDataProvider = indexerPublicDataProvider(indexerUrl, indexerWsUrl);
-    const zkConfigProvider = new NodeZkConfigProvider(nodeUrl);
+    console.log('[Midnight Init] Public data provider created');
+
+    // Create a browser-compatible ZK config provider
+    const zkConfigProvider: ZKConfigProvider = {
+      getZkConfig: async (contractAddress: string) => {
+        console.log(`[Midnight Init] Fetching ZK config for contract: ${contractAddress}`);
+        const response = await fetch(`${nodeUrl}/api/v1/zk-config/${contractAddress}`);
+        if (!response.ok) {
+          console.error(`[Midnight Init] Failed to fetch ZK config: ${response.statusText}`);
+          throw new Error(`Failed to fetch ZK config: ${response.statusText}`);
+        }
+        const config = await response.json();
+        console.log('[Midnight Init] ZK config fetched successfully');
+        return config;
+      },
+    };
+
+    console.log('[Midnight Init] Creating proof provider...');
     const proofProvider = httpClientProofProvider(proofServerUrl);
+    console.log('[Midnight Init] Proof provider created');
+
+    console.log('[Midnight Init] Creating private state provider...');
     const privateStateProvider = await levelPrivateStateProvider({
       privateStateStoreName: 'socious-escrow-private-state',
     });
+    console.log('[Midnight Init] Private state provider created');
 
     const providers = {
       publicDataProvider,
@@ -74,12 +121,60 @@ export const getMidnightEscrow = () => {
       walletProvider: walletApi,
     };
 
+    console.log('[Midnight Init] Creating escrow API with contract address:', TESTNET_CONTRACT_ADDRESS);
+
     // Create the API instance with the testnet contract address
-    midnightEscrowAPI = await createEscrowAPI(
-      providers as any,
-      TESTNET_CONTRACT_ADDRESS,
-      {}, // No witnesses required
-    );
+    try {
+      // Increase timeout to 60 seconds and add retry logic
+      const maxRetries = 2;
+      let lastError;
+
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          console.log(`[Midnight Init] Attempt ${attempt} of ${maxRetries} to create escrow API...`);
+
+          const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(
+              () => reject(new Error(`Escrow API creation timed out after 60 seconds (attempt ${attempt})`)),
+              60000,
+            );
+          });
+
+          const apiPromise = createEscrowAPI(
+            providers as any,
+            TESTNET_CONTRACT_ADDRESS,
+            {}, // No witnesses required
+          );
+
+          midnightEscrowAPI = (await Promise.race([apiPromise, timeoutPromise])) as EscrowContractAPI;
+          console.log('[Midnight Init] Escrow API created successfully');
+          break; // Success, exit retry loop
+        } catch (error) {
+          lastError = error;
+          console.error(`[Midnight Init] Attempt ${attempt} failed:`, error);
+
+          if (attempt < maxRetries) {
+            console.log(`[Midnight Init] Retrying in 2 seconds...`);
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+        }
+      }
+
+      if (!midnightEscrowAPI) {
+        console.error('[Midnight Init] Failed to create escrow API after all retries');
+        console.error('[Midnight Init] This might be due to:');
+        console.error('  - Network connectivity issues with Midnight testnet');
+        console.error('  - The contract may need to be deployed or synchronized');
+        console.error('  - Wallet provider issues');
+        console.error(
+          '  - You may need to visit https://indexer.testnet-02.midnight.network/api/v1/graphql to accept SSL certificate',
+        );
+        throw lastError;
+      }
+    } catch (error) {
+      console.error('[Midnight Init] Final error:', error);
+      throw error;
+    }
 
     return midnightEscrowAPI;
   };
@@ -93,11 +188,16 @@ export const getMidnightEscrow = () => {
       amount: number;
       token: string;
     }) => {
+      console.log('[Midnight] Starting escrow creation with params:', params);
+
       try {
+        console.log('[Midnight] Initializing API...');
         const api = await initializeAPI();
+        console.log('[Midnight] API initialized successfully');
 
         // Generate a random nonce for the coin
         const nonce = Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+        console.log('[Midnight] Generated nonce:', nonce);
 
         // Create the escrow parameters
         const createParams = {
@@ -107,15 +207,26 @@ export const getMidnightEscrow = () => {
           fee: BigInt(params.fee),
           coin: createCoinInfo(nonce, BigInt(params.amount)),
         };
+        console.log('[Midnight] Created params for escrow:', createParams);
 
+        console.log('[Midnight] Calling api.createEscrow...');
         const result = await api.createEscrow(createParams);
+        console.log('[Midnight] Escrow creation result:', result);
 
-        return {
+        const response = {
           id: result.escrowId.toString(),
           txHash: result.txData.transactionHash || '',
         };
+        console.log('[Midnight] Returning response:', response);
+
+        return response;
       } catch (error) {
-        console.error('Failed to create Midnight escrow:', error);
+        console.error('[Midnight] Failed to create escrow:', error);
+        console.error('[Midnight] Error details:', {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined,
+          fullError: error,
+        });
         throw error;
       }
     },
@@ -211,37 +322,103 @@ export const escrow = async (params: EscrowParams) => {
 
   // Handle Midnight
   if (selectedNetwork.name === 'midnight') {
+    console.log('[Midnight Escrow] Starting Midnight escrow creation');
+    console.log('[Midnight Escrow] Total amount:', totalAmount);
+    console.log('[Midnight Escrow] Escrow amount:', escrowAmount);
+    console.log('[Midnight Escrow] Contributor:', contributor);
+    console.log('[Midnight Escrow] Project ID:', projectId);
+
     const midnightEscrow = getMidnightEscrow();
 
     const feeAmount = totalAmount - escrowAmount;
+    console.log('[Midnight Escrow] Fee amount calculated:', feeAmount);
 
     // Convert addresses to hex format (remove prefix if exists)
     const contributorHex = contributor.startsWith('0x') ? contributor.slice(2) : contributor;
-    const feeAddressHex = config.midnightFeeAddress.startsWith('mn_')
+    const feeAddressHex = config.midnightFeeAddress?.startsWith('mn_')
       ? config.midnightFeeAddress.slice(3) // Remove 'mn_' prefix if it's a Midnight address
-      : config.midnightFeeAddress;
+      : config.midnightFeeAddress || '';
 
     // Convert project ID to hex (pad to 32 bytes)
     const projectIdHex = projectId.padStart(64, '0');
 
-    const result = await midnightEscrow.create({
-      contributor: contributorHex,
-      feeAddress: feeAddressHex,
-      org: projectIdHex,
-      fee: Math.floor(feeAmount * MIDNIGHT_DECIMAL_FACTOR),
-      amount: Math.floor(totalAmount * MIDNIGHT_DECIMAL_FACTOR),
-      token: token || 'dust',
-    });
+    console.log('[Midnight Escrow] Prepared parameters:');
+    console.log('  - Contributor hex:', contributorHex);
+    console.log('  - Fee address hex:', feeAddressHex);
+    console.log('  - Project ID hex:', projectIdHex);
+    console.log('  - Fee (in smallest units):', Math.floor(feeAmount * MIDNIGHT_DECIMAL_FACTOR));
+    console.log('  - Amount (in smallest units):', Math.floor(totalAmount * MIDNIGHT_DECIMAL_FACTOR));
 
-    return {
-      txHash: result.txHash,
-      id: result.id,
-      token: token || 'dust',
-      verified: verifiedOrg,
-      contributor,
-      amount: totalAmount,
-      fee: feeAmount,
-    };
+    // Validate that we have a Midnight address, not a Cardano address
+    if (contributor.startsWith('addr_')) {
+      console.error('[Midnight Escrow] ERROR: Cardano address provided instead of Midnight address');
+      throw new Error(
+        'Invalid address: A Cardano address was provided but Midnight network requires a Midnight address. Please connect a Midnight wallet.',
+      );
+    }
+
+    // Validate project ID format and convert properly
+    const cleanProjectId = projectId.replace(/-/g, ''); // Remove hyphens from UUID
+    if (cleanProjectId.length > 64) {
+      console.error('[Midnight Escrow] Project ID too long after cleaning:', cleanProjectId);
+      throw new Error('Project ID is too long for Midnight network');
+    }
+
+    try {
+      console.log('[Midnight Escrow] Calling midnight escrow create...');
+
+      // Try using the real API with Socious proof server
+      const USE_MOCK = false; // Using real API with Socious proof server
+
+      let result;
+      if (USE_MOCK) {
+        console.warn('[Midnight Escrow] MOCK MODE: Using simulated response');
+        console.warn('[Midnight Escrow] To use real API, ensure proof server is accessible');
+
+        // Generate mock escrow ID and transaction hash
+        const mockEscrowId = Date.now().toString();
+        const mockTxHash =
+          '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+
+        result = {
+          id: mockEscrowId,
+          txHash: mockTxHash,
+        };
+
+        console.log('[Midnight Escrow] Mock escrow created:', result);
+      } else {
+        result = await midnightEscrow.create({
+          contributor: contributorHex,
+          feeAddress: feeAddressHex,
+          org: projectIdHex,
+          fee: Math.floor(feeAmount * MIDNIGHT_DECIMAL_FACTOR),
+          amount: Math.floor(totalAmount * MIDNIGHT_DECIMAL_FACTOR),
+          token: token || 'dust',
+        });
+        console.log('[Midnight Escrow] Create completed successfully:', result);
+      }
+
+      const response = {
+        txHash: result.txHash,
+        id: result.id,
+        token: token || 'dust',
+        verified: verifiedOrg,
+        contributor,
+        amount: totalAmount,
+        fee: feeAmount,
+      };
+
+      console.log('[Midnight Escrow] Returning response:', response);
+      return response;
+    } catch (error) {
+      console.error('[Midnight Escrow] Failed to create escrow:', error);
+      console.error('[Midnight Escrow] Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+      // Re-throw with more context
+      throw new Error(`Midnight escrow creation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }
 
   // Handle EVM
@@ -360,6 +537,15 @@ export const withdrawnEscrow = async (params: WithdrawnParams) => {
 };
 
 export const getSelectedTokenDetail = (address: string) => {
+  // Special handling for Midnight's tDUST token
+  if (address === 'dust') {
+    return {
+      name: 'Test DUST',
+      symbol: 'tDUST',
+      address: 'dust',
+    };
+  }
+
   const flattenedTokens: FlattenToken[] = [];
 
   for (const [network, chainArray] of Object.entries(dappConfig)) {

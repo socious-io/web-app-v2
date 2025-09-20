@@ -51,6 +51,7 @@ export interface NewContract {
   amounts: Amounts;
   currency: PaymentCurrency;
   crypto_currency: string;
+  crypto_network?: string;
   currency_rate: number;
   commitment: number;
   commitment_period: CommitmentPeriod;
@@ -59,6 +60,15 @@ export interface NewContract {
   applicant_id: string;
   project_id: string;
   client: Identity;
+  client_wallet?: {
+    id: string;
+    user_id: string;
+    address: string;
+    network: string;
+    testnet: boolean;
+    created_at: string;
+    updated_at: string;
+  };
   status: NewContractStatus;
   provider: Identity;
   payment_id?: string;
@@ -82,6 +92,7 @@ export interface ContractReq {
   total_amount: number;
   currency: PaymentCurrency | string;
   crypto_currency: string;
+  crypto_network?: string;
   payment_type: PaymentMode;
   project_id: string; //service_id or job_id
   client_id: string; //buyer in services or talent in jobs

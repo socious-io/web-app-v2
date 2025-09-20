@@ -38,7 +38,7 @@ const schema = yup.object().shape({
   description: yup.string().required('Description is required'),
 });
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
-  const { connected, network } = dapp.useWeb3();
+  const { connected, network, networkName } = dapp.useWeb3();
   const [tokens, setTokens] = useState<
     {
       value: string;
@@ -141,6 +141,7 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       offer_message: description,
       total_hours: hours.toString(),
       crypto_currency_address: isCrypto ? selected : undefined,
+      crypto_network: isCrypto ? networkName : undefined,
       currency: isCrypto ? undefined : selected,
     };
 

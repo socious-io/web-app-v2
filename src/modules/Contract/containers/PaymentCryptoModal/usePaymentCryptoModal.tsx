@@ -15,7 +15,8 @@ export const usePaymentCryptoModal = (contract: Contract, onSucceedPayment?: (co
 
   const onProceedCryptoPayment = async () => {
     try {
-      const contributor = contract.client?.meta.wallet_address;
+      // Use client_wallet address if available (for network-specific wallet), otherwise fallback to meta.wallet_address
+      const contributor = contract.client_wallet?.address || contract.client?.meta.wallet_address;
       if (!connected) {
         setErrorMessage(translate('cont-wallet-not-connected'));
         return;

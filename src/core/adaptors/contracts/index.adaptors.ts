@@ -52,9 +52,11 @@ export const getContractsAdaptor = async (
               : { name: contract.currency },
           payment: contract.payment_type,
           client: contract.client,
+          client_wallet: contract.client_wallet,
           clientId: contract.client.id,
           paymentId: contract.payment_id,
           provider: contract.provider,
+          crypto_network: contract.crypto_network,
           providerId: contract.provider.id,
           offerId: contract.offer_id,
           missionId: contract.mission_id,
@@ -99,6 +101,8 @@ export const getContractAdaptor = async (contractId: string): Promise<AdaptorRes
       paymentObj: res.payment,
       projectId: res.project_id,
       client: res.client,
+      client_wallet: res.client_wallet,
+      crypto_network: res.crypto_network,
       provider: res.provider,
     };
     return {
