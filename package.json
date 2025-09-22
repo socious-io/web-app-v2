@@ -58,7 +58,7 @@
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-table": "^8.21.3",
     "@web3modal/ethers": "^5.1.11",
-    "axios": "^1.10.0",
+    "axios": "^1.12.2",
     "cardano-bridge": "github:socious-io/cardano-bridge#v0.0.6",
     "country-flag-icons": "^1.5.19",
     "dotenv": "^17.2.1",
