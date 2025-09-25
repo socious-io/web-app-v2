@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { KeyboardEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PAYMENT_CURRENCIES } from 'src/constants/PAYMENT_CURRENCY';
 import { minByToken } from 'src/constants/TOKEN_LIMIT';
@@ -21,7 +21,7 @@ const getSchema = tokens => {
       .number()
       .typeError('Total hours is required')
       .positive('Must be positive')
-      .min(1, 'Hours must be more than 0')
+      .min(1, 'Hours must be more than 1')
       .required('Total hours is required'),
     total: yup
       .number()
@@ -105,12 +105,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     setValue(name, value, { shouldValidate: true });
   };
 
-  const preventArrow = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
-      e.preventDefault();
-    }
-  };
-
   const onSubmit: SubmitHandler<Form> = async ({ paymentMethod, total, description, hours }) => {
     let netTotal = total || 0;
 
@@ -163,7 +157,6 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     isNonPaid,
     paymentMethodOptions,
     currency,
-    preventArrow,
     disabled: !isFiat && !connected,
   };
 };
