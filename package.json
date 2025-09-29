@@ -54,7 +54,7 @@
     "@reown/appkit": "^1.8.2",
     "@reown/appkit-adapter-wagmi": "^1.7.17",
     "@storybook/addon-designs": "^8.2.1",
-    "@stripe/stripe-js": "^7.4.0",
+    "@stripe/stripe-js": "^7.9.0",
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-table": "^8.21.3",
     "@web3modal/ethers": "^5.1.11",
