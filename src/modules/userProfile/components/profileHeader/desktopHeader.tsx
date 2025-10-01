@@ -1,6 +1,6 @@
 import React from 'react';
 import { ConnectStatus, Organization, User } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { ThreeDotsButton } from 'src/modules/connections/threeDotsButton';
 import { AvatarProfile } from 'src/modules/general/components/avatarProfile';
 import { Button } from 'src/modules/general/components/Button';
@@ -26,11 +26,11 @@ interface DesktopHeaderProps {
   displayConnectButton: () => boolean;
   displayMessageButton: () => boolean;
   displayThreeDotsButton: () => boolean;
+  userTags: string[];
 }
 export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   identity,
   myProfile,
-  isLoggedIn,
   connectStatus,
   handleOpenEditInfoModal,
   handleOpenQRCodeModal,
@@ -41,6 +41,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
   displayConnectButton,
   displayMessageButton,
   displayThreeDotsButton,
+  userTags,
 }) => {
   const { username, name, profileImage } = getIdentityMeta(identity);
 
@@ -59,7 +60,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
             <div className="text-2xl md:text-3xl font-semibold text-Gray-light-mode-900">{name}</div>
             {type === 'users' && (identity as User).open_to_work && (
               <Chip
-                label="Available for work"
+                label={translate('profile-header.available-for-work')}
                 size="lg"
                 theme="secondary"
                 startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
@@ -69,13 +70,16 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
 
             {type === 'organizations' && (identity as Organization).hiring && (
               <Chip
-                label="Hiring"
+                label={translate('profile-header.hiring')}
                 size="lg"
                 theme="secondary"
                 startIcon={<Dot color={variables.color_success_500} size="small" shadow={false} />}
                 shape="sharp"
               />
             )}
+
+            {type === 'users' &&
+              userTags.map(tag => <Chip key={tag} label={tag} size="lg" theme="secondary" shape="sharp" />)}
           </div>
           <div className="text-base font-normal text-Gray-light-mode-500">{username}</div>
         </div>
@@ -88,7 +92,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
             onClick={handleOpenQRCodeModal}
           >
             <Icon fontSize={20} name="share-01" color={variables.color_grey_700} />
-            Share
+            {translate('profile-header.actions.share')}
           </Button>
           {displayMessageButton() && (
             <Button
@@ -97,7 +101,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
               style={{ height: '40px', fontSize: '14px' }}
               onClick={handleMessage}
             >
-              Message
+              {translate('profile-header.actions.message')}
             </Button>
           )}
           {displayConnectButton() && (
@@ -108,7 +112,9 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({
               style={{ height: '40px', fontSize: '14px' }}
               onClick={() => setOpenConnectRequest(true)}
             >
-              {connectStatus === 'PENDING' ? 'Request sent' : 'Connect'}
+              {connectStatus === 'PENDING'
+                ? translate('profile-header.actions.request-sent')
+                : translate('profile-header.actions.connect')}
             </Button>
           )}
           {displayThreeDotsButton() && <ThreeDotsButton otherIdentityId={identity?.id || ''} />}

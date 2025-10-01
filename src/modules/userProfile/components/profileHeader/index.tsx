@@ -44,6 +44,7 @@ export const ProfileHeader = () => {
     displayMessageButton,
     displayThreeDotsButton,
     displayVerifyAlert,
+    userTags,
   } = useProfileHeader();
 
   const coverImage = identity?.cover_image;
@@ -100,6 +101,7 @@ export const ProfileHeader = () => {
           displayConnectButton={displayConnectButton}
           displayMessageButton={displayMessageButton}
           displayThreeDotsButton={displayThreeDotsButton}
+          userTags={userTags}
         />
         <MobileHeader
           identity={identity}
@@ -107,6 +109,7 @@ export const ProfileHeader = () => {
           myProfile={myProfile}
           handleOpenEditInfoModal={handleOpenEditInfoModal}
           handleOpenEditAvatar={handleOpenEditAvatar}
+          userTags={userTags}
         />
       </div>
       <div className="md:hidden">
