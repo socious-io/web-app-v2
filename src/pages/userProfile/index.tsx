@@ -6,11 +6,11 @@ import css from './userProfile.module.scss';
 import { useUserProfile } from './useUserProfile';
 
 export const UserProfile = () => {
-  const { tabs, activeTabIndex } = useUserProfile();
+  const { tabs, activeTabIndex, userTags } = useUserProfile();
 
   return (
     <div className="w-full">
-      <ProfileHeader />
+      <ProfileHeader userTags={userTags} />
       <div className={`${css.content} p-4 pt-0 md:p-8 md:pt-0`}>
         <div className={` ${css.leftCol} hidden md:block`}>
           <MainInfo />

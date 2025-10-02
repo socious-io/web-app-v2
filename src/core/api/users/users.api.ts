@@ -1,3 +1,4 @@
+import { config } from 'src/config';
 import { post, get } from 'src/core/api/http';
 import { ApplicantsRes, JobsRes, MissionsRes, OffersRes } from 'src/core/api/jobs/jobs.types';
 import { FilterReq, PaginateReq, SuccessRes } from 'src/core/api/types';
@@ -23,7 +24,13 @@ import {
   ReferReq,
   ImportRes,
   Reviews,
+  UserDetails,
 } from './users.types';
+
+const overwrittenConfigV3 = {
+  baseURL: config.baseURLV3,
+  withCredentials: false,
+};
 
 export async function profile(): Promise<User> {
   return (await get<User>('user/profile')).data;
@@ -158,4 +165,8 @@ export async function importLinkedin(file: File): Promise<ImportRes> {
 
 export async function reviews(params: PaginateReq, filters?: FilterReq): Promise<Reviews> {
   return (await get<Reviews>('user/reviews', { params }, filters)).data;
+}
+
+export async function getUserDetails(username: string): Promise<UserDetails> {
+  return (await get<UserDetails>(`users/by-username/${username}`, { ...overwrittenConfigV3 })).data;
 }
