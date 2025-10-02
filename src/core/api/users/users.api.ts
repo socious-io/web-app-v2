@@ -24,6 +24,7 @@ import {
   ReferReq,
   ImportRes,
   Reviews,
+  UserDetails,
 } from './users.types';
 
 const overwrittenConfigV3 = {
@@ -164,4 +165,8 @@ export async function importLinkedin(file: File): Promise<ImportRes> {
 
 export async function reviews(params: PaginateReq, filters?: FilterReq): Promise<Reviews> {
   return (await get<Reviews>('user/reviews', { params }, filters)).data;
+}
+
+export async function getUserDetails(username: string): Promise<UserDetails> {
+  return (await get<UserDetails>(`users/by-username/${username}`, { ...overwrittenConfigV3 })).data;
 }

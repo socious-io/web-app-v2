@@ -1,7 +1,8 @@
 import React from 'react';
 import { Organization, User } from 'src/core/api';
-import { getIdentityMeta } from 'src/core/utils';
+import { getIdentityMeta, translate } from 'src/core/utils';
 import { AvatarProfile } from 'src/modules/general/components/avatarProfile';
+import { Chip } from 'src/modules/general/components/Chip';
 import { Dot } from 'src/modules/general/components/dot';
 import { IconButton } from 'src/modules/general/components/iconButton';
 import variables from 'src/styles/constants/_exports.module.scss';
@@ -14,6 +15,7 @@ interface MobileHeaderProps {
   handleOpenEditInfoModal: () => void;
   handleOpenEditAvatar: () => void;
   type: 'users' | 'organizations';
+  userTags: string[];
 }
 export const MobileHeader: React.FC<MobileHeaderProps> = ({
   identity,
@@ -21,6 +23,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
   handleOpenEditInfoModal,
   handleOpenEditAvatar,
   type,
+  userTags,
 }) => {
   const { profileImage, name, username } = getIdentityMeta(identity);
   return (
@@ -48,7 +51,15 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
         {type === 'users' && (identity as User).open_to_work && (
           <div className={css.status}>
             <Dot color={variables.color_success_500} size="small" shadow={false} />
-            <span className={css.statusText}>Available for work</span>
+            <span className={css.statusText}>{translate('profile-header.available-for-work')}</span>
+          </div>
+        )}
+
+        {type === 'users' && !!userTags.length && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {userTags.map(tag => (
+              <Chip key={tag} label={tag} size="lg" theme="secondary" shape="sharp" />
+            ))}
           </div>
         )}
 
