@@ -11,6 +11,7 @@ import {
   ProjectType,
   reviews,
   updateWallet,
+  UserDetails,
 } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -145,5 +146,16 @@ export const updateWalletAdaptor = async (payload: WalletReq): Promise<AdaptorRe
   } catch (error) {
     console.error('Error in updating user wallet', error);
     return { data: null, error: 'Error in updating user wallet' };
+  }
+};
+
+//FIXME Use this type after migrating to v3
+export const getUserDetailsAdaptor = async (username: string): Promise<AdaptorRes<UserDetails>> => {
+  try {
+    const data = await getUserDetails(username);
+    return { data, error: null };
+  } catch (error) {
+    console.error('Error in getting user details: ', error);
+    return { data: null, error: 'Error in getting user details' };
   }
 };
