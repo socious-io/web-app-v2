@@ -16,7 +16,9 @@
       "request-sent": "Request sent",
       "connect": "Connect",
       "message": "Message"
-    }
+    },
+    "available-for-work": "Available for work",
+    "hiring": "Hiring"
   },
   "main-info": {
     "connections": "connections",

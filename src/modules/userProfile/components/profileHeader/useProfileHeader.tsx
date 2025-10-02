@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getUserDetailsAdaptor } from 'src/core/adaptors/users/index.adaptors';
 import { CurrentIdentity, getReferrer, OrganizationProfile, UserProfile } from 'src/core/api';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { RootState } from 'src/store';
@@ -25,12 +26,26 @@ export const useProfileHeader = () => {
   const [openEditHeader, setOpenEditHeader] = useState(false);
   const [openConnectRequest, setOpenConnectRequest] = useState(false);
   const [displayVerifyAlert, setDisplayVerifyAlert] = useState(false);
+  const [userTags, setUserTags] = useState<string[]>([]);
 
   const { updateSelectedStep } = useContext(StepsContext);
 
   useEffect(() => {
     updateSelectedStep(0);
   }, []);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (identity && identityType === 'users') {
+        const username = (identity as UserProfile).username;
+        const { data, error } = await getUserDetailsAdaptor(username);
+        console.log('User details data:', data);
+        if (error) console.error('Error fetching user details:', error);
+        if (data) setUserTags(data.tags);
+      }
+    };
+    fetchUserDetails();
+  }, [identity, identityType]);
 
   const closeEditInfoModal = () => {
     setOpenEditInfoModal(false);
@@ -139,5 +154,6 @@ export const useProfileHeader = () => {
     displayMessageButton,
     displayThreeDotsButton,
     displayVerifyAlert,
+    userTags,
   };
 };
