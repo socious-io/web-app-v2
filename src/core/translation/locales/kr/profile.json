@@ -16,7 +16,9 @@
       "request-sent": "요청 전송됨",
       "connect": "연결",
       "message": "메시지"
-    }
+    },
+    "available-for-work": "구직 중",
+    "hiring": "채용 중"
   },
   "main-info": {
     "connections": "연결",

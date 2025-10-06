@@ -10,8 +10,9 @@ import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer
 export const useUserProfile = () => {
   const { hash } = useLocation();
   const dispatch = useDispatch();
-  const { user } = useLoaderData() as {
+  const { user, userTags } = useLoaderData() as {
     user: UserProfile;
+    userTags: string[];
   };
 
   dispatch(setIdentity(user));
@@ -30,5 +31,5 @@ export const useUserProfile = () => {
     '#services': 1,
   };
 
-  return { tabs, activeTabIndex: activeTabIndex[hash] || 0 };
+  return { tabs, activeTabIndex: activeTabIndex[hash] || 0, userTags };
 };

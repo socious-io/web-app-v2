@@ -5,10 +5,12 @@ import {
   addLanguage,
   Education,
   Experience,
+  getUserDetails,
   importLinkedin,
   LanguageCode,
   ProjectType,
   reviews,
+  UserDetails,
 } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -128,5 +130,16 @@ export const getReviewsAdaptor = async (page = 1, limit = 10): Promise<AdaptorRe
   } catch (error) {
     console.error('Error in getting reviews list: ', error);
     return { data: null, error: 'Error in getting reviews list' };
+  }
+};
+
+//FIXME Use this type after migrating to v3
+export const getUserDetailsAdaptor = async (username: string): Promise<AdaptorRes<UserDetails>> => {
+  try {
+    const data = await getUserDetails(username);
+    return { data, error: null };
+  } catch (error) {
+    console.error('Error in getting user details: ', error);
+    return { data: null, error: 'Error in getting user details' };
   }
 };

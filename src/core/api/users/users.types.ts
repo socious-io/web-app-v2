@@ -268,3 +268,27 @@ export interface Review {
 export interface Reviews extends PaginateRes {
   items: Review[];
 }
+
+//FIXME Use this type after migrating to v3
+export interface UserDetails {
+  id: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  mission: string | null;
+  impact_points: number;
+  social_causes: string[];
+  followers: number;
+  followings: number;
+  skills: string[];
+  open_to_work: boolean;
+  open_to_volunteer: boolean;
+  identity_verified: boolean;
+  events: string[];
+  tags: string[];
+  avatar_id: string | null;
+  avatar: Media | null;
+  cover_id: string | null;
+  cover: Media | null;
+  created_at: string;
+}
