@@ -16,7 +16,9 @@
       "request-sent": "リクエスト送信済み",
       "connect": "接続",
       "message": "メッセージ"
-    }
+    },
+    "available-for-work": "仕事を探しています",
+    "hiring": "採用中"
   },
   "main-info": {
     "connections": "つながり",

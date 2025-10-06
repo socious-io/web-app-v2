@@ -40,7 +40,7 @@ import FallBack from 'src/pages/error/fallback/fallback';
 import { NotFound } from 'src/pages/error/notFound';
 import { RootState } from 'src/store';
 
-import { getReviewsAdaptor } from '../adaptors/users/index.adaptors';
+import { getReviewsAdaptor, getUserDetailsAdaptor } from '../adaptors/users/index.adaptors';
 import { DeepLinks } from '../deepLinks';
 import { checkSearchFilters } from '../utils';
 
@@ -84,12 +84,14 @@ export const blueprint: RouteObject[] = [
                           kind: 'SERVICE',
                         });
                         const reviews = await getReviewsAdaptor(1, 5);
+                        const userDetails = await getUserDetailsAdaptor(params.id);
                         // Keep this, it might be needed in the future
                         // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
                         return {
                           user,
                           services: services.data,
                           reviews: reviews.data,
+                          userTags: userDetails.data?.tags || [],
                           // badges: userBadges,
                           // missions,
                         };
