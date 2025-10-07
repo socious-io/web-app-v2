@@ -52,19 +52,6 @@ const WALLET_TYPES = {
 } as const;
 
 export const useWeb3 = () => {
-  const initialState = {
-    wallet: null,
-    walletProvider: null,
-    provider: null,
-    signer: null,
-    account: '',
-    chainId: null,
-    connected: false,
-    network: null,
-    networkName: '',
-    testnet: config.dappENV === 'testnet',
-    balance: null,
-  };
   const dispatch = useDispatch();
   const walletState = useSelector((state: RootState) => state.wallet);
   const [pendingConnector, setPendingConnector] = useState<Connector<CreateConnectorFn> | null>(walletState.wallet);
@@ -164,7 +151,6 @@ export const useWeb3 = () => {
     dispatch(resetWalletState());
     localStorage.removeItem('walletType');
     localStorage.removeItem('selectedWallet');
-    setWalletState(initialState);
   };
 
   useEffect(() => {
