@@ -41,6 +41,7 @@ export const Chats = () => {
           </div> */}
         </div>
         <IconButton
+          data-testid="message-to-icon"
           iconColor={variables.color_grey_700}
           iconName="edit-05"
           iconSize={20}

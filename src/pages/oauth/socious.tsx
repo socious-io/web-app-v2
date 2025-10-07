@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { config } from 'src/config';
@@ -11,6 +12,7 @@ export const SociousID = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
   const identityId = searchParams.get('identity_id');
+  const platform = Capacitor.getPlatform();
 
   const fetchAuthURL = async () => {
     const { error, data } = await getAuthUrlAdaptor(config.appBaseURL + 'oauth/socious');
@@ -57,7 +59,7 @@ export const SociousID = () => {
 
     const redirectToAuthURL = async () => {
       const authURL = await fetchAuthURL();
-      if (authURL) {
+      if (authURL && platform === 'web') {
         window.location.href = authURL;
       }
     };

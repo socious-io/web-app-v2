@@ -29,11 +29,14 @@ jobs:
           PORT: 3000
           VITE_ENV: development
           VITE_BASE_URL: https://dev.socious.io/api/v2
+          VITE_BASE_URL_V3: https://dev.socious.io/api/v3
           VITE_APP_URL: https://webapp2.socious.io/
           VITE_JP_STRIPE_PUBLIC_KEY: pk_test
           VITE_DAPP_ENV: testnet
           VITE_GOOGLE_OAUTH_CLIENT_ID: id
           VITE_GOOGLE_RECAPTCHA_SITE_KEY: secret
+          VITE_BLOCKFROST_PROJECT_ID: id
+          VITE_CARDANO_PAYOUT_ADERESS: address
 
       - name: Check Status
         if: failure()

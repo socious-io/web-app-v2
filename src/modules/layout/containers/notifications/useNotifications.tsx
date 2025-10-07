@@ -143,7 +143,6 @@ export const useNotifications = (handleClose: () => void) => {
         path = '';
         break;
     }
-    console.log(path, 'fdsfsdf');
     handleClose();
     navigate(path);
   };

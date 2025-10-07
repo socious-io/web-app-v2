@@ -23,6 +23,15 @@
     "expiry": "Expiry",
     "ending": "ending in"
   },
-  "router-not-found": "Page not found :(",
-  "general-success-continue": "Continue"
+  "general-success-continue": "Continue",
+  "general-error-not-found": {
+    "header": "404 - Page Not Found",
+    "subheader": "Oops! The page you're looking for doesn't exist on",
+    "go-to-home-btn": "Go to Home"
+  },
+  "general-error-internal": {
+    "header": "Internal Server Error",
+    "subheader": "We apologize for the inconvenience. Please try again later",
+    "home-btn": " Home Page"
+  }
 }

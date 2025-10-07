@@ -6,48 +6,94 @@ import { useLoaderData, useLocation, useNavigate, useParams } from 'react-router
 import { PAYMENT_CURRENCIES } from 'src/constants/PAYMENT_CURRENCY';
 import { translatePaymentMode } from 'src/constants/PROJECT_PAYMENT_MODE';
 import { translateServiceLength } from 'src/constants/SERVICE_LENGTH';
-import { createOrUpdateServiceAdaptor, OptionType, Service, skillsToCategory } from 'src/core/adaptors';
-import { CurrentIdentity, updateWallet, uploadMedia, PaymentMode } from 'src/core/api';
+import { minByToken } from 'src/constants/TOKEN_LIMIT';
+import {
+  createOrUpdateServiceAdaptor,
+  OptionType,
+  Service,
+  skillsToCategory,
+  updateWalletAdaptor,
+} from 'src/core/adaptors';
+import { CurrentIdentity, uploadMedia, PaymentMode } from 'src/core/api';
 import { useTokens } from 'src/core/hooks/useTokens';
 import { getIdentityMeta, translate } from 'src/core/utils';
-import Dapp from 'src/dapp';
+import dapp from 'src/dapp';
 import { Files } from 'src/modules/general/components/FileUploader/index.types';
 import { RootState } from 'src/store';
 import * as yup from 'yup';
 
 import { ServiceForm } from './index.types';
 
-const schema = yup.object().shape({
-  name: yup.string().required(translate('service-form.error-message')),
-  category: yup.object().shape({
-    label: yup.string().required(),
-    value: yup.string().required(translate('service-form.error-message')),
-  }),
-  description: yup.string().required(translate('service-form.error-message')),
-  delivery: yup.object().shape({
-    label: yup.string().required(),
-    value: yup.string().required(translate('service-form.error-message')),
-  }),
-  hours: yup
-    .string()
-    .matches(/^[0-9]*\.?[0-9]+$/, translate('service-form.error-positive-message'))
-    .required(translate('service-form.error-message')),
-  payment: yup.string().default('FIAT').required(translate('service-form.error-message')),
-  price: yup
-    .string()
-    .matches(/^[0-9]*\.?[0-9]+$/, translate('service-form.error-positive-message'))
-    .required(translate('service-form.error-message')),
-  currency: yup.string().required(translate('service-form.error-message')),
-  skills: yup
-    .array()
-    .of(
-      yup.object().shape({
-        label: yup.string().required(),
-        value: yup.string().required(translate('service-form.error-message')),
+const getSchema = tokens => {
+  return yup.object().shape({
+    name: yup.string().required(translate('service-form.error-message')),
+    category: yup.object().shape({
+      label: yup.string().required(),
+      value: yup.string().required(translate('service-form.error-message')),
+    }),
+    description: yup.string().required(translate('service-form.error-message')),
+    delivery: yup.object().shape({
+      label: yup.string().required(),
+      value: yup.string().required(translate('service-form.error-message')),
+    }),
+    hours: yup
+      .string()
+      .matches(/^[0-9]*\.?[0-9]+$/, translate('service-form.error-positive-message'))
+      .required(translate('service-form.error-message')),
+    payment: yup.string().default('FIAT').required(translate('service-form.error-message')),
+    price: yup
+      .string()
+      .required(translate('service-form.error-message'))
+      .when(['payment', 'currency'], ([payment, currency], schema) => {
+        let minValue;
+        if (payment === 'FIAT') {
+          minValue = 22;
+        } else if (payment === 'CRYPTO' && currency) {
+          const tokenLabel = tokens.find(t => t.value === currency)?.label;
+          minValue = minByToken[tokenLabel];
+        }
+        return schema
+          .test('is-positive', translate('service-form.error-positive-message'), value =>
+            value ? parseFloat(value) > 0 : false,
+          )
+          .test(
+            'min-price',
+            minValue !== undefined ? translate('service-form.error-min-price', { minValue }) : '',
+            value => {
+              if (!value || minValue === undefined) return true;
+              return parseFloat(value) >= minValue;
+            },
+          );
       }),
-    )
-    .required(translate('service-form.error-message')),
-});
+    currency: yup
+      .string()
+      .required(translate('service-form.error-message'))
+      .when(['payment'], ([payment], schema) => {
+        if (payment === 'FIAT') {
+          return schema.required(translate('service-form.error-message')).oneOf(
+            PAYMENT_CURRENCIES.map(c => c.value),
+            'Invalid FIAT currency',
+          );
+        }
+        if (payment === 'CRYPTO') {
+          return schema.required(translate('service-form.error-message')).oneOf(
+            tokens.map(t => t.value),
+            'Invalid CRYPTO token',
+          );
+        }
+        return schema;
+      }),
+    skills: yup
+      .array()
+      .of(
+        yup.object().shape({
+          label: yup.string().required(),
+          value: yup.string().required(translate('service-form.error-message')),
+        }),
+      )
+      .required(translate('service-form.error-message')),
+  });
+};
 
 export const useServiceCreateForm = () => {
   const navigate = useNavigate();
@@ -69,8 +115,8 @@ export const useServiceCreateForm = () => {
   });
   const { usernameVal } = getIdentityMeta(currentIdentity);
   const walletAddress = currentIdentity?.meta.wallet_address;
-  const { Web3Connect, isConnected, chainId, account } = Dapp.useWeb3();
-  const tokens = useTokens(isConnected, chainId);
+  const { connected, account, network, networkName, testnet } = dapp.useWeb3();
+  const tokens = useTokens(connected, network);
   const [openModal, setOpenModal] = useState<{ name: 'publish' | 'cancel' | 'stripe' | ''; open: boolean }>({
     name: '',
     open: false,
@@ -93,25 +139,25 @@ export const useServiceCreateForm = () => {
     reset,
   } = useForm<ServiceForm>({
     mode: 'all',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(getSchema(tokens)),
   });
   const selectedCategory = getValues('category');
   const selectedDelivery = getValues('delivery');
   const selectedPaymentMethod = watch('payment') || paymentModes[0].value;
   const selectedCurrency = getValues('currency') || paymentCurrencies[0].value;
   const selectedSkills = getValues('skills') || [];
-  const disabledButton = selectedPaymentMethod === 'CRYPTO' && !isConnected;
+  const disabledButton = selectedPaymentMethod === 'CRYPTO' && !connected;
 
   useEffect(() => {
     if (
       currentIdentity?.type === 'users' &&
-      isConnected &&
+      connected &&
       account &&
       (!walletAddress || String(walletAddress) !== account)
     ) {
-      updateWallet({ wallet_address: account });
+      updateWalletAdaptor({ account, networkName, testnet });
     }
-  }, [isConnected, account]);
+  }, [connected, account]);
 
   const initCurrencyValue = (service: Service) => {
     if (!service) {
@@ -249,7 +295,6 @@ export const useServiceCreateForm = () => {
       handleCloseModal,
       onCancelClick,
       onBack,
-      Web3Connect,
       handleSubmit,
       onSubmit,
       onSelectSearchDropdown,

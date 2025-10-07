@@ -6,25 +6,23 @@ import { init } from 'src/core/datadog';
 
 import App from './App';
 import './index.scss';
-import FallBack from './pages/fallback/fallback';
-import { logError } from './pages/fallback/fallback.services';
+import FallBack from './pages/error/fallback/fallback';
+import { logError } from './pages/error/fallback/fallback.services';
 
 const VERSION = '7.0.0';
 init(VERSION);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  //   <React.StrictMode>
   <>
     <Helmet>
       <meta charSet="UTF-8" />
       <meta name="version" content={VERSION} />
       <link rel="icon" type="image/png" href="/favicon.png" />
-      <title>Socious</title>
+      <title>{'Socious'}</title>
     </Helmet>
     <ErrorBoundary fallback={<FallBack />} onError={logError}>
       <App />
     </ErrorBoundary>
   </>,
-  //   </React.StrictMode>
 );
 defineCustomElements(window);

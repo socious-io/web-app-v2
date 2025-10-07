@@ -8,6 +8,7 @@ import { Input } from 'src/modules/general/components/input/input';
 import ProgressStep from 'src/modules/general/components/ProgressStep';
 import AddCardModal from 'src/modules/general/containers/AddCardModal';
 import ServiceOrderDetail from 'src/modules/Services/components/ServiceOrderDetail';
+import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 import variables from 'src/styles/constants/_exports.module.scss';
 
 import styles from './index.module.scss';
@@ -24,7 +25,6 @@ const ServicePaymentFlow = () => {
       cardsList,
       selectedCardId,
       openAddCardModal,
-      Web3Connect,
       errorMessage,
       orderStatus,
       register,
@@ -60,7 +60,7 @@ const ServicePaymentFlow = () => {
           customStyle={styles['card__remove']}
           onClick={() => onRemoveCard(card.id)}
         >
-          Remove
+          {'Remove'}
         </Button>
       ),
     };
@@ -105,7 +105,7 @@ const ServicePaymentFlow = () => {
             </>
           ) : (
             <div className="self-center">
-              <Web3Connect />
+              <ConnectButton />
             </div>
           )}
         </div>

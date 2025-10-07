@@ -7,7 +7,7 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import styles from './index.module.scss';
 import { CopyLinkProps } from './index.types';
 
-const CopyLink: React.FC<CopyLinkProps> = ({ link, copyText = '', onCopy }) => {
+const CopyLink: React.FC<CopyLinkProps> = ({ link, copyText = translate('general-copy'), onCopy, className = '' }) => {
   const [copied, setCopied] = useState(false);
 
   const onCopyClick = () => {
@@ -19,6 +19,7 @@ const CopyLink: React.FC<CopyLinkProps> = ({ link, copyText = '', onCopy }) => {
     <Input
       id="copy-url"
       value={link}
+      className={className}
       postfix={
         <div className={copied ? styles['copy--success'] : styles['copy']} onClick={onCopyClick}>
           <Icon
@@ -26,7 +27,7 @@ const CopyLink: React.FC<CopyLinkProps> = ({ link, copyText = '', onCopy }) => {
             fontSize={20}
             color={copied ? variables.color_success_700 : variables.color_grey_700}
           />
-          {copyText || translate('general-copy')}
+          {copyText}
         </div>
       }
     />

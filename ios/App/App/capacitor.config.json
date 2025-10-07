@@ -20,10 +20,10 @@
 		}
 	},
 	"packageClassList": [
-		"SignInWithApple",
 		"FirebaseMessagingPlugin",
 		"ActionSheetPlugin",
 		"AppPlugin",
+		"CAPBrowserPlugin",
 		"CAPCameraPlugin",
 		"DialogPlugin",
 		"HapticsPlugin",

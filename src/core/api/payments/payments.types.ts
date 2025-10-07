@@ -50,6 +50,7 @@ export interface Payment {
     amount?: number;
     fee?: number;
     contributor?: string;
+    verifiedOrg?: boolean;
   };
 
   payer_identity: Identity;

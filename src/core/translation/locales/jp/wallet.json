@@ -1,0 +1,10 @@
+{
+  "wallet-title": "暗号ウォレット",
+  "wallet-connect": "ウォレットを接続する",
+  "wallet-connect-btn": "ウォレットを接続",
+  "wallet-disconnect": "切断する",
+  "wallet-copy": "アドレスをコピー",
+  "wallet-not-installed-error": "CardanoまたはEVMウォレットが検出されませんでした。対応するウォレットをインストールしてください。",
+  "wallet-not-connected-error": "{{walletName}}ウォレットの接続に失敗しました。もう一度お試しください。",
+  "wallet-failed": "失敗しました"
+}

@@ -21,6 +21,11 @@ const NavPortal = () => {
       logo: '/images/logo/fund-logo.svg',
       link: config.fundURL,
     },
+    {
+      name: 'AC',
+      logo: '/images/logo/account-center.svg',
+      link: config.accountCenterURL + 'app',
+    },
   ];
 
   return (
@@ -46,7 +51,7 @@ const NavPortal = () => {
             onClick={() => (window.location.href = product.link)}
           >
             <div className="flex items-center justify-center p-2 bg-Gray-light-mode-100 rounded-full">
-              <img src={product.logo} alt={`Socious ${product.name}`} width={24} height={24} />
+              <img src={product.logo} alt={`Socious ${product.name}`} width={24} height={26} />
             </div>
             {product.name}
           </div>

@@ -1,8 +1,6 @@
 import { Interface, InterfaceAbi, JsonRpcSigner } from 'ethers';
 import { Chain } from 'viem';
 
-import { CIP30ToEIP1193Provider } from './wallets/cip-30';
-
 export interface Token {
   name: string;
   symbol: string;
@@ -12,6 +10,7 @@ export interface Token {
 
 export interface Network {
   chain: Chain;
+  name: string;
   escrow: string;
   old?: boolean;
   logic?: string;
@@ -29,10 +28,8 @@ export interface DappConfig {
 }
 
 export interface EscrowParams {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  walletProvider?: any;
-  signer: JsonRpcSigner;
-  chainId: number;
+  signer: JsonRpcSigner | null;
+  network?: Network;
   totalAmount: number;
   escrowAmount: number;
   contributor: string;
@@ -46,8 +43,8 @@ export interface EscrowParams {
 }
 
 export interface AllowanceParams {
-  signer: JsonRpcSigner;
-  chainId: number;
+  signer: JsonRpcSigner | null;
+  network?: Network;
   token: string;
   amount: number;
   decimals?: number;
@@ -63,9 +60,8 @@ export interface EscrowActionEventData {
 }
 
 export interface WithdrawnParams {
-  walletProvider?: CIP30ToEIP1193Provider;
-  signer: JsonRpcSigner;
-  chainId: number;
+  signer: JsonRpcSigner | null;
+  network?: Network;
   escrowId: string;
   meta?: any;
 }

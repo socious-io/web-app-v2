@@ -1,58 +1,103 @@
+import { Escrow } from 'cardano-bridge';
 import { Contract, parseUnits } from 'ethers';
 import { config } from 'src/config';
 
 import { dappConfig } from './dapp.config';
-import { CardanoEscrow, NETWORKS } from './dapp.connect';
 import { AllowanceParams, EscrowParams, FlattenToken, WithdrawnParams } from './dapp.types';
 
-export const allowance = async (params: AllowanceParams) => {
-  const contract = new Contract(params.token, dappConfig.abis.token, params.signer);
-  const decimals = params.decimals || (await contract.decimals());
-  const amount = parseUnits(`${params.amount}`, decimals);
-  const selectedNetwork = NETWORKS.filter(n => n.chain.id === params.chainId)[0];
+// Fee constants
+const VERIFIED_ORG_FEE_PERCENT = 0.05; // 5% fee for verified organizations
+const UNVERIFIED_ORG_FEE_PERCENT = 0.1; // 10% fee for unverified organizations
+const CARDANO_DECIMAL_FACTOR = 1_000_000; // Lovelace conversion factor
 
-  const tx = await contract.approve(selectedNetwork.escrow, amount);
+let cardanoEscrow: Escrow | null = null;
+export const getCardanoEscrow = () => {
+  if (config.blockfrostProjectId && !cardanoEscrow) {
+    cardanoEscrow = new Escrow({ blockfrost: config.blockfrostProjectId });
+  }
+
+  return cardanoEscrow;
+};
+
+export const allowance = async (params: AllowanceParams) => {
+  const { token, signer, amount, decimals, network: selectedNetwork } = params;
+
+  if (!selectedNetwork) throw new Error('No network selected');
+
+  const contract = new Contract(token, dappConfig.abis.token, signer);
+  const tokenDecimals = decimals || (await contract.decimals());
+  const parsedAmount = parseUnits(amount.toString(), tokenDecimals);
+
+  const tx = await contract.approve(selectedNetwork.escrow, parsedAmount);
   await tx.wait();
-  return { tx, amount, decimals };
+
+  return {
+    tx,
+    amount: parsedAmount,
+    decimals: tokenDecimals,
+  };
 };
 
 export const escrow = async (params: EscrowParams) => {
-  const { chainId, signer, walletProvider } = params;
+  const {
+    token: inputToken,
+    signer,
+    network: selectedNetwork,
+    verifiedOrg,
+    contributor,
+    totalAmount,
+    escrowAmount,
+    projectId,
+    addressReferringOrg,
+    addressReferringCont,
+    applyOrgFeeDiscount,
+    applyContFeeDiscount,
+  } = params;
 
-  const selectedNetwork = NETWORKS.filter(n => n.chain.id === chainId)[0];
-  let token = params.token;
-  if (!token) token = selectedNetwork.tokens[0].address as string;
+  if (!selectedNetwork) throw new Error('No network selected');
 
-  if (walletProvider?.isCIP30) {
-    const txHash = await CardanoEscrow.deposit({
-      unit: token,
-      quantity: `${params.totalAmount * 1000000}`,
+  // Default token
+  const token = inputToken || selectedNetwork.tokens[0].address;
+  if (!token) throw new Error('No token specified or available in selected network');
+
+  // Handle Cardano
+  if (selectedNetwork.name === 'cardano') {
+    const cardanoEscrow = getCardanoEscrow();
+    if (!cardanoEscrow) {
+      throw new Error('Cardano escrow service not available');
+    }
+
+    const txHash = await cardanoEscrow.deposit({
+      unit: token || 'lovelace',
+      quantity: `${totalAmount * CARDANO_DECIMAL_FACTOR}`,
     });
-    // more info need for release cardano escrow
+
+    // Store metadata for release
     return {
       txHash,
       id: txHash,
       token,
-      varified: params.verifiedOrg,
-      contributor: params.contributor,
-      amount: params.totalAmount,
-      fee: params.totalAmount - params.escrowAmount,
+      verified: verifiedOrg,
+      contributor,
+      amount: totalAmount,
+      fee: totalAmount - escrowAmount,
     };
   }
 
+  // Handle EVM
   const tokenConfig = selectedNetwork.tokens.find(t => t.address === token);
   if (!tokenConfig) throw new Error("Offered token is not exists on this network you'd selected!");
 
   // First need allowance to verify that transaction is possible for smart contract
   const approved = await allowance({
-    chainId,
+    network: selectedNetwork,
     signer,
     token: token || '',
-    amount: params.totalAmount,
+    amount: totalAmount,
     decimals: tokenConfig.decimals,
   });
 
-  const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
+  const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, signer);
 
   // TODO right way is getting events but on huge network it wont works properly with current version
   /* const event = new Promise<EscrowActionEventData>((resolve, reject) => {
@@ -64,14 +109,14 @@ export const escrow = async (params: EscrowParams) => {
   const tmpAddress = '0x0000000000000000000000000000000000000000';
 
   const tx = await contract.newEscrow(
-    params.contributor,
-    params.projectId,
-    parseUnits(`${params.escrowAmount}`, approved.decimals),
-    params.verifiedOrg,
-    params.addressReferringOrg || tmpAddress,
-    params.addressReferringCont || tmpAddress,
-    params.applyOrgFeeDiscount,
-    params.applyContFeeDiscount,
+    contributor,
+    projectId,
+    parseUnits(`${escrowAmount}`, approved?.decimals),
+    verifiedOrg,
+    addressReferringOrg || tmpAddress,
+    addressReferringCont || tmpAddress,
+    applyOrgFeeDiscount,
+    applyContFeeDiscount,
     token,
   );
 
@@ -87,32 +132,55 @@ export const escrow = async (params: EscrowParams) => {
 };
 
 export const withdrawnEscrow = async (params: WithdrawnParams) => {
-  if (params.walletProvider?.isCIP30) {
-    let feePercent = 0.1;
-    if (params.meta.verifiedOrg) feePercent = 0.05;
+  const { meta, escrowId, signer, network: selectedNetwork } = params;
 
-    const fee = params.meta.amount * (1 - feePercent) + params.meta?.fee;
-    const amount = params.meta.amount - fee;
+  if (!selectedNetwork) throw new Error('No network selected');
 
-    const tx = await CardanoEscrow.release({
-      tx: params.escrowId,
-      payouts: [
-        {
-          address: config.cardanoPayoutFeeAddress,
-          amount: Math.trunc(fee * 1000000),
-        },
-        {
-          address: params.meta.contributor,
-          amount: Math.trunc(amount * 1000000),
-        },
-      ],
-    });
+  // Handle Cardano
+  if (selectedNetwork.name === 'cardano') {
+    try {
+      // Determine fee percentage based on organization verification status
+      const feePercent = meta.verifiedOrg ? VERIFIED_ORG_FEE_PERCENT : UNVERIFIED_ORG_FEE_PERCENT;
 
-    return tx;
+      // FIXED: Calculate fee correctly (percentage of amount + any additional fees)
+      const platformFee = meta.amount * feePercent;
+      const totalFee = platformFee + (meta?.fee || 0);
+      const contributorAmount = meta.amount - totalFee;
+
+      // Validate amounts
+      if (contributorAmount <= 0) {
+        throw new Error('Invalid amount: fee exceeds total amount');
+      }
+
+      const cardanoEscrow = getCardanoEscrow();
+      if (!cardanoEscrow) {
+        throw new Error('Cardano escrow service not available');
+      }
+
+      const tx = await cardanoEscrow.release({
+        tx: escrowId,
+        payouts: [
+          {
+            address: config.cardanoPayoutFeeAddress,
+            amount: Math.trunc(totalFee * CARDANO_DECIMAL_FACTOR),
+          },
+          {
+            address: meta.contributor,
+            amount: Math.trunc(contributorAmount * CARDANO_DECIMAL_FACTOR),
+          },
+        ],
+      });
+
+      return tx;
+    } catch (error) {
+      console.error('Cardano escrow release failed:', error);
+      throw new Error(`Failed to release Cardano escrow: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   }
-  const selectedNetwork = NETWORKS.filter(n => n.chain.id === params.chainId)[0];
-  const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, params.signer);
-  const tx = await contract.withdrawn(params.escrowId);
+
+  // Handle EVM
+  const contract = new Contract(selectedNetwork.escrow, dappConfig.abis.escrow, signer);
+  const tx = await contract.withdrawn(escrowId);
 
   await tx.wait();
 

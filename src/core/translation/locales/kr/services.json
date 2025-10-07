@@ -26,6 +26,7 @@
     "subheader": "귀하의 서비스에 대해 더 알려주세요",
     "error-message": "이 필드는 필수입니다",
     "error-positive-message": "값은 양수여야 합니다",
+    "error-min-price": "가격은 최소 {{minValue}} 이상이어야 합니다.",
     "name": "서비스 이름",
     "name-description": "제공하려는 서비스의 명확하고 간결한 이름을 입력하세요",
     "name-placeholder": "예: 로고 디자인",

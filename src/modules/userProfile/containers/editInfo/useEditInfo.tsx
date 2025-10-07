@@ -78,7 +78,7 @@ export const useEditInfo = (handleClose: () => void) => {
         value: yup.string(),
       }),
       country: yup.string(),
-      bio: yup.string().required('Headline is required'),
+      bio: yup.string().max(160, 'Too long'),
       socialCauses: yup
         .array()
         .of(

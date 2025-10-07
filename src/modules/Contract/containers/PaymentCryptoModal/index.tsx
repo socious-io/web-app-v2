@@ -4,6 +4,7 @@ import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/featuredIcon-new';
 import { Modal } from 'src/modules/general/components/modal';
+import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 
 import styles from './index.module.scss';
 import { PaymentCryptoModalProps } from './index.types';
@@ -11,13 +12,13 @@ import { usePaymentCryptoModal } from './usePaymentCryptoModal';
 
 const PaymentCryptoModal: React.FC<PaymentCryptoModalProps> = ({ open, handleClose, contract, onSucceedPayment }) => {
   const {
-    data: { Web3Connect, disabledPayment, errorMessage },
+    data: { disabledPayment, errorMessage },
     operations: { setErrorMessage, onProceedCryptoPayment },
   } = usePaymentCryptoModal(contract, onSucceedPayment);
 
   const contentJsx = (
     <>
-      <Web3Connect />
+      <ConnectButton />
       {contract.amounts && (
         <PaymentSummary
           currency={contract.currency?.name || ''}
