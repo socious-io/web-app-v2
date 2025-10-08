@@ -1,0 +1,30 @@
+@import 'src/styles/constants/_primitives.scss';
+
+$left-column: 17.5rem;
+
+.content {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2rem 0 2rem 2rem;
+
+    @media (max-width: $md) {
+        padding: 1rem 0 1rem 1rem;
+    }
+
+    &__left {
+        flex: 1;
+        width: $left-column;
+        overflow: hidden;
+
+        @media (max-width: $md) {
+            display: none;
+        }
+    }
+
+    &__right {
+        flex: 3;
+        width: calc(100% - $left-column);
+        height: 100%;
+    }
+}

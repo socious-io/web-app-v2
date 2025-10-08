@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Badge, Mission, OrganizationProfile, UserProfile } from 'src/core/api';
+import { Badge, Mission, OrganizationProfile, User } from 'src/core/api';
 
 import { updateOrgProfile, updateUserProfile } from '../thunks/profile.thunks';
 
@@ -15,7 +15,7 @@ const initState = {
 export const profileSlice = createSlice({
   name: 'profile',
   initialState: initState as {
-    identity: UserProfile | OrganizationProfile | undefined;
+    identity: User | OrganizationProfile | undefined;
     type: 'users' | 'organizations';
     badges: Badge[];
     missions: Mission[];
@@ -57,7 +57,7 @@ export const profileSlice = createSlice({
           follower: state.identity?.follower || false,
           connection_status: state.identity?.connection_status || 'PENDING',
           connection_id: state.identity?.connection_id || '',
-          is_contributor: (state.identity as UserProfile).is_contributor,
+          is_contributor: (state.identity as User).is_contributor,
         };
         state.type = 'users';
       })

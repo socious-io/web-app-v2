@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLoaderData, useLocation } from 'react-router-dom';
-import { UserProfile } from 'src/core/api';
+import { User } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import ReviewsList from 'src/modules/Reviews/containers/ReviewsList';
 import ServicesList from 'src/modules/Services/containers/ServicesList';
@@ -8,18 +9,17 @@ import { About } from 'src/modules/userProfile/components/about';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 
 export const useUserProfile = () => {
-  const { hash } = useLocation();
   const dispatch = useDispatch();
+  const { hash } = useLocation();
   const { user, userTags } = useLoaderData() as {
-    user: UserProfile;
+    user: User;
     userTags: string[];
   };
 
-  dispatch(setIdentity(user));
-  dispatch(setIdentityType('users'));
-  // keep these lines for now, it might be needed in V3
-  // dispatch(setMissions(resolver.missions));
-  // dispatch(setBadges(resolver.badges));
+  useEffect(() => {
+    dispatch(setIdentity(user));
+    dispatch(setIdentityType('users'));
+  }, [dispatch, user]);
 
   const tabs = [
     { label: translate('user-profile.about'), content: <About /> },
@@ -28,7 +28,9 @@ export const useUserProfile = () => {
   ];
 
   const activeTabIndex = {
+    '#about': 0,
     '#services': 1,
+    '#reviews': 2,
   };
 
   return { tabs, activeTabIndex: activeTabIndex[hash] || 0, userTags };

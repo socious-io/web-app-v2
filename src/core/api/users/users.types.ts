@@ -103,53 +103,57 @@ export interface Wallet {
 }
 
 export interface User {
-  id: string;
-  username: string;
-  email: string;
-  first_name?: string;
-  last_name?: string;
-  city?: string;
-  country?: string;
-  mission?: string;
-  bio?: string;
-  impact_points: number;
-  skills: string[];
+  name: string;
+  address: string | null;
+  avatar: Media | null;
+  bio: string | null;
+  certificates: AdditionalRes[] | null;
+  city: string | null;
+  connection_id: string | null;
+  connection_status: ConnectStatus | null;
+  connections: number;
+  country: string | null;
+  cover_image: Media | null;
+  educations: Education[] | null;
+  events: Event[] | null;
+  experiences: Experience[] | null;
+  first_name: string;
+  follower: boolean;
   followers: number;
+  following: boolean;
   followings: number;
-  connections?: number;
-  wallet_address?: string;
-  proofspace_connect_id?: string;
-  phone?: string;
-  address?: string;
-  social_causes: string[];
-  avatar?: Media;
-  cover_image?: Media;
-  reported: boolean;
-  mobile_country_code?: string;
-  open_to_work: boolean;
-  open_to_volunteer: boolean;
-  languages?: Language[] | null;
-  experiences?: Experience[] | null;
-  created_at: Date;
-  geoname_id?: string;
-  educations?: Education[] | null;
-  recommendations?: AdditionalRes[];
-  portfolios?: AdditionalRes[];
-  certificates?: AdditionalRes[];
+  geoname_id: string | null;
+  id: string;
   identity_verified: boolean;
-  name?: string;
-  events?: Event[] | null;
+  impact_points: number;
+  is_contributor: boolean | null;
+  languages: Language[] | null;
+  last_name: string;
+  mission: string | null;
+  mobile_country_code: string | null;
+  open_to_volunteer: boolean;
+  open_to_work: boolean;
+  phone: string | null;
+  portfolios: AdditionalRes[] | null;
+  proofspace_connect_id: string | null;
   rate: number;
-  wallets?: Wallet[] | null;
+  recommendations: AdditionalRes[] | null;
+  reported: boolean;
+  skills: string[] | null;
+  social_causes: string[] | null;
+  username: string;
+  wallet_address: string | null;
+  wallets: Wallet[] | null;
+  created_at: Date;
 }
 
-export interface UserProfile extends User {
-  following: boolean;
-  follower: boolean;
-  connection_status: ConnectStatus | null;
-  connection_id: string;
-  is_contributor: boolean;
-}
+// export interface UserProfile extends User {
+//   following: boolean;
+//   follower: boolean;
+//   connection_status: ConnectStatus | null;
+//   connection_id: string;
+//   is_contributor: boolean;
+// }
 
 export interface Language extends LanguageReq {
   id: string;

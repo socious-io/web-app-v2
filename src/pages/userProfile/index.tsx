@@ -2,7 +2,7 @@ import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 import { MainInfo } from 'src/modules/userProfile/components/mainInfo';
 import { ProfileHeader } from 'src/modules/userProfile/components/profileHeader';
 
-import css from './userProfile.module.scss';
+import styles from './index.module.scss';
 import { useUserProfile } from './useUserProfile';
 
 export const UserProfile = () => {
@@ -11,11 +11,11 @@ export const UserProfile = () => {
   return (
     <div className="w-full">
       <ProfileHeader userTags={userTags} />
-      <div className={`${css.content} p-4 pt-0 md:p-8 md:pt-0`}>
-        <div className={` ${css.leftCol} hidden md:block`}>
+      <div className={styles['content']}>
+        <div className={styles['content__left']}>
           <MainInfo />
         </div>
-        <div className={`${css.rightCol} w-full h-full md:w-auto`}>
+        <div className={styles['content__right']}>
           <HorizontalTabs tabs={tabs} activeIndex={activeTabIndex} />
         </div>
       </div>

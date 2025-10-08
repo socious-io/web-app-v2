@@ -8,16 +8,32 @@ import {
   getUserDetails,
   importLinkedin,
   LanguageCode,
+  otherProfileByUsername,
   ProjectType,
   reviews,
   updateWallet,
   UserDetails,
+  User,
 } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AdaptorRes, SuccessRes } from '..';
 import { ImportLinkedInRes, ReviewsRes, WalletReq } from './index.types';
+
+//FIXME: user types on adaptor
+export const getUserByUsernameAdaptor = async (username: string): Promise<AdaptorRes<User>> => {
+  try {
+    const data = await otherProfileByUsername(username);
+    return {
+      data,
+      error: null,
+    };
+  } catch (error) {
+    console.error('Error in getting Uuser by username: ', error);
+    return { data: null, error: 'Error in getting user by username' };
+  }
+};
 
 export const getLinkedinProfileAdaptor = async (file: File): Promise<AdaptorRes<ImportLinkedInRes>> => {
   try {

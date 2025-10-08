@@ -40,7 +40,7 @@ import FallBack from 'src/pages/error/fallback/fallback';
 import { NotFound } from 'src/pages/error/notFound';
 import { RootState } from 'src/store';
 
-import { getReviewsAdaptor, getUserDetailsAdaptor } from '../adaptors/users/index.adaptors';
+import { getReviewsAdaptor, getUserByUsernameAdaptor, getUserDetailsAdaptor } from '../adaptors/users/index.adaptors';
 import { DeepLinks } from '../deepLinks';
 import { checkSearchFilters } from '../utils';
 
@@ -78,22 +78,21 @@ export const blueprint: RouteObject[] = [
                     path: 'view',
                     loader: async ({ params }) => {
                       if (params.id) {
-                        const user = await otherProfileByUsername(params.id);
-                        const services = await getServicesAdaptor(1, 5, {
-                          identity_id: user?.id || '',
-                          kind: 'SERVICE',
-                        });
-                        const reviews = await getReviewsAdaptor(1, 5);
-                        const userDetails = await getUserDetailsAdaptor(params.id);
-                        // Keep this, it might be needed in the future
-                        // const [userBadges, missions] = await Promise.all([badges(user.id), userMissions(user.id)]);
+                        const { error, data: user } = await getUserByUsernameAdaptor(params.id);
+                        if (error) return;
+                        const [services, reviews, userDetails] = await Promise.all([
+                          getServicesAdaptor(1, 5, {
+                            identity_id: user?.id || '',
+                            kind: 'SERVICE',
+                          }),
+                          getReviewsAdaptor(1, 5),
+                          getUserDetailsAdaptor(params.id),
+                        ]);
                         return {
                           user,
                           services: services.data,
                           reviews: reviews.data,
                           userTags: userDetails.data?.tags || [],
-                          // badges: userBadges,
-                          // missions,
                         };
                       }
                     },
