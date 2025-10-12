@@ -54,9 +54,7 @@ export interface Dispute {
   category: string;
 }
 
-export interface DisputesRes extends PaginateRes {
-  items: Dispute[];
-}
+export type DisputesRes = PaginateRes<Dispute>;
 
 export interface RespondDisputeReq {
   message: string;
@@ -81,6 +79,4 @@ export interface Invitation {
   updated_at: Date;
 }
 
-export interface InvitationsRes extends PaginateRes {
-  items: Invitation[];
-}
+export type InvitationsRes = PaginateRes<Invitation>;

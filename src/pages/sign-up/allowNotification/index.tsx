@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
-import { CurrentIdentity } from 'src/core/api';
-import { UserType } from 'src/core/types';
+import { CurrentIdentity, UserType } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { FeaturedIcon } from 'src/modules/general/components/FeaturedIcon';

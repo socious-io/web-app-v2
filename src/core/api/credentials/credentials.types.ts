@@ -35,12 +35,9 @@ export interface ClaimVCRes {
   short_url: string;
 }
 
-export interface CredentialExperiencePaginateRes extends PaginateRes {
-  items: CredentialExperienceRes[];
-}
-export interface CredentialEducationPaginateRes extends PaginateRes {
-  items: CredentialEducationRes[];
-}
+export type CredentialExperiencePaginateRes = PaginateRes<CredentialExperienceRes>;
+
+export type CredentialEducationPaginateRes = PaginateRes<CredentialEducationRes>;
 
 export interface RequestVerificationRes {
   id: string;

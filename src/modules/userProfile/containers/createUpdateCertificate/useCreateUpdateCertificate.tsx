@@ -2,9 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrganization, Organization, otherProfileByUsername, User } from 'src/core/api';
-import { createAdditional, removeAdditional, updateAdditional } from 'src/core/api/additionals/additionals.api';
-import { AdditionalReq, AdditionalRes, CertificateMeta } from 'src/core/api/additionals/additionals.types';
+import { getUserByUsernameAdaptor } from 'src/core/adaptors';
+import { createOrganization, Organization, User } from 'src/core/api';
+import { createAdditional, removeAdditional, updateAdditional } from 'src/core/api/additional/additional.api';
+import { AdditionalReq, AdditionalRes, CertificateMeta } from 'src/core/api/additional/additional.types';
 import { urlPattern } from 'src/core/regexs';
 import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
@@ -244,16 +245,18 @@ export const useCreateUpdateCertificate = (
       const res = await createAdditional(payload);
       setCertificate(res);
     }
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
+    if (!user?.username) return;
+    const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+    dispatch(setIdentity(updatedUser));
     dispatch(setIdentityType('users'));
     handleClose();
   };
 
   const onDelete = async () => {
     if (certificate) await removeAdditional(certificate.id);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
+    if (!user?.username) return;
+    const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+    dispatch(setIdentity(updatedUser));
     dispatch(setIdentityType('users'));
     handleClose();
   };

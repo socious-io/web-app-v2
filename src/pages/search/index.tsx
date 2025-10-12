@@ -52,7 +52,7 @@ export const Search = () => {
         </div>
       </div>
       <div className={css.list}>
-        {searchResult.items?.map((item, index) => (
+        {searchResult?.items?.map((item, index) => (
           <div key={item.id} className="mt-6" ref={index === scrollIndex ? scrollRef : null}>
             {card(item, index)}
           </div>
@@ -64,7 +64,7 @@ export const Search = () => {
           )}
         </div>
 
-        {(searchResult.items?.length ?? 0) < total && (
+        {(searchResult?.items?.length ?? 0) < total && (
           <div className="mt-5 flex items-center justify-center md:hidden">
             <Button color="primary" variant="text" onClick={handleChangeMobilePage}>
               {translate('search.seeMore')}

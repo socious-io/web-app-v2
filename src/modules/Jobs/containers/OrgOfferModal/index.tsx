@@ -46,7 +46,8 @@ export const OrgOfferModal: React.FC<OrgOfferModalProps> = ({ open, onClose, app
           <div className={css.header}>
             <h1 className={css.title}>Send an offer</h1>
             <div className="mt-1">
-              <h2 className={css.subtitle}>An offer will be sent to {applicant.user.name}</h2>
+              {/* FIXME: create adaptor to return name in User type */}
+              <h2 className={css.subtitle}>An offer will be sent to {applicant.user.first_name}</h2>
             </div>
           </div>
           <div className={css.body}>

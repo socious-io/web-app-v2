@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CurrentIdentity, getReferrer, OrganizationProfile, UserProfile } from 'src/core/api';
+import { CurrentIdentity, getReferrer, Organization, User } from 'src/core/api';
 import { StepsContext } from 'src/modules/Auth/containers/onboarding/Stepper';
 import { RootState } from 'src/store';
 
 export const useProfileHeader = () => {
   const navigate = useNavigate();
-  const identity = useSelector<RootState, UserProfile | OrganizationProfile | undefined>(state => {
+  const identity = useSelector<RootState, User | Organization | undefined>(state => {
     return state.profile.identity;
   });
   const identityType = useSelector<RootState, 'users' | 'organizations'>(state => {
@@ -98,8 +98,8 @@ export const useProfileHeader = () => {
       if (!isLoggedIn || !myProfile) setDisplayVerifyAlert(false);
 
       let verified;
-      if (identityType === 'users') verified = (identity as UserProfile).identity_verified;
-      else verified = (identity as OrganizationProfile).verified_impact;
+      if (identityType === 'users') verified = (identity as User).identity_verified;
+      else verified = (identity as Organization).verified_impact;
 
       if (!verified) {
         const referrer = await getReferrer(identity!.id);

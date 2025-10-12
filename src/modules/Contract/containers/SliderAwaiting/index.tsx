@@ -1,4 +1,3 @@
-import { UserType } from 'src/core/types';
 import { translate } from 'src/core/utils';
 import AlertMessage from 'src/modules/general/components/AlertMessage';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
@@ -11,6 +10,7 @@ import ConnectButton from 'src/modules/wallet/components/ConnectButton';
 import { useSliderAwaiting } from './useSliderAwaiting';
 import { ContractSliderProps } from '../ContractDetailsSlider/index.types';
 import InitiateDisputeModal from '../InitiateDisputeModal';
+import { UserType } from 'src/core/api';
 
 const SliderAwaiting: React.FC<ContractSliderProps> = ({ contract, disableMessage, redirectToChat }) => {
   const {

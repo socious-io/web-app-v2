@@ -15,13 +15,9 @@ export interface PayReq {
   meta?: any;
 }
 
-export interface PaymentsRes extends PaginateRes {
-  items: Payment[];
-}
+export type PaymentsRes = PaginateRes<Payment>;
 
-export interface CardsRes extends PaginateRes {
-  items: Card[];
-}
+export type CardsRes = PaginateRes<Card>;
 
 export interface Payment {
   id: string;

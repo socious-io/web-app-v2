@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdditionalRes } from 'src/core/api/additionals/additionals.types';
+import { AdditionalRes } from 'src/core/api/additional/additional.types';
 import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Input } from 'src/modules/general/components/input/input';

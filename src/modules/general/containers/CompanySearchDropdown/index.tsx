@@ -27,8 +27,8 @@ const CompanySearchDropdown: React.FC<CompanySearchDropdownProps> = ({
           },
           { page: 1, limit: 10 },
         );
-        onSetCompanies?.(response.items);
-        cb(orgToOption(response.items));
+        onSetCompanies?.(response.items as Organization[]);
+        cb(orgToOption(response.items as Organization[]));
       }
     } catch (error) {
       console.error('Error fetching company data:', error);

@@ -32,7 +32,8 @@ export const MainInfo = () => {
   const org = identity as Organization;
   const user = identity as User;
   const size = ORGANIZATION_SIZE.find(sizes => sizes.value === org.size)?.label.split(' ')[0];
-  const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
+  //FIXME: make empty array in adaptor
+  const socialCauses = socialCausesToCategory(identity?.social_causes || []).map(item => item.label);
   const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   const bioJSX = (
     <div>
@@ -60,12 +61,14 @@ export const MainInfo = () => {
     <div className="flex gap-2">
       <Link
         href="/connections?active=0"
-        label={`${identity?.connections} ${translate('main-info.connections')}`}
+        //FIXME: in adaptor
+        label={`${identity?.connections || 0} ${translate('main-info.connections')}`}
         customStyle={`${css.textSM} text-brand-700`}
       />
       <Link
         href="/connections?active=2"
-        label={`${identity?.followers} ${translate('main-info.followers')}`}
+        //FIXME: in adaptor
+        label={`${identity?.followers || 0} ${translate('main-info.followers')}`}
         customStyle={`${css.textSM} text-brand-700`}
       />
     </div>
@@ -99,8 +102,10 @@ export const MainInfo = () => {
           </span>
         </div>
       )}
-
-      {identity?.country && <Location country={identity.country} city={identity?.city} iconName={identity?.country} />}
+      {/* FIXME: make empty string in adaptor */}
+      {identity?.country && (
+        <Location country={identity.country} city={identity?.city || ''} iconName={identity?.country} />
+      )}
 
       {profileType === 'users' && user.languages && <LanguageJSX items={user.languages || []} />}
 

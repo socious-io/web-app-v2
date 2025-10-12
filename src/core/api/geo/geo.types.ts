@@ -14,9 +14,7 @@ export interface City {
   type: string;
 }
 
-export interface CityRes extends PaginateRes {
-  items: City[];
-}
+export type CityRes = PaginateRes<City>;
 
 export interface Location {
   id: number;
@@ -40,6 +38,4 @@ export interface Location {
   timezone_utc: string | null;
 }
 
-export interface LocationRes extends PaginateRes {
-  items: Location[];
-}
+export type LocationsRes = PaginateRes<Location>;

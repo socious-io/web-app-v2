@@ -10,11 +10,11 @@ export interface SuccessRes {
   message: string;
 }
 
-export interface PaginateRes {
+export interface PaginateRes<T> {
+  items: T[];
   page: number;
   limit: number;
   total_count: number;
-  items: any[];
 }
 
 export interface PaginateResV3<T> {
@@ -205,6 +205,8 @@ export type NotificationTitle =
   | 'EXPERIENCE_ISSUED'
   | 'EXPERIENCE_ISSUED_APPROVED'
   | 'EXPERIENCE_ISSUED_REJECTED';
+
+export type UserType = 'users' | 'organizations';
 
 export type IdentityType = 'ORG' | 'USER';
 

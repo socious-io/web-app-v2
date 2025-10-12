@@ -1,5 +1,4 @@
-import { Education, Experience, LanguageReq } from 'src/core/api';
-import { UserType } from 'src/core/types';
+import { Education, Experience, LanguageReq, UserType } from 'src/core/api';
 
 import { PaginateRes } from '..';
 

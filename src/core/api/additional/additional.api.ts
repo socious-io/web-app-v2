@@ -1,4 +1,4 @@
-import { AdditionalReq, AdditionalRes } from './additionals.types';
+import { AdditionalReq, AdditionalRes } from './additional.types';
 import { post } from '../http';
 import { SuccessRes } from '../types';
 

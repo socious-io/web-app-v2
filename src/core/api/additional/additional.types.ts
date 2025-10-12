@@ -17,6 +17,7 @@ export interface EducationMeta {
   awarded_date?: string;
   credential_name?: string;
 }
+
 export interface CertificateMeta {
   issue_month?: string;
   issue_year?: string;

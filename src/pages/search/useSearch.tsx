@@ -34,7 +34,7 @@ export const useSearch = () => {
 
   const PER_PAGE = 10;
   const isMobile = isTouchDevice();
-  const [searchResult, setSearchResult] = useState({} as JobsRes | UsersRes | OrganizationsRes);
+  const [searchResult, setSearchResult] = useState<JobsRes | UsersRes | OrganizationsRes | null>(null);
   const [page, setPage] = useState(pageNumber);
   const [scrollIndex, setscrollIndex] = useState(scrollIndx);
   const scrollRef = useRef<null | HTMLDivElement>(null);
@@ -83,8 +83,8 @@ export const useSearch = () => {
       } as any;
       if (q?.trim()) {
         Object.assign(body, { q });
-      }
-      if (prevPage.current === page - 1 && searchResult.items?.length === (page - 1) * PER_PAGE) {
+      } 
+      if (prevPage.current === page - 1 && searchResult?.items?.length === (page - 1) * PER_PAGE) {
         // if see more is clicked
         const data = await searchReq(body, { limit: 10, page });
         setSearchResult({
@@ -164,8 +164,6 @@ export const useSearch = () => {
     [type, page],
   );
 
-
-
   useEffect(() => {
     if (isMobile) fetchMore();
     else {
@@ -193,7 +191,7 @@ export const useSearch = () => {
     data: {
       page,
       searchResult,
-      total: searchResult.total_count ?? data.total_count,
+      total: searchResult?.total_count ?? data.total_count,
       PER_PAGE,
       readableType,
       q,

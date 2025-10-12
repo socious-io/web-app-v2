@@ -1,8 +1,6 @@
 import { NotificationType, PaginateRes } from '../types';
 
-export interface NotificationsRes extends PaginateRes {
-  items: Notification[];
-}
+export type NotificationsRes = PaginateRes<Notification>;
 
 export interface Notification {
   id: string;

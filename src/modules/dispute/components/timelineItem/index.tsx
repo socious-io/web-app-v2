@@ -1,9 +1,7 @@
-import React from 'react';
-import { DisputeEvent, Identity } from 'src/core/api';
+import { DisputeEvent, Identity, UserType } from 'src/core/api';
 import { isTouchDevice } from 'src/core/device-type-detector';
 import { toRelativeTime } from 'src/core/relative-time';
 import { truncateFromMiddle } from 'src/core/stringTransformation';
-import { UserType } from 'src/core/types';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { ExpandableText } from 'src/modules/general/components/expandableText';
 

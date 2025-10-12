@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { SemanticContractStatus } from 'src/core/adaptors';
-import { UserType } from 'src/core/types';
 import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
@@ -14,6 +13,7 @@ import SliderOfferReceived from '../SliderOfferReceived';
 import SliderOfferSent from '../SliderOfferSent';
 import SliderOngoing from '../SliderOngoing';
 import SliderPaymentRequired from '../SliderPaymentRequired';
+import { UserType } from 'src/core/api';
 
 const ContractDetailsSlider = () => {
   const {

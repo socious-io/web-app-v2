@@ -1,6 +1,5 @@
 import { CONTRACT_STATUS } from 'src/constants/CONTRACTS_STATUS';
 import { toRelativeTime } from 'src/core/relative-time';
-import { UserType } from 'src/core/types';
 import { translate } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { Icon } from 'src/modules/general/components/Icon';
@@ -10,6 +9,7 @@ import variables from 'src/styles/constants/_exports.module.scss';
 import styles from './index.module.scss';
 import { ContractCardProps } from './index.types';
 import { useContractCard } from './useContractCard';
+import { UserType } from 'src/core/api';
 
 const ContractCard: React.FC<ContractCardProps> = ({ contract }) => {
   const {

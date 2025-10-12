@@ -20,13 +20,9 @@ export interface CommentReq {
   reply_id?: string;
 }
 
-export interface PostsRes extends PaginateRes {
-  items: Post[];
-}
+export type PostsRes = PaginateRes<Post>;
 
-export interface CommentsRes extends PaginateRes {
-  items: Comment[];
-}
+export type CommentsRes = PaginateRes<Comment>;
 
 export interface Emoji {
   created_at: Date;

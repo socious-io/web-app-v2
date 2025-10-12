@@ -54,7 +54,8 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch,
           >
             <Avatar size="40px" type="users" img={applicant.user.avatar?.url} />
             <div className="flex flex-col justify-start">
-              <p className="text-Gray-light-mode-900 leading-6 font-medium">{applicant.user?.name ?? ''}</p>
+              {/* FIXME: create a name based on firstname and lastname */}
+              <p className="text-Gray-light-mode-900 leading-6 font-medium">{applicant.user.first_name}</p>
               <p className="text-Gray-light-mode-600 text-sm leading-5">
                 {toRelativeTime(applicant.created_at.toString())}
               </p>
@@ -131,7 +132,8 @@ export const Cards: React.FC<CardsProps> = ({ applicants, currentTab, onRefetch,
         <AlertModal
           open={success}
           onClose={handleCloseSuccess}
-          message={`Congratulations! You have successfully sent an offer to ${applicant.user.name}`}
+          //FIXME: create a name based on firstname and lastname */
+          message={`Congratulations! You have successfully sent an offer to ${applicant.user.first_name}`}
           title="Offer sent"
           customIcon={<FeaturedIcon iconName="check-circle" size="md" theme="success" type="light-circle-outlined" />}
           closeButtn={true}

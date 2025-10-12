@@ -31,9 +31,10 @@ export const useDashboard = () => {
       .filter(item => item.offer !== null)
       .forEach(item => {
         if (item.offer) {
-          if ((item?.offer?.currency && ['USD', 'YEN'].includes(item?.offer?.currency)) || item.offer.currency)
-            hoursWorked += item.offer.total_hours;
-          else hoursVolunteered += item.offer.total_hours;
+          //FIXME: ask Ehsan
+          if ((item.offer?.currency && ['USD', 'YEN'].includes(item.offer?.currency)) || item.offer.currency)
+            hoursWorked += item.offer?.total_hours || 0;
+          else hoursVolunteered += item.offer?.total_hours || 0;
         }
       });
   }

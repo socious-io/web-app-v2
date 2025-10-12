@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { CurrentIdentity, Payment, payments } from 'src/core/api';
+import { CurrentIdentity, Payment, payments, UserType } from 'src/core/api';
 import { toRelativeTime } from 'src/core/relative-time';
-import { UserType } from 'src/core/types';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import dapp from 'src/dapp';
 import { RootState } from 'src/store';

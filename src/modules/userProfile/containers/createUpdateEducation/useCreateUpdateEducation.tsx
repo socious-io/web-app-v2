@@ -2,18 +2,18 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserByUsernameAdaptor } from 'src/core/adaptors';
 import {
   addEducations,
   createOrganization,
   Education,
   EducationsReq,
   Organization,
-  otherProfileByUsername,
   search,
   updateEducations,
   User,
 } from 'src/core/api';
-import { removeAdditional } from 'src/core/api/additionals/additionals.api';
+import { removeAdditional } from 'src/core/api/additional/additional.api';
 import { getUTCDate, monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
 import { Avatar } from 'src/modules/general/components/avatar/avatar';
@@ -179,8 +179,8 @@ export const useCreateUpdateEducation = (
     try {
       if (searchText) {
         const response = await search({ type: 'organizations', q: searchText, filter: {} }, { page: 1, limit: 10 });
-        schoolsRef.current = response.items;
-        cb(schoolToOption(response.items));
+        schoolsRef.current = response.items as Organization[];
+        cb(schoolToOption(response.items as Organization[]));
       }
     } catch (error) {
       console.error('Error fetching city data:', error);
@@ -206,8 +206,9 @@ export const useCreateUpdateEducation = (
 
   const onDelete = async () => {
     if (education) await removeAdditional(education.id);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
+    if (!user?.username) return;
+    const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+    dispatch(setIdentity(updatedUser));
     dispatch(setIdentityType('users'));
     handleClose();
   };
@@ -252,8 +253,9 @@ export const useCreateUpdateEducation = (
       payload = removedEmptyProps(payload) as EducationsReq;
       if (education) await updateEducations(education.id, payload);
       else await addEducations(payload);
-      const updated = await otherProfileByUsername(user?.username || '');
-      dispatch(setIdentity(updated));
+      if (!user?.username) return;
+      const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+      dispatch(setIdentity(updatedUser));
       dispatch(setIdentityType('users'));
     }
     handleClose();

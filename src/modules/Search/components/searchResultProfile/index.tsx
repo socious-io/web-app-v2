@@ -16,7 +16,8 @@ interface SearchResultProfileProps {
 
 export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identity }) => {
   const { type, website } = useSearchResultProfile(identity);
-  const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => item.label);
+  //FIXME: create adaptor to return empty array for social causes and skills and events in User type
+  const socialCauses = socialCausesToCategory(identity?.social_causes || []).map(item => item.label);
   const skills = skillsToCategory((identity as User)?.skills || []).map(item => item.label);
   const events = eventsToCategory((identity as User)?.events || []).map(item => item.label);
   return (
@@ -62,7 +63,8 @@ export const SearchResultProfile: React.FC<SearchResultProfileProps> = ({ identi
             </div>
           )}
           {identity?.country && (
-            <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
+            // FIXME: make empty strin in adaptor
+            <Location country={identity?.country} city={identity?.city || ''} iconName={identity?.country} />
           )}
           {website && <Website url={website} truncate />}
         </div>

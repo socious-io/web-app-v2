@@ -12,7 +12,6 @@ import {
   Language,
   Experience,
   ChangePasswordReq,
-  ChangePasswordDirectReq,
   DeleteUserReq,
   Badges,
   ImpactPoints,
@@ -23,7 +22,7 @@ import {
   ReferReq,
   ImportRes,
   Reviews,
-  UserDetails,
+  PublicUser,
 } from './users.types';
 
 const overwrittenConfigV3 = {
@@ -47,8 +46,8 @@ export async function impactPoints(params?: FilterReq): Promise<ImpactPoints> {
   return (await get<ImpactPoints>(`user/impact-points`, { params })).data;
 }
 
-export async function otherProfileByUsername(username: string): Promise<User> {
-  return (await get<User>(`user/by-username/${username}/profile`)).data;
+export async function otherProfileByUsername(username: string): Promise<PublicUser> {
+  return (await get<PublicUser>(`users/by-username/${username}`, { ...overwrittenConfigV3 })).data;
 }
 
 export async function report(identityId: string, payload: ReportReq): Promise<SuccessRes> {
@@ -87,6 +86,10 @@ export async function removeLanguage(id: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/languages/remove/${id}`, {})).data;
 }
 
+export async function getExperiences(): Promise<Experience[]> {
+  return (await get<Experience[]>('user/experiences')).data;
+}
+
 export async function addExperiences(payload: ExperienceReq): Promise<Experience> {
   return (await post<Experience>('user/experiences', payload)).data;
 }
@@ -115,7 +118,7 @@ export async function changePassword(payload: ChangePasswordReq): Promise<Succes
   return (await post<SuccessRes>(`user/change-password`, payload)).data;
 }
 
-export async function changePasswordDirect(payload: ChangePasswordDirectReq): Promise<SuccessRes> {
+export async function changePasswordDirect(payload: ChangePasswordReq): Promise<SuccessRes> {
   return (await post<SuccessRes>(`user/change-password-direct`, payload)).data;
 }
 
@@ -164,8 +167,4 @@ export async function importLinkedin(file: File): Promise<ImportRes> {
 
 export async function reviews(params: PaginateReq, filters?: FilterReq): Promise<Reviews> {
   return (await get<Reviews>('user/reviews', { params }, filters)).data;
-}
-
-export async function getUserDetails(username: string): Promise<UserDetails> {
-  return (await get<UserDetails>(`users/by-username/${username}`, { ...overwrittenConfigV3 })).data;
 }

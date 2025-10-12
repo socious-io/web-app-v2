@@ -1,27 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Badge, Mission, OrganizationProfile, User } from 'src/core/api';
+import { Badge, Mission, Organization, User, UserType } from 'src/core/api';
 
 import { updateOrgProfile, updateUserProfile } from '../thunks/profile.thunks';
 
-const initState = {
+type State = {
+  identity: User | Organization | undefined;
+  type: UserType;
+  status: 'loading' | 'idle' | 'succeeded' | 'failed';
+  error: any;
+};
+
+const initialState: State = {
   identity: undefined,
   type: 'users',
-  profileReq: undefined,
-  badges: [],
-  missions: [],
   status: 'idle',
   error: null,
 };
+
 export const profileSlice = createSlice({
   name: 'profile',
-  initialState: initState as {
-    identity: User | OrganizationProfile | undefined;
-    type: 'users' | 'organizations';
-    badges: Badge[];
-    missions: Mission[];
-    status: string;
-    error: any;
-  },
+  initialState,
   reducers: {
     setIdentity: (state, action) => {
       state.identity = action.payload;
@@ -37,12 +35,6 @@ export const profileSlice = createSlice({
         state.identity.following = action.payload.following;
       }
     },
-    setBadges: (state, action) => {
-      state.badges = action.payload;
-    },
-    setMissions: (state, action) => {
-      state.missions = action.payload;
-    },
   },
   extraReducers: builder => {
     builder
@@ -51,6 +43,7 @@ export const profileSlice = createSlice({
       })
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.type = 'users';
         state.identity = {
           ...action.payload,
           following: state.identity?.following || false,
@@ -59,7 +52,6 @@ export const profileSlice = createSlice({
           connection_id: state.identity?.connection_id || '',
           is_contributor: (state.identity as User).is_contributor,
         };
-        state.type = 'users';
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
         state.status = 'failed';
@@ -70,6 +62,7 @@ export const profileSlice = createSlice({
       })
       .addCase(updateOrgProfile.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.type = 'organizations';
         state.identity = {
           ...action.payload,
           following: state.identity?.following || false,
@@ -77,7 +70,6 @@ export const profileSlice = createSlice({
           connection_status: state.identity?.connection_status || 'PENDING',
           connection_id: state.identity?.connection_id || '',
         };
-        state.type = 'organizations';
       })
       .addCase(updateOrgProfile.rejected, (state, action) => {
         state.status = 'failed';
@@ -86,4 +78,4 @@ export const profileSlice = createSlice({
   },
 });
 
-export const { setIdentity, setIdentityType, setBadges, setMissions, setConnectionStatus } = profileSlice.actions;
+export const { setIdentity, setIdentityType, setConnectionStatus } = profileSlice.actions;

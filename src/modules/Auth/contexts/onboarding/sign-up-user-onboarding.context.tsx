@@ -44,26 +44,12 @@ const initialState: State = {
   address: '',
   orgName: '',
   orgType: { value: 'STARTUP', label: 'Impact Startup' },
-  // image: {
-  //   id: '',
-  //   identity_id: '',
-  //   filename: '',
-  //   url: '',
-  //   created_at: '',
-  // },
   image: undefined,
   email: '',
   website: '',
   size: null,
   shortname: '',
   industry: '',
-  // avatar: {
-  //   id: '',
-  //   identity_id: '',
-  //   filename: '',
-  //   url: '',
-  //   created_at: '',
-  // },
   avatar: undefined,
 };
 

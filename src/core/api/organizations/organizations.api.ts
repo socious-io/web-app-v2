@@ -1,10 +1,10 @@
 import {
-  IndustryRes,
+  IndustriesRes,
   MembersRes,
   Organization,
-  OrganizationProfile,
   OrganizationReq,
   OrganizationsRes,
+  PublicOrganization,
 } from './organizations.types';
 import { post, get } from '../http';
 import { SuccessRes, PaginateReq, PaginateRes } from '../types';
@@ -29,8 +29,8 @@ export async function createOrganization(
 export async function getOrganization(id: string): Promise<Organization> {
   return (await get<Organization>(`orgs/${id}`)).data;
 }
-export async function getOrganizationByShortName(shortName: string): Promise<OrganizationProfile> {
-  return (await get<OrganizationProfile>(`orgs/by-shortname/${shortName}`)).data;
+export async function getOrganizationByShortName(shortName: string): Promise<PublicOrganization> {
+  return (await get<PublicOrganization>(`orgs/by-shortname/${shortName}`)).data;
 }
 
 export async function updateOrganization(id: string, payload: OrganizationReq): Promise<Organization> {
@@ -54,5 +54,5 @@ export async function hiring(): Promise<boolean> {
 }
 
 export async function getIndustries(q: string, params: PaginateReq) {
-  return (await get<IndustryRes>(`orgs/d/industries?q=${q}`, { params })).data;
+  return (await get<IndustriesRes>(`orgs/d/industries?q=${q}`, { params })).data;
 }

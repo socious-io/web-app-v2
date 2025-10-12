@@ -2,21 +2,24 @@ import { HorizontalTabs } from 'src/modules/general/components/horizontalTabs';
 import { MainInfo } from 'src/modules/userProfile/components/mainInfo';
 import { ProfileHeader } from 'src/modules/userProfile/components/profileHeader';
 
-import css from './orgProfile.module.scss';
+import styles from './index.module.scss';
 import { useOrgProfile } from './useOrgProfile';
 
 export const OrgProfile = () => {
-  const { tabs, active, setActive } = useOrgProfile();
+  const {
+    data: { tabs, activeTabIndex },
+    operations: { setActiveTab },
+  } = useOrgProfile();
 
   return (
     <div className="w-full">
       <ProfileHeader />
-      <div className={`${css.content} p-4 pt-0 md:p-8 md:pt-0`}>
-        <div className={` ${css.leftCol} hidden md:block`}>
+      <div className={styles['content']}>
+        <div className={styles['content__left']}>
           <MainInfo />
         </div>
-        <div className={`${css.rightCol} w-full h-full md:w-auto`}>
-          <HorizontalTabs tabs={tabs} activeIndex={active} onActiveIndex={setActive} />
+        <div className={styles['content__right']}>
+          <HorizontalTabs tabs={tabs} activeIndex={activeTabIndex} onActiveIndex={setActiveTab} />
         </div>
       </div>
     </div>

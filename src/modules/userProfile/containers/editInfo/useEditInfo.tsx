@@ -108,10 +108,11 @@ export const useEditInfo = (handleClose: () => void) => {
       firstName: user.first_name,
       lastName: user.last_name,
       username: user.username,
-      city: { label: user.city, value: user.city },
-      country: user.country,
-      bio: user.bio,
-      socialCauses: socialCausesToCategory(user?.social_causes),
+      //FIXME: make empty default in adaptor
+      city: user.city ? { label: user.city, value: user.city } : undefined,
+      country: user.country || '',
+      bio: user.bio || '',
+      socialCauses: socialCausesToCategory(user?.social_causes || []),
     },
   });
 
@@ -144,10 +145,11 @@ export const useEditInfo = (handleClose: () => void) => {
       firstName: user.first_name || undefined,
       lastName: user.last_name || undefined,
       username: user.username,
-      city: { label: user.city, value: user.city },
-      country: user.country,
-      bio: user.bio,
-      socialCauses: socialCausesToCategory(user?.social_causes),
+      //FIXME: make empty default in adaptor
+      city: user.city ? { label: user.city, value: user.city } : undefined,
+      country: user.country || '',
+      bio: user.bio || '',
+      socialCauses: socialCausesToCategory(user?.social_causes || []),
     });
   };
 

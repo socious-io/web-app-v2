@@ -20,7 +20,7 @@ export const useEditImage = (closeModal: () => void, type: 'avatar' | 'header') 
       ? identityType === 'users'
         ? (identity as User).avatar?.url
         : (identity as Organization).image?.url
-      : identity?.cover_image?.url,
+      : identity?.cover?.url,
   );
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });

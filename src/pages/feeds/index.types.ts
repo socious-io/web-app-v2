@@ -1,4 +1,3 @@
-import { Post } from 'src/core/api';
-import { Pagination } from 'src/core/types';
+import { PaginateRes, Post } from 'src/core/api';
 
-export type Resolver = Pagination<Post>;
+export type Resolver = PaginateRes<Post>;

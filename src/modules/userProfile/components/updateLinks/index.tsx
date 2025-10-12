@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { AdditionalRes } from 'src/core/api/additionals/additionals.types';
+import { AdditionalRes } from 'src/core/api/additional/additional.types';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 

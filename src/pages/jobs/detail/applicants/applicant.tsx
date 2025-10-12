@@ -34,7 +34,10 @@ export const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({
         <div className="flex flex-col gap-6 ">
           <Avatar size="72px" type="users" img={applicant.user.avatar?.toString()} />
           <div className="flex flex-col">
-            <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">{applicant.user?.name}</span>
+            {/* FIXME: create a name based on firstname and lastname */}
+            <span className="font-semibold text-2xl leading-8 text-Gray-light-mode-900">
+              {applicant.user?.first_name}
+            </span>
             <span className="font-normal text-base leading-6 text-Gray-light-mode-600">{applicant.user.username}</span>
           </div>
         </div>

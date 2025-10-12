@@ -23,7 +23,7 @@ export const useThreeDotsButton = (otherIdentityId: string) => {
   const navigate = useNavigate();
   const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
   const [openMenu, setOpenMenu] = useState(false);
-  const getConectionStatus = () => {
+  const getConnectionStatus = () => {
     const items: MenuItemType[] = [];
 
     if (following) items.push({ iconName: 'x-circle', title: 'Unfollow', onClick: handleUnfollow });
@@ -37,7 +37,7 @@ export const useThreeDotsButton = (otherIdentityId: string) => {
   };
 
   useEffect(() => {
-    getConectionStatus();
+    getConnectionStatus();
   }, [follower, following]);
 
   const handleClose = () => {

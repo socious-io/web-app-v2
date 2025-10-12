@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoaderData, useLocation } from 'react-router-dom';
-import { CurrentIdentity, JobsRes, OrganizationProfile } from 'src/core/api';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { CurrentIdentity, JobsRes, Organization } from 'src/core/api';
 import { translate } from 'src/core/utils';
 import Badge from 'src/modules/general/components/Badge';
 import OrgPreferences from 'src/modules/Preferences/OrgPreferences';
@@ -12,30 +12,29 @@ import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 
 export const useOrgProfile = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
+  const { pathname, hash } = useLocation();
   const dispatch = useDispatch();
-  const { organization, orgJobs } = useLoaderData() as {
-    organization: OrganizationProfile;
-    orgJobs: JobsRes;
-  };
+  const { organization, orgJobs } = useLoaderData() as { organization: Organization; orgJobs: JobsRes };
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
-  const [active, setActive] = useState(0);
   const totalJobs = orgJobs?.total_count || 0;
   const myProfile = currentIdentity?.id === organization?.id;
 
-  dispatch(setIdentity(organization));
-  dispatch(setIdentityType('organizations'));
+  useLayoutEffect(() => {
+    dispatch(setIdentity(organization));
+    dispatch(setIdentityType('organizations'));
+  }, [dispatch, organization]);
 
   useEffect(() => {
-    if (location.pathname.includes(`/jobs`)) {
-      setActive(1);
+    if (pathname.includes(`/jobs`)) {
+      setActiveTab(1);
     }
-  }, [location]);
+  }, [pathname]);
 
   const tabs = [
-    { label: translate('org-profile.about'), content: <About onOpenPreferences={() => setActive(2)} /> },
+    { label: translate('org-profile.about'), content: <About onOpenPreferences={() => setActiveTab(2)} /> },
     {
       label: (
         <>
@@ -49,5 +48,25 @@ export const useOrgProfile = () => {
     { label: translate('org-profile.reviews'), content: <ReviewsList /> },
   ];
 
-  return { tabs, active, setActive };
+  const activeTabIndexes = {
+    '#about': 0,
+    '#jobs': 1,
+    '#preferences': 2,
+    '#reviews': 3,
+  };
+
+  const setActiveTab = (index: number) => {
+    const activeKey = Object.keys(activeTabIndexes).find(key => activeTabIndexes[key] === index);
+    activeKey && navigate(activeKey);
+  };
+
+  return {
+    data: {
+      tabs,
+      activeTabIndex: activeTabIndexes[hash] || 0,
+    },
+    operations: {
+      setActiveTab,
+    },
+  };
 };

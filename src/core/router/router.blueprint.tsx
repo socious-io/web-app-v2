@@ -16,7 +16,6 @@ import {
   jobQuestions,
   profile,
   job,
-  otherProfileByUsername,
   badges,
   impactPoints,
   getOrganizationByShortName,
@@ -40,7 +39,7 @@ import FallBack from 'src/pages/error/fallback/fallback';
 import { NotFound } from 'src/pages/error/notFound';
 import { RootState } from 'src/store';
 
-import { getReviewsAdaptor, getUserByUsernameAdaptor, getUserDetailsAdaptor } from '../adaptors/users/index.adaptors';
+import { getReviewsAdaptor, getUserByUsernameAdaptor } from '../adaptors/users/index.adaptors';
 import { DeepLinks } from '../deepLinks';
 import { checkSearchFilters } from '../utils';
 
@@ -80,19 +79,17 @@ export const blueprint: RouteObject[] = [
                       if (params.id) {
                         const { error, data: user } = await getUserByUsernameAdaptor(params.id);
                         if (error) return;
-                        const [services, reviews, userDetails] = await Promise.all([
+                        const [services, reviews] = await Promise.all([
                           getServicesAdaptor(1, 5, {
                             identity_id: user?.id || '',
                             kind: 'SERVICE',
                           }),
                           getReviewsAdaptor(1, 5),
-                          getUserDetailsAdaptor(params.id),
                         ]);
                         return {
                           user,
                           services: services.data,
                           reviews: reviews.data,
-                          userTags: userDetails.data?.tags || [],
                         };
                       }
                     },
@@ -666,7 +663,7 @@ export const blueprint: RouteObject[] = [
                 path: '',
                 loader: async ({ params }) => {
                   if (params.id) {
-                    const user = await otherProfileByUsername(params.id);
+                    const { data: user } = await getUserByUsernameAdaptor(params.id);
                     return {
                       user,
                     };

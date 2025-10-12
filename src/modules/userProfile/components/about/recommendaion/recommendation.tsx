@@ -1,4 +1,4 @@
-import { RecommendationMeta } from 'src/core/api/additionals/additionals.types';
+import { RecommendationMeta } from 'src/core/api/additional/additional.types';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';
 import { StepperCard } from 'src/modules/general/components/stepperCard';

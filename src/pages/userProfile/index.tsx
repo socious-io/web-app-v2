@@ -6,7 +6,11 @@ import styles from './index.module.scss';
 import { useUserProfile } from './useUserProfile';
 
 export const UserProfile = () => {
-  const { tabs, activeTabIndex, userTags } = useUserProfile();
+  const {
+    data: { currentUser, tabs, activeTabIndex, userTags },
+  } = useUserProfile();
+
+  if (!currentUser) return;
 
   return (
     <div className="w-full">

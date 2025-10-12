@@ -154,7 +154,8 @@ export const useApplicantAction = (
             >
               <Avatar size="40px" type="users" img={String(detail?.user.avatar || '')} />
               <div className="flex flex-col justify-start">
-                <p className="text-Gray-light-mode-900 leading-6 font-medium">{detail?.user.name}</p>
+                {/* FIXME: create a name based on firstname and lastname */}
+                <p className="text-Gray-light-mode-900 leading-6 font-medium">{detail?.user.first_name}</p>
                 <p className="text-Gray-light-mode-600 text-sm leading-5">@{detail?.user.username}</p>
               </div>
             </div>

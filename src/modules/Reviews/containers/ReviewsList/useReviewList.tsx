@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { getReviewsAdaptor } from 'src/core/adaptors';
 import { ReviewsRes } from 'src/core/adaptors/users/index.types';
-import { UserProfile } from 'src/core/api';
+import { User } from 'src/core/api';
 
 export const useReviewList = () => {
-  const { reviews, user } = useLoaderData() as { reviews: ReviewsRes; user: UserProfile };
+  const { reviews, user } = useLoaderData() as { reviews: ReviewsRes; user: User };
   const limit = 5;
   const [page, setPage] = useState(1);
   const [currentReviews, setCurrentReviews] = useState(reviews);

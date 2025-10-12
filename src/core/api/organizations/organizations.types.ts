@@ -1,6 +1,8 @@
-import { AdditionalRes } from '../additionals/additionals.types';
+import { AdditionalRes } from '../additional/additional.types';
 import { Media } from '../media/media.types';
 import { SocialCauses, PaginateRes, OrganizationType, ConnectStatus } from '../types';
+
+export type OrganizationSize = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
 
 export interface OrganizationReq {
   name: string;
@@ -14,7 +16,7 @@ export interface OrganizationReq {
   city?: string;
   geoname_id?: number;
   address?: string;
-  social_causes?: SocialCauses[];
+  social_causes?: string[];
   website?: string;
   mobile_country_code?: string;
   image?: string | any;
@@ -22,50 +24,66 @@ export interface OrganizationReq {
   mission?: string;
   culture?: string;
   industry?: string;
-  size?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'L';
+  size?: OrganizationSize;
 }
 
-export interface OrganizationsRes extends PaginateRes {
-  items: Organization[];
-}
+export type OrganizationsRes = PaginateRes<Organization>;
 
-export interface MembersRes extends PaginateRes {
-  items: Member[];
-}
+export type MembersRes = PaginateRes<Member>;
 
-export interface Organization extends OrganizationReq {
+export interface PublicOrganization {
   id: string;
-  followers: number;
-  followings: number;
-  connections?: number;
-  wallet_address?: string;
-  impact_points: number;
-  image?: Media;
-  cover_image?: Media;
-  mobile_country_code?: string;
-  created_by?: string;
+  name: string;
   shortname: string;
-  status: string;
-  search_tsv: string;
-  other_party_id: string;
-  other_party_title: string;
-  other_party_url: string;
+  email: string;
+  bio: string | null;
+  description: string | null;
+  website: string | null;
+  address: string | null;
+  country: string | null;
+  city: string | null;
+  benefits: AdditionalRes[] | null;
+  impact_points: number;
+  social_causes: SocialCauses[] | null;
+  follower: boolean;
+  followers: number;
+  following: boolean;
+  followings: number;
+  connections: number;
+  connection_id: string | null;
+  connection_status: ConnectStatus | null;
+  culture: string | null;
+  did: string | null;
   geoname_id?: number;
+  type: OrganizationType | null;
+  image: Media | null;
+  cover_image: Media | null;
+  hiring: boolean;
+  impact_detected: boolean;
+  industry: string | null;
+  mission: string | null;
+  mobile_country_code: string | null;
+  phone: string | null;
+  recommendations?: AdditionalRes[];
+  status: string;
   verified_impact: boolean;
   verified: boolean;
-  hiring: boolean;
-  recommendations?: AdditionalRes[];
-  benefits?: AdditionalRes[];
-  industry?: string;
+  wallet_address: string | null;
+  employee_count: string | null;
+  size: OrganizationSize | null;
   created_at: Date;
+  //FIXME: no in v3, tell Mohammad
+  avatar_id: string | null;
+  avatar: Media | null; // replace with image
+  cover_id: string | null;
+  cover: Media | null; // replace with cover_image
+}
+
+export interface Organization extends PublicOrganization {
+  //ّFIXME: no private Organization
   updated_at: Date;
 }
-export interface OrganizationProfile extends Organization {
-  following: boolean;
-  follower: boolean;
-  connection_status: ConnectStatus | null;
-  connection_id: string;
-}
+
 export interface Member {
   id: string;
   username: string;
@@ -79,6 +97,4 @@ export interface Industry {
   name: string;
 }
 
-export interface IndustryRes extends PaginateRes {
-  items: Industry[];
-}
+export type IndustriesRes = PaginateRes<Industry>;

@@ -1,4 +1,4 @@
-import { CertificateMeta } from 'src/core/api/additionals/additionals.types';
+import { CertificateMeta } from 'src/core/api/additional/additional.types';
 import { translate } from 'src/core/utils';
 import { Button } from 'src/modules/general/components/Button';
 import { Icon } from 'src/modules/general/components/Icon';

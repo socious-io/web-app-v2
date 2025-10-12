@@ -48,8 +48,7 @@ import store from 'src/store';
 import { setEvents } from 'src/store/reducers/events.reducer';
 import { setSkills } from 'src/store/reducers/skills.reducer';
 
-import { events, skills, Event, Category } from '../api';
-import { Cities } from '../types';
+import { events, skills, Event, Category, City } from '../api';
 import { translate } from '../utils';
 
 export function socialCausesToCategoryAdaptor() {
@@ -99,7 +98,7 @@ export function jobCategoriesToDropdown(categories: Category[]) {
   });
 }
 
-export function citiesToCategories(cities: Cities[]) {
+export function citiesToCategories(cities: City[]) {
   return cities.map(city => {
     return {
       id: city.id,

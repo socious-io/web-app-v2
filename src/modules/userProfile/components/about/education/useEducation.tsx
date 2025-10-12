@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserByUsernameAdaptor } from 'src/core/adaptors';
 import {
   CurrentIdentity,
   Education,
@@ -7,7 +8,6 @@ import {
   User,
   claimEducationVC,
   getOrganization,
-  otherProfileByUsername,
   removeEducations,
   requestVerifyEducation,
 } from 'src/core/api';
@@ -30,7 +30,7 @@ export const useEducation = () => {
   const [credentialId, setCredentialId] = useState('');
   const [claimUrl, setClaimUrl] = useState('');
   const [showAll, setShowAll] = useState(false);
-  const isVerified = (user as User).identity_verified;
+  const isVerified = (user as User)?.identity_verified || false;
   const myProfile = currentIdentity?.id === user?.id;
   const dispatch = useDispatch();
   const MAX_EDUCATIONS = 5;
@@ -58,9 +58,9 @@ export const useEducation = () => {
 
   const handleDelete = async (id: string) => {
     await removeEducations(id);
-
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
+    if (!user?.username) return;
+    const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+    dispatch(setIdentity(updatedUser));
     dispatch(setIdentityType('users'));
   };
 
@@ -74,8 +74,9 @@ export const useEducation = () => {
   const handleRequestVerify = async (id: string, message?: string, exact_info?: boolean) => {
     try {
       await requestVerifyEducation(id, message, exact_info);
-      const updated = await otherProfileByUsername(user?.username || '');
-      dispatch(setIdentity(updated));
+      if (!user?.username) return;
+      const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+      dispatch(setIdentity(updatedUser));
       dispatch(setIdentityType('users'));
     } catch (e) {
       console.log('error in verifying education:', e);

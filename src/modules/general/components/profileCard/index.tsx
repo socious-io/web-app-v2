@@ -2,8 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { eventsToCategory, socialCausesToCategory } from 'src/core/adaptors';
-import { CurrentIdentity, Organization, User } from 'src/core/api';
-import { UserType } from 'src/core/types';
+import { CurrentIdentity, Organization, User, UserType } from 'src/core/api';
 import { getIdentityMeta, translate } from 'src/core/utils';
 import { Location } from 'src/modules/userProfile/components/location';
 import { Website } from 'src/modules/userProfile/components/website';
@@ -26,7 +25,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
   const myProfile = currentIdentity?.id === identity?.id;
   const navigate = useNavigate();
   const { name, profileImage, type, website, username } = getIdentityMeta(identity);
-  const socialCauses = socialCausesToCategory(identity?.social_causes).map(item => translate(item.value));
+  //FIXME: create adaptor and make Social Causes empty array by default
+  const socialCauses = socialCausesToCategory(identity?.social_causes || []).map(item => translate(item.value));
   if (!identity) return;
   const events = eventsToCategory((identity as User).events || []).map(item => item.label);
   return (
@@ -44,7 +44,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
           type={type as UserType}
           bio={identity.bio || ''}
           profileImageUrl={profileImage}
-          coverImageUrl={identity.cover_image?.url}
+          coverImageUrl={identity.cover?.url}
           rounded={rounded}
           myProfile={myProfile}
           username={username}
@@ -77,7 +77,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ identity, labelShown = true, 
             )}
           </div>
           {identity.country && (
-            <Location country={identity?.country} city={identity?.city} iconName={identity?.country} />
+            // FIXME: make empty string in adaptor
+            <Location country={identity?.country} city={identity?.city || ''} iconName={identity?.country} />
           )}
           {website && <Website url={website} truncate />}
         </div>

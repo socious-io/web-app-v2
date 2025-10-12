@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { UserProfile, OrganizationProfile } from 'src/core/api';
+import { User, Organization } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 
-export const useShareProfile = (handleClose: () => void, identity: UserProfile | OrganizationProfile) => {
+export const useShareProfile = (handleClose: () => void, identity: User | Organization) => {
   const url = window.location.href;
   const { username, name, profileImage, type } = getIdentityMeta(identity);
   const [copied, setCopied] = useState(false);

@@ -1,7 +1,5 @@
-import { UserType } from 'src/core/types';
-
 import { Identity } from '../site/site.types';
-import { ChatMemberType, PaginateRes } from '../types';
+import { ChatMemberType, PaginateRes, UserType } from '../types';
 
 export interface MessageReq {
   text: string;
@@ -14,13 +12,9 @@ export interface ChatReq {
   type: 'CHAT';
   participants: string[];
 }
-export interface ChatsRes extends PaginateRes {
-  items: Chat[];
-}
+export type ChatsRes = PaginateRes<Chat>;
 
-export interface MessagesRes extends PaginateRes {
-  items: Message[];
-}
+export type MessagesRes = PaginateRes<Message>;
 export interface ChatCountRes {
   count: string;
 }
@@ -72,9 +66,7 @@ export interface Participant extends Omit<Identity, 'type' | 'verification_statu
   type: ChatMemberType;
 }
 
-export interface ParticipantRes extends PaginateRes {
-  items: Participant[];
-}
+export type ParticipantRes = PaginateRes<Participant>;
 
 export interface chatIdRes {
   id: string[];

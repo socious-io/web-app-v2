@@ -5,15 +5,13 @@ import {
   addLanguage,
   Education,
   Experience,
-  getUserDetails,
   importLinkedin,
   LanguageCode,
   otherProfileByUsername,
   ProjectType,
+  PublicUser,
   reviews,
   updateWallet,
-  UserDetails,
-  User,
 } from 'src/core/api';
 import { getIdentityMeta } from 'src/core/utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,7 +20,7 @@ import { AdaptorRes, SuccessRes } from '..';
 import { ImportLinkedInRes, ReviewsRes, WalletReq } from './index.types';
 
 //FIXME: user types on adaptor
-export const getUserByUsernameAdaptor = async (username: string): Promise<AdaptorRes<User>> => {
+export const getUserByUsernameAdaptor = async (username: string): Promise<AdaptorRes<PublicUser>> => {
   try {
     const data = await otherProfileByUsername(username);
     return {
@@ -162,16 +160,5 @@ export const updateWalletAdaptor = async (payload: WalletReq): Promise<AdaptorRe
   } catch (error) {
     console.error('Error in updating user wallet', error);
     return { data: null, error: 'Error in updating user wallet' };
-  }
-};
-
-//FIXME Use this type after migrating to v3
-export const getUserDetailsAdaptor = async (username: string): Promise<AdaptorRes<UserDetails>> => {
-  try {
-    const data = await getUserDetails(username);
-    return { data, error: null };
-  } catch (error) {
-    console.error('Error in getting user details: ', error);
-    return { data: null, error: 'Error in getting user details' };
   }
 };

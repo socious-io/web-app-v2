@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { deleteServiceAdaptor, getServicesAdaptor, ServicesRes } from 'src/core/adaptors';
-import { CurrentIdentity, UserProfile } from 'src/core/api';
+import { CurrentIdentity, User } from 'src/core/api';
 import { RootState } from 'src/store';
 
 export const useServiceList = () => {
   const navigate = useNavigate();
-  const { services, user } = useLoaderData() as { services: ServicesRes; user: UserProfile };
+  const { services, user } = useLoaderData() as { services: ServicesRes; user: User };
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });

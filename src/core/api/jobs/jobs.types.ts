@@ -1,5 +1,3 @@
-import { Currency } from 'iso-country-currency';
-
 import { Media } from '../media/media.types';
 import { Organization } from '../organizations/organizations.types';
 import { Payment } from '../payments/payments.types';
@@ -17,10 +15,9 @@ import {
   MissionStatus,
   OfferStatus,
   PaymentMode,
+  PaymentCurrency,
 } from '../types';
 import { User } from '../users/users.types';
-
-// --------------- Requests -----------------------
 
 export interface JobReq {
   title: string;
@@ -70,7 +67,7 @@ export interface OfferReq {
   assignment_total: number;
   weekly_limit?: number;
   total_hours?: number;
-  currency?: Currency | string;
+  currency?: PaymentCurrency;
   crypto_currency_address?: string;
 }
 
@@ -89,10 +86,7 @@ export interface HourlyWorkReq {
   end_at: Date;
 }
 
-// --------------- Responses -----------------------
-export interface JobsRes extends PaginateRes {
-  items: Job[];
-}
+export type JobsRes = PaginateRes<Job>;
 
 export interface Question extends QuestionReq {
   id: string;
@@ -139,17 +133,11 @@ export interface Category {
   updated_at?: Date;
 }
 
-export interface OffersRes extends PaginateRes {
-  items: Offer[];
-}
+export type OffersRes = PaginateRes<Offer>;
 
-export interface MissionsRes extends PaginateRes {
-  items: Mission[];
-}
+export type MissionsRes = PaginateRes<Mission>;
 
-export interface ApplicantsRes extends PaginateRes {
-  items: Applicant[];
-}
+export type ApplicantsRes = PaginateRes<Applicant>;
 
 export interface HourlyWork extends HourlyWorkReq {
   id: string;
@@ -204,6 +192,7 @@ export interface Offer extends OfferReq {
   org_fee_discount: boolean;
   contributor_fee_discount: boolean;
 }
+
 export type ContractStatus =
   | 'Offer sent'
   | 'Offer received'
@@ -215,6 +204,7 @@ export type ContractStatus =
   | 'Withdrawn'
   | 'Kicked out'
   | 'Closed';
+
 export interface Contract extends Offer {
   contractStatus: ContractStatus;
   mission?: Mission;
@@ -256,7 +246,7 @@ export interface Mission {
 export interface Escrow {
   id: string;
   amount: number;
-  currency?: Currency;
+  currency?: PaymentCurrency;
   created_at: Date;
   released_at?: Date;
   refound_at?: Date;

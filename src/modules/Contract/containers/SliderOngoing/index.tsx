@@ -1,4 +1,3 @@
-import { UserType } from 'src/core/types';
 import { translate } from 'src/core/utils';
 import { AlertModal } from 'src/modules/general/components/AlertModal';
 import { Button } from 'src/modules/general/components/Button';
@@ -9,6 +8,7 @@ import { MenuItem } from 'src/modules/general/components/threeDotButton/threeDot
 import { useSliderOngoing } from './useSliderOngoing';
 import { ContractSliderProps } from '../ContractDetailsSlider/index.types';
 import InitiateDisputeModal from '../InitiateDisputeModal';
+import { UserType } from 'src/core/api';
 
 const SliderOngoing: React.FC<ContractSliderProps> = ({ disableMessage, redirectToChat, contract }) => {
   const {

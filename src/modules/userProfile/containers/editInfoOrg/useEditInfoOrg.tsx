@@ -75,15 +75,16 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     defaultValues: {
       name: org.name,
       username: org.shortname,
-      city: { label: org.city, value: org.city },
-      country: org.country,
-      summary: org.mission,
+      //FIXME: make empty default in adaptor
+      city: org.city ? { label: org.city, value: org.city } : undefined,
+      country: org.country || '',
+      summary: org.mission || '',
       website: org?.website || '',
-      industry: { label: org.industry, value: org.industry },
+      industry: org.industry ? { label: org.industry, value: org.industry } : undefined,
       size: org.size
         ? { label: ORGANIZATION_SIZE.find(item => item.value === org.size)?.label, value: org.size }
         : { label: '', value: '' },
-      socialCauses: socialCausesToCategory(org?.social_causes),
+      socialCauses: socialCausesToCategory(org?.social_causes || []),
     },
   });
 
@@ -120,15 +121,16 @@ export const useEditInfoOrg = (handleClose: () => void) => {
     reset({
       name: org.name,
       username: org.shortname,
-      city: { label: org.city, value: org.city },
-      country: org.country,
-      summary: org.mission,
+      //FIXME: make empty default in adaptor
+      city: org.city ? { label: org.city, value: org.city } : undefined,
+      country: org.country || '',
+      summary: org.mission || '',
       website: org?.website || '',
-      industry: { label: org.industry, value: org.industry },
+      industry: org.industry ? { label: org.industry, value: org.industry } : undefined,
       size: org.size
         ? { label: ORGANIZATION_SIZE.find(item => item.value === org.size)?.label, value: org.size }
         : { label: '', value: '' },
-      socialCauses: socialCausesToCategory(org?.social_causes),
+      socialCauses: socialCausesToCategory(org?.social_causes || []),
     });
   }, [org]);
 

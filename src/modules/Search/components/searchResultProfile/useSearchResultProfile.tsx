@@ -5,7 +5,7 @@ import { getIdentityMeta } from 'src/core/utils';
 
 export const useSearchResultProfile = (identity?: User | Organization) => {
   const { name, profileImage, type, username, website } = getIdentityMeta(identity);
-  const coverImageUrl = identity?.cover_image?.url;
+  const coverImageUrl = identity?.cover?.url;
   const [buttonLabel, setButtonLabel] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState('');

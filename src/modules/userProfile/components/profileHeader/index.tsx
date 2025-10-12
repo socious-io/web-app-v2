@@ -50,7 +50,7 @@ export const ProfileHeader = ({ userTags = [] }: ProfileHeaderProps) => {
     displayVerifyAlert,
   } = useProfileHeader();
 
-  const coverImage = identity?.cover_image;
+  const coverImage = identity?.cover;
 
   return (
     <>

@@ -2,8 +2,7 @@ import { t } from 'i18next';
 
 export const translate = t;
 
-import { Credential, Identity, OrgMeta, Organization, SearchReq, User, UserMeta } from './api';
-import { UserType } from './types';
+import { Credential, Identity, OrgMeta, Organization, SearchReq, User, UserMeta, UserType } from './api';
 
 export function when<T, P>(value: unknown, fn: (params?: P) => T, params?: P) {
   if (value) {
@@ -122,7 +121,7 @@ export const getIdentityMeta = (identity: User | Organization | Identity | UserM
     return {
       username: `@${user.username}`,
       usernameVal: user.username,
-      name: user.name || `${user?.first_name || ''} ${user?.last_name || ''}`,
+      name: `${user?.first_name || ''} ${user?.last_name || ''}`,
       profileImage: user.avatar?.url || (user.avatar && String(user.avatar)) || '',
       type: 'users' as Identity['type'],
       website: undefined,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdditionalRes, AdditionalTypes } from 'src/core/api/additionals/additionals.types';
+import { AdditionalRes, AdditionalTypes } from 'src/core/api/additional/additional.types';
 import { Input } from 'src/modules/general/components/input/input';
 
 import { Error } from '../../containers/editInfo/editInfo.types';

@@ -1,33 +1,18 @@
 import { addFiltersToSearch } from 'src/core/utils';
 
-import { CurrentIdentity, Device, DeviceReq, EventsRes, SearchReq, SkillRes } from './site.types';
+import { CurrentIdentity, Device, DeviceReq, EventsRes, SearchReq, SearchTypeMap, SkillsRes } from '../';
 import { post, get } from '../http';
-import { ApplicantsRes, JobsRes } from '../jobs/jobs.types';
-import { OrganizationsRes } from '../organizations/organizations.types';
-import { PostsRes } from '../posts/posts.types';
 import { PaginateReq, PaginateRes, SuccessRes } from '../types';
-import { UsersRes } from '../users/users.types';
 
-export async function search(payload: SearchReq, params: PaginateReq) {
-  const { data } = await post<PaginateRes>('search/v2', addFiltersToSearch(payload), { params });
-  switch (payload.type) {
-    case 'organizations':
-      return data as OrganizationsRes;
-    case 'projects':
-      return data as JobsRes;
-    case 'posts':
-      return data as PostsRes;
-    case 'users':
-      return data as UsersRes;
-    case 'applicants':
-      return data as ApplicantsRes;
-    default:
-      return data;
-  }
+export async function search<T extends keyof SearchTypeMap>(
+  payload: SearchReq,
+  params: PaginateReq,
+): Promise<SearchTypeMap[T]> {
+  return (await post<SearchTypeMap[T]>('search/v2', addFiltersToSearch(payload), { params })).data;
 }
 
-export async function searchHistory(params: PaginateReq) {
-  const { data } = await get<PaginateRes>('search/history', { params });
+export async function searchHistory<T>(params: PaginateReq) {
+  const { data } = await get<PaginateRes<T>>('search/history', { params });
   return data;
 }
 
@@ -47,8 +32,8 @@ export async function removeDevice(fcm: string): Promise<SuccessRes> {
   return (await post<SuccessRes>(`devices/remove/${fcm}`, {})).data;
 }
 
-export async function skills(params: PaginateReq): Promise<SkillRes> {
-  return (await get<SkillRes>('skills', { params })).data;
+export async function skills(params: PaginateReq): Promise<SkillsRes> {
+  return (await get<SkillsRes>('skills', { params })).data;
 }
 
 export async function events(params: PaginateReq): Promise<EventsRes> {

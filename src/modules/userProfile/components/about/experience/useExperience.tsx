@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getUserByUsernameAdaptor } from 'src/core/adaptors';
 import {
   CurrentIdentity,
   Experience,
@@ -7,7 +8,6 @@ import {
   User,
   UserMeta,
   claimExperienceVC,
-  otherProfileByUsername,
   removeExperiences,
   requestVerifyExperience,
 } from 'src/core/api';
@@ -57,8 +57,9 @@ export const useExperience = () => {
 
   const handleDelete = async (id: string) => {
     await removeExperiences(id);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
+    if (!user?.username) return;
+    const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+    dispatch(setIdentity(updatedUser));
     dispatch(setIdentityType('users'));
   };
 
@@ -77,8 +78,9 @@ export const useExperience = () => {
   const handleRequestVerify = async (id: string, message?: string, exact_info?: boolean) => {
     try {
       await requestVerifyExperience(id, message, exact_info);
-      const updated = await otherProfileByUsername(user?.username || '');
-      dispatch(setIdentity(updated));
+      if (!user?.username) return;
+      const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+      dispatch(setIdentity(updatedUser));
       dispatch(setIdentityType('users'));
       setReqModelShow(true);
     } catch (e) {

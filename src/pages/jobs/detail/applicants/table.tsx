@@ -170,7 +170,8 @@ export const Table: React.FC<TableProps> = ({ applicants, currentTab, onRefetch,
         <AlertModal
           open={success}
           onClose={handleCloseSuccess}
-          message={`Congratulations! You have successfully sent an offer to ${applicant.user.name}`}
+          //FIXME: create a name based on firstname and lastname
+          message={`Congratulations! You have successfully sent an offer to ${applicant.user.first_name}`}
           title="Offer sent"
           customIcon={<FeaturedIcon iconName="check-circle" size="md" theme="success" type="light-circle-outlined" />}
           closeButtn={true}

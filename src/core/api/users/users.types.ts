@@ -1,15 +1,113 @@
-import { Offer } from 'src/core/types';
+import {
+  AdditionalRes,
+  NewContract,
+  Category,
+  Mission,
+  Job,
+  Media,
+  Organization,
+  Identity,
+  Event,
+  CredentialStatus,
+  Offer,
+} from '..';
+import { LanguageCode, SDG, PaginateRes, ConnectStatus, ProjectType, LanguageLevel, SocialCauses } from '../types';
 
-import { AdditionalRes } from '../additionals/additionals.types';
-import { NewContract } from '../contracts/contracts.types';
-import { Category, Mission } from '../jobs/jobs.types';
-import { Job } from '../jobs/jobs.types';
-import { Media } from '../media/media.types';
-import { Organization } from '../organizations/organizations.types';
-import { Identity, Event } from '../site/site.types';
-import { LanguageCode, SDG, PaginateRes, ConnectStatus, ProjectType, LanguageLevel } from '../types';
+export type PreferenceValue =
+  | 'ON'
+  | 'OFF'
+  | 'STRONG_HIGH'
+  | 'MODERATE_HIGH'
+  | 'NEUTRAL'
+  | 'STRONG_LOW'
+  | 'MODERATE_LOW'
+  | 'PREFER_NOT_SAY';
 
-// -------------------- Requests ----------------------
+export interface Wallet {
+  id: string;
+  address: string;
+  network: string;
+  testnet: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface PublicUser {
+  id: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  mission: string | null;
+  bio: string | null;
+  impact_points: number;
+  social_causes: SocialCauses[] | null;
+  followers: number;
+  followings: number;
+  skills: string[] | null;
+  open_to_work: boolean;
+  open_to_volunteer: boolean;
+  identity_verified: boolean;
+  events: Event[] | null;
+  tags: string[] | null;
+  avatar_id: string | null;
+  avatar: Media | null;
+  cover_id: string | null;
+  cover: Media | null;
+  created_at: Date;
+  //FIXME: no in v3, tell mohammad
+  follower: boolean;
+  following: boolean;
+  connections: number;
+  connection_id: string | null;
+  connection_status: ConnectStatus | null;
+}
+
+export interface User extends PublicUser {
+  email: string;
+  phone: string | null;
+  wallet_address: string | null;
+  city: string | null;
+  address: string | null;
+  languages: Language[] | null;
+  skills: string[] | null;
+  country: string | null;
+  mobile_country_code: string | null;
+  certificates: AdditionalRes[] | null;
+  educations: Education[] | null;
+  geoname_id: string | null;
+  proofspace_connect_id: string | null;
+  is_contributor: boolean;
+  wallets: Wallet[] | null;
+  //FIXME: no in v3, tell mohammad
+  experiences: Experience[] | null;
+  portfolios: AdditionalRes[] | null;
+  rate: number;
+  recommendations: AdditionalRes[] | null;
+  reported: boolean;
+}
+
+export type UsersRes = PaginateRes<User>;
+
+export type Badge = {
+  total_points: number;
+  social_cause_category: SDG;
+};
+export interface Badges {
+  badges: Badge[];
+}
+
+export interface ImpactPoint {
+  id: string;
+  job_category: { name: string };
+  mission: Mission;
+  project: Job;
+  created_at: Date;
+  total_points: number;
+  organization: Identity;
+  offer: Offer;
+}
+
+export type ImpactPoints = PaginateRes<ImpactPoint>;
 
 export interface ReportReq {
   comment?: string;
@@ -49,6 +147,21 @@ export interface LanguageReq {
   level: LanguageLevel;
 }
 
+export interface Language extends LanguageReq {
+  id: string;
+  created_at: Date;
+}
+
+export interface Credential {
+  id: string;
+  status: CredentialStatus;
+  message?: string;
+  connection_id?: string;
+  connection_url?: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface ExperienceReq {
   org_id: string;
   title: string;
@@ -64,6 +177,15 @@ export interface ExperienceReq {
   total_hours?: number | null;
 }
 
+export interface Experience extends ExperienceReq {
+  id: string;
+  org: Organization;
+  job_category?: Category;
+  created_at?: Date;
+  credential?: Credential;
+  message?: string;
+}
+
 export interface EducationsReq {
   org_id: string;
   title: string;
@@ -74,101 +196,6 @@ export interface EducationsReq {
   end_at?: string;
 }
 
-export interface ChangePasswordReq {
-  current_password: string;
-  password: string;
-}
-
-export interface ChangePasswordDirectReq {
-  password: string;
-}
-
-export interface DeleteUserReq {
-  reason: string;
-}
-
-// -------------------- Responses ----------------------
-
-export interface UsersRes extends PaginateRes {
-  items: User[];
-}
-
-export interface Wallet {
-  id: string;
-  address: string;
-  network: string;
-  testnet: boolean;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export interface User {
-  name: string;
-  address: string | null;
-  avatar: Media | null;
-  bio: string | null;
-  certificates: AdditionalRes[] | null;
-  city: string | null;
-  connection_id: string | null;
-  connection_status: ConnectStatus | null;
-  connections: number;
-  country: string | null;
-  cover_image: Media | null;
-  educations: Education[] | null;
-  events: Event[] | null;
-  experiences: Experience[] | null;
-  first_name: string;
-  follower: boolean;
-  followers: number;
-  following: boolean;
-  followings: number;
-  geoname_id: string | null;
-  id: string;
-  identity_verified: boolean;
-  impact_points: number;
-  is_contributor: boolean | null;
-  languages: Language[] | null;
-  last_name: string;
-  mission: string | null;
-  mobile_country_code: string | null;
-  open_to_volunteer: boolean;
-  open_to_work: boolean;
-  phone: string | null;
-  portfolios: AdditionalRes[] | null;
-  proofspace_connect_id: string | null;
-  rate: number;
-  recommendations: AdditionalRes[] | null;
-  reported: boolean;
-  skills: string[] | null;
-  social_causes: string[] | null;
-  username: string;
-  wallet_address: string | null;
-  wallets: Wallet[] | null;
-  created_at: Date;
-}
-
-// export interface UserProfile extends User {
-//   following: boolean;
-//   follower: boolean;
-//   connection_status: ConnectStatus | null;
-//   connection_id: string;
-//   is_contributor: boolean;
-// }
-
-export interface Language extends LanguageReq {
-  id: string;
-  created_at: Date;
-}
-
-export interface Experience extends ExperienceReq {
-  id: string;
-  org: Organization;
-  job_category?: Category;
-  created_at?: Date;
-  credential?: Credential;
-  message?: string;
-}
-
 export interface Education extends EducationsReq {
   id: string;
   org: Organization;
@@ -176,50 +203,14 @@ export interface Education extends EducationsReq {
   message?: string;
 }
 
-export interface Badge {
-  total_points: number;
-  social_cause_category: SDG;
-}
-export interface Badges {
-  badges: Badge[];
+export interface ChangePasswordReq {
+  current_password?: string;
+  password: string;
 }
 
-export interface ImpactPoint {
-  id: string;
-  job_category: {
-    name: string;
-  };
-  mission: Mission;
-  project: Job;
-  created_at: Date;
-  total_points: number;
-  organization: Identity;
-  offer: Offer;
+export interface DeleteUserReq {
+  reason: string;
 }
-
-export interface ImpactPoints extends PaginateRes {
-  items: ImpactPoint[];
-}
-
-export interface Credential {
-  id: string;
-  status: 'PENDING' | 'APPROVED' | 'SENT' | 'ISSUED' | 'CLAIMED' | 'REJECTED';
-  message?: string;
-  connection_id?: string;
-  connection_url?: string;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export type PreferenceValue =
-  | 'ON'
-  | 'OFF'
-  | 'STRONG_HIGH'
-  | 'MODERATE_HIGH'
-  | 'NEUTRAL'
-  | 'STRONG_LOW'
-  | 'MODERATE_LOW'
-  | 'PREFER_NOT_SAY';
 
 export interface Preference {
   title: string;
@@ -281,30 +272,4 @@ export interface Review {
   contract: NewContract;
 }
 
-export interface Reviews extends PaginateRes {
-  items: Review[];
-}
-
-//FIXME Use this type after migrating to v3
-export interface UserDetails {
-  id: string;
-  first_name: string;
-  last_name: string;
-  username: string;
-  mission: string | null;
-  impact_points: number;
-  social_causes: string[];
-  followers: number;
-  followings: number;
-  skills: string[];
-  open_to_work: boolean;
-  open_to_volunteer: boolean;
-  identity_verified: boolean;
-  events: string[];
-  tags: string[];
-  avatar_id: string | null;
-  avatar: Media | null;
-  cover_id: string | null;
-  cover: Media | null;
-  created_at: string;
-}
+export type Reviews = PaginateRes<Review>;

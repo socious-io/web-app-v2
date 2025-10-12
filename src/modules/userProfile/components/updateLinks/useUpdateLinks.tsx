@@ -1,4 +1,4 @@
-import { AdditionalRes, AdditionalTypes } from 'src/core/api/additionals/additionals.types';
+import { AdditionalRes, AdditionalTypes } from 'src/core/api/additional/additional.types';
 
 export const UseUpdatelinks = (links: AdditionalRes[] | null, setLinks: (newVal: AdditionalRes[]) => void) => {
   const addNewLink = () => {

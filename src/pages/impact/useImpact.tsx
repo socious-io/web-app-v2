@@ -18,10 +18,11 @@ export const useImpact = () => {
       totalHours = impactPointHistory.items
         .filter(item => !!item.offer)
         .map(item => {
+          //FIXME: ask Ehsan
           if ((item.offer.currency && ['USD', 'YEN'].includes(item.offer.currency)) || item.offer.currency) {
-            return { type: 'paid', hours: item.offer.total_hours };
+            return { type: 'paid', hours: item.offer.total_hours || 0 };
           } else {
-            return { type: 'volunteered', hours: item.offer.total_hours };
+            return { type: 'volunteered', hours: item.offer.total_hours || 0 };
           }
         });
 

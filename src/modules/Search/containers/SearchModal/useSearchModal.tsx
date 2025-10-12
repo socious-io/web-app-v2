@@ -57,7 +57,7 @@ export const useSearchModal = (props: { open: boolean; onClose: () => void; setS
     props.setSearchText(q);
     if (q.length) {
       const result = await search({ type: selectedTab, q, filter: {} }, { page: 1, limit: 20 });
-      setList(searchIntoList(result.items));
+      setList(searchIntoList(result.items as Array<User | Organization | Job | ServiceSearchRes>));
       if (q && result.items.length === 0) setShowNoResult(true);
     }
   };

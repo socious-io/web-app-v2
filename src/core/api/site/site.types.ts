@@ -1,8 +1,26 @@
-import { CredentialStatus, PaginateRes } from 'src/core/api';
-import { UserType } from 'src/core/types';
+import {
+  ApplicantsRes,
+  CredentialStatus,
+  JobsRes,
+  OrganizationsRes,
+  PaginateRes,
+  PostsRes,
+  ServicesRes,
+  UsersRes,
+  UserType,
+} from 'src/core/api';
+
+export type SearchTypeMap = {
+  projects: JobsRes;
+  users: UsersRes;
+  organizations: OrganizationsRes;
+  posts: PostsRes;
+  applicants: ApplicantsRes;
+};
 
 export interface SearchReq {
-  type: 'projects' | 'users' | 'posts' | 'organizations' | 'applicants' | 'services';
+  //FIXME: if all move to v3 we can add `services` to SearchTypeMap
+  type: keyof SearchTypeMap | 'services';
   q: string;
   filter: any;
   sort?: any;
@@ -75,9 +93,7 @@ export interface Skill {
   created_at: Date;
 }
 
-export interface SkillRes extends PaginateRes {
-  items: Skill[];
-}
+export type SkillsRes = PaginateRes<Skill>;
 
 export interface Event {
   id: string;
@@ -87,6 +103,4 @@ export interface Event {
   created_at: Date;
 }
 
-export interface EventsRes extends PaginateRes {
-  items: Event[];
-}
+export type EventsRes = PaginateRes<Event>;

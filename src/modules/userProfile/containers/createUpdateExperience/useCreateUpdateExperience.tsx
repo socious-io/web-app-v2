@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { PROJECT_TYPE } from 'src/constants/PROJECT_TYPES';
+import { getUserByUsernameAdaptor } from 'src/core/adaptors';
 import {
   Experience,
   ExperienceReq,
@@ -13,15 +14,12 @@ import {
   addExperiences,
   createOrganization,
   jobCategories as jobCategoriesApi,
-  otherProfileByUsername,
   removeExperiences,
-  search,
   searchLocation,
   updateExperiences,
 } from 'src/core/api';
 import { monthNames } from 'src/core/time';
 import { removedEmptyProps } from 'src/core/utils';
-import { Avatar } from 'src/modules/general/components/avatar/avatar';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
 import { v4 as uuidv4 } from 'uuid';
@@ -377,8 +375,9 @@ export const useCreateUpdateExperience = (
     } else {
       if (experience) await updateExperiences(experience.id, payload);
       else await addExperiences(payload);
-      const updated = await otherProfileByUsername(user?.username || '');
-      dispatch(setIdentity(updated));
+      if (!user?.username) return;
+      const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+      dispatch(setIdentity(updatedUser));
       dispatch(setIdentityType('users'));
     }
     handleClose();
@@ -387,8 +386,9 @@ export const useCreateUpdateExperience = (
   const onDelete = async () => {
     if (!experience) return;
     await removeExperiences(experience.id);
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
+    if (!user?.username) return;
+    const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+    dispatch(setIdentity(updatedUser));
     dispatch(setIdentityType('users'));
     handleClose();
   };

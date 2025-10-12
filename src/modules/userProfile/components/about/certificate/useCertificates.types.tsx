@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CurrentIdentity, Organization, User, otherProfileByUsername } from 'src/core/api';
-import { removeAdditional } from 'src/core/api/additionals/additionals.api';
-import { AdditionalRes, CertificateMeta, EducationMeta } from 'src/core/api/additionals/additionals.types';
+import { getUserByUsernameAdaptor } from 'src/core/adaptors';
+import { CurrentIdentity, Organization, User } from 'src/core/api';
+import { removeAdditional } from 'src/core/api/additional/additional.api';
+import { AdditionalRes, CertificateMeta, EducationMeta } from 'src/core/api/additional/additional.types';
 import { monthShortNames } from 'src/core/time';
 import { RootState } from 'src/store';
 import { setIdentity, setIdentityType } from 'src/store/reducers/profile.reducer';
@@ -54,9 +55,9 @@ export const useCertificate = () => {
 
   const handleDelete = async (id: string) => {
     await removeAdditional(id);
-
-    const updated = await otherProfileByUsername(user?.username || '');
-    dispatch(setIdentity(updated));
+    if (!user?.username) return;
+    const { data: updatedUser } = await getUserByUsernameAdaptor(user.username);
+    dispatch(setIdentity(updatedUser));
     dispatch(setIdentityType('users'));
   };
 
