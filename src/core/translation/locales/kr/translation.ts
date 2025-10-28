@@ -21,7 +21,7 @@ import organization from './organization.json';
 import payments from './payments.json';
 import preferences from './preferences.json';
 import profile from './profile.json';
-import referral from './referral.json';
+import refer from './refer.json';
 import reviews from './reviews.json';
 import search from './search.json';
 import services from './services.json';
@@ -31,6 +31,7 @@ import skills from './skills.json';
 import socialCauses from './socialCauses.json';
 import termsCondition from './termsCondition.json';
 import userTeam from './userTeam.json';
+import wallet from './wallet.json';
 
 export function generateTranslationFile() {
   return Object.assign(
@@ -49,7 +50,7 @@ export function generateTranslationFile() {
     dashboard,
     kyc,
     profile,
-    referral,
+    refer,
     navigation,
     header,
     jobs,
@@ -68,5 +69,6 @@ export function generateTranslationFile() {
     userTeam,
     contribute,
     reviews,
+    wallet,
   );
 }

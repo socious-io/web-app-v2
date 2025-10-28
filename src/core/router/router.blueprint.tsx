@@ -35,9 +35,9 @@ import {
   cards,
 } from 'src/core/api';
 import { search as searchReq } from 'src/core/api/site/site.api';
-import { translate } from 'src/core/utils';
 import { Layout as NowruzLayout } from 'src/modules/layout';
-import FallBack from 'src/pages/fallback/fallback';
+import FallBack from 'src/pages/error/fallback/fallback';
+import { NotFound } from 'src/pages/error/notFound';
 import { RootState } from 'src/store';
 
 import { getReviewsAdaptor, getUserDetailsAdaptor } from '../adaptors/users/index.adaptors';
@@ -609,9 +609,9 @@ export const blueprint: RouteObject[] = [
               return { connections };
             },
             async lazy() {
-              const { Connctions } = await import('src/pages/connections');
+              const { Connections } = await import('src/pages/connections');
               return {
-                Component: Protect(Connctions, 'both'),
+                Component: Protect(Connections, 'both'),
               };
             },
           },
@@ -652,7 +652,7 @@ export const blueprint: RouteObject[] = [
             ],
           },
           {
-            path: 'referral',
+            path: 'refer',
             async lazy() {
               const { Refer } = await import('src/pages/refer');
               return {
@@ -751,41 +751,6 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
-    path: 'referral',
-    children: [
-      {
-        path: ':username/talent',
-        loader: async ({ params }) => {
-          if (params.username) {
-            localStorage.setItem('registerFor', 'user');
-            const user = await otherProfileByUsername(params.username);
-            localStorage.setItem(
-              'referrer',
-              JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
-            );
-            return null;
-          }
-        },
-        element: <Navigate to="/sign-up/user/email" />,
-      },
-      {
-        path: ':username/org',
-        loader: async ({ params }) => {
-          if (params.username) {
-            localStorage.setItem('registerFor', 'organization');
-            const user = await otherProfileByUsername(params.username);
-            localStorage.setItem(
-              'referrer',
-              JSON.stringify({ fisrtName: user.first_name, avatarUrl: user.avatar?.url, id: user.id }),
-            );
-            return null;
-          }
-        },
-        element: <Navigate to="/sign-up/user/email" />,
-      },
-    ],
-  },
-  {
     path: 'notifications/:id',
     loader: ({ params }) => {
       return {
@@ -821,6 +786,13 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
+    path: '/referral',
+    async lazy() {
+      const { Referral } = await import('src/pages/refer/referral');
+      return { Component: Referral };
+    },
+  },
+  {
     path: 'privacy-policy',
     async lazy() {
       const { PrivacyPolicy } = await import('src/pages/privacyPolicy/privacyPolicy');
@@ -840,7 +812,7 @@ export const blueprint: RouteObject[] = [
   },
   {
     path: '*',
-    element: <div>{translate('router-not-found')}</div>,
+    element: <NotFound />,
   },
 ];
 

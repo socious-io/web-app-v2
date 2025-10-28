@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData } from 'react-router-dom';
-import { CurrentIdentity, StripeAccount, updateWallet } from 'src/core/api';
+import { updateWalletAdaptor } from 'src/core/adaptors';
+import { CurrentIdentity, StripeAccount } from 'src/core/api';
 import dapp from 'src/dapp';
 import { RootState } from 'src/store';
 
@@ -9,7 +10,7 @@ import { Resolver } from './assets.types';
 
 export const useAssets = () => {
   const { stripeProfileRes, jpStripeProfileRes } = useLoaderData() as Resolver;
-  const { isConnected, Web3Connect, account } = dapp.useWeb3();
+  const { connected, account, networkName, testnet } = dapp.useWeb3();
   const currentIdentity = useSelector<RootState, CurrentIdentity | undefined>(state => {
     return state.identity.entities.find(identity => identity.current);
   });
@@ -24,13 +25,13 @@ export const useAssets = () => {
   useEffect(() => {
     if (
       currentIdentity?.type === 'users' &&
-      isConnected &&
+      connected &&
       account &&
       (!walletAddress || String(walletAddress) !== account)
     ) {
-      updateWallet({ wallet_address: account });
+      updateWalletAdaptor({ account, networkName, testnet });
     }
-  }, [isConnected, account]);
+  }, [connected, account]);
 
-  return { stripeAccounts, openAddAccount, setOpenAddAccount, isConnected, Web3Connect };
+  return { stripeAccounts, openAddAccount, setOpenAddAccount, connected };
 };

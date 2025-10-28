@@ -6,10 +6,11 @@ import { Modal } from 'src/modules/general/components/modal';
 import { Pagination } from 'src/modules/general/components/Pagination';
 import { PaginationMobile } from 'src/modules/general/components/paginationMobile';
 
+import { RequestTabProps } from './index.types';
 import css from './requestTab.module.scss';
-import { useRequestTab } from './useRequetTab';
+import { useRequestTab } from './useRequestTab';
 
-export const RequestTab = () => {
+export const RequestTab: React.FC<RequestTabProps> = ({ requestType }) => {
   const {
     connectRequests,
     page,
@@ -22,10 +23,15 @@ export const RequestTab = () => {
     setOpenAcceptModal,
     handleOpenAcceptModal,
     selectedRequest,
-  } = useRequestTab();
-
-  const requester = selectedRequest?.requester;
-  const { profileImage, username } = getIdentityMeta(requester);
+    isRequestedType,
+    getAccount,
+  } = useRequestTab(requestType);
+  const {
+    profileImage: img = '',
+    type = 'users',
+    name = '',
+    username = '',
+  } = getIdentityMeta(selectedRequest?.requester);
 
   const footerJsx = (
     <div className="w-full flex flex-col md:flex-row-reverse px-4 py-4 md:px-6 md:py-6 gap-3 md:justify-start">
@@ -41,14 +47,14 @@ export const RequestTab = () => {
   return (
     <div className={css.container}>
       {connectRequests.map(item => {
-        const account = item.requester;
-        const { username, profileImage, type, name } = getIdentityMeta(account);
+        const account = getAccount(item);
+        const { profileImage: img = '', type = 'users', name = '', username = '' } = getIdentityMeta(account);
         const accountItem = {
           id: account?.id || '',
-          img: profileImage || '',
-          type: type || 'users',
-          name: name || '',
-          username: (username || '').replace('@', ''),
+          img,
+          type,
+          name,
+          username: username.replace('@', ''),
         };
 
         return (
@@ -63,14 +69,16 @@ export const RequestTab = () => {
               >
                 {translate('connect-decline')}
               </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ height: '40px', fontSize: '14px' }}
-                onClick={() => handleOpenAcceptModal(item.id)}
-              >
-                {translate('connect-view')}
-              </Button>
+              {isRequestedType && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ height: '40px', fontSize: '14px' }}
+                  onClick={() => handleOpenAcceptModal(item.id)}
+                >
+                  {translate('connect-view')}
+                </Button>
+              )}
             </div>
           </div>
         );
@@ -101,17 +109,17 @@ export const RequestTab = () => {
         <div className="flex flex-col gap-5 px-4 md:px-6 py-4">
           <div className="w-full flex flex-col gap-1">
             <div className="text-lg font-semibold text-Gray-light-mode-900">
-              {translate('connect-accept-alert', { name: selectedRequest?.requester.meta.name })}
+              {translate('connect-accept-alert', { name })}
             </div>
             <div className="text-sm font-normal text-Gray-light-mode-600">{selectedRequest?.text}</div>
           </div>
           <AvatarLabelGroup
             account={{
-              id: requester?.id || '',
-              img: profileImage,
-              type: requester?.type || 'users',
-              name: requester?.meta.name || '',
-              username: username,
+              id: selectedRequest?.id || '',
+              img,
+              type,
+              name,
+              username,
             }}
             customStyle="!px-0"
           />

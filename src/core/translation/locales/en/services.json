@@ -26,6 +26,7 @@
     "subheader": "Tell us more about your service",
     "error-message": "This field is required",
     "error-positive-message": "Value must be a positive number",
+    "error-min-price": "The price must be at least {{minValue}}.",
     "name": "Service name",
     "name-description": "Add a clear and concise name for the service you want to provide",
     "name-placeholder": "e.g, Logo Design",

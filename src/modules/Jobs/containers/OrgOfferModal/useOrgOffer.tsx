@@ -1,52 +1,72 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { KeyboardEvent, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { PAYMENT_CURRENCIES } from 'src/constants/PAYMENT_CURRENCY';
+import { minByToken } from 'src/constants/TOKEN_LIMIT';
 import { Applicant, ProjectPaymentType, offerByApplicant } from 'src/core/api';
+import { useTokens } from 'src/core/hooks/useTokens';
 import { removeValuesFromObject } from 'src/core/utils';
-import Dapp from 'src/dapp';
+import dapp from 'src/dapp';
 import * as yup from 'yup';
 
-type Inputs = {
-  title: string;
-  hours: number;
-  total?: number;
-  paymentMethod?: string;
-  description: string;
+import { Form } from './OrgOfferModal.types';
+
+const getSchema = tokens => {
+  return yup.object().shape({
+    title: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
+    paymentType: yup.string().required('Required'),
+    paymentTerm: yup.string(),
+    paymentMethod: yup.string(),
+    hours: yup
+      .number()
+      .typeError('Total hours is required')
+      .positive('Must be positive')
+      .min(1, 'Hours must be more than 1')
+      .required('Total hours is required'),
+    total: yup
+      .number()
+      .when(['paymentType', 'paymentMethod', 'currency'], ([paymentType, paymentMethod, currency], schema) => {
+        if (paymentType === 'VOLUNTEER') {
+          return yup.number().nullable().notRequired();
+        }
+        let minValue;
+        if (paymentMethod === 'FIAT') {
+          minValue = 22;
+        } else if (paymentMethod === 'CRYPTO' && currency) {
+          const tokenLabel = tokens.find(token => token.value === currency)?.label;
+          minValue = minByToken[tokenLabel];
+        }
+        return schema
+          .typeError('Offer amount is required')
+          .required('Offer amount is required')
+          .test('is-positive', 'Offer amount should be positive', value => typeof value === 'number' && value > 0)
+          .min(minValue || 0, minValue !== undefined ? `Offer amount must be at least ${minValue}.` : '');
+      }),
+    currency: yup.string().when(['paymentType', 'paymentMethod'], ([paymentType, paymentMethod], schema) => {
+      if (paymentType === 'VOLUNTEER') {
+        return schema.nullable().notRequired();
+      }
+      if (paymentMethod === 'FIAT') {
+        return schema.required('Currency is required').oneOf(
+          PAYMENT_CURRENCIES.map(c => c.value),
+          'Invalid FIAT currency',
+        );
+      }
+      if (paymentMethod === 'CRYPTO') {
+        return schema.required('Token is required').oneOf(
+          tokens.map(t => t.value),
+          'Invalid CRYPTO token',
+        );
+      }
+      return schema;
+    }),
+    description: yup.string().required('Description is required'),
+  });
 };
-const schema = yup.object().shape({
-  title: yup.string().required('Required').min(2, 'Must be 2-50 characters').max(50, 'Must be 2-50 characters'),
-  paymentType: yup.string().required('Required'),
-  paymentTerm: yup.string(),
-  paymentMethod: yup.string(),
-  hours: yup
-    .number()
-    .positive()
-    .typeError('Total hours is required')
-    .min(1, 'Hours needs to be more than 0')
-    .required('Total hours is required'),
-  total: yup.number().when(['paymentType'], paymentType => {
-    if (paymentType.includes('PAID')) {
-      return yup
-        .number()
-        .typeError('Offer amount is required')
-        .positive('Offer amount should be positive value')
-        .required('Offer amount is required');
-    } else {
-      return yup.string().nullable().notRequired();
-    }
-  }),
-  description: yup.string().required('Description is required'),
-});
+
 export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess: () => void) => {
-  const { chainId, isConnected, Web3Connect } = Dapp.useWeb3();
-  const [tokens, setTokens] = useState<
-    {
-      value: string;
-      label: string;
-      address: string;
-    }[]
-  >([]);
-  const [selected, setSelected] = useState<string>();
+  const { connected, network } = dapp.useWeb3();
+  const tokens = useTokens(connected, network);
 
   const {
     register,
@@ -57,79 +77,56 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     formState: { errors },
   } = useForm({
     mode: 'all',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(getSchema(tokens)),
     defaultValues: {
       paymentType: 'PAID' as ProjectPaymentType,
       paymentMethod: 'FIAT' as 'STRIPE',
       paymentTerm: 'FIXED',
     },
   });
+  const paymentMethod = watch('paymentMethod');
+  const currency = watch('currency');
+  const isNonPaid = watch('paymentType') === 'VOLUNTEER';
+  const isCrypto = paymentMethod === 'CRYPTO';
+  const isFiat = paymentMethod === 'FIAT';
+  const paymentMethodOptions = isCrypto ? tokens : PAYMENT_CURRENCIES;
+
+  const initCurrencyValue = () => {
+    if (isCrypto) return tokens[0]?.value;
+    else if (isFiat) return PAYMENT_CURRENCIES[0].value;
+    return '';
+  };
 
   useEffect(() => {
-    const getTokens = async () => {
-      if (isConnected) {
-        const selectedNetwork = Dapp.NETWORKS.filter(n => n.chain.id === chainId)[0];
-        const mapTokens = selectedNetwork.tokens.map(token => {
-          return {
-            value: token?.address || '',
-            label: token.name,
-            address: token?.address || '',
-          };
-        });
+    setValue('currency', initCurrencyValue());
+  }, [tokens.length, paymentMethod]);
 
-        setTokens(mapTokens);
-      }
-    };
-    getTokens();
-  }, [isConnected, chainId]);
-
-  const onSelectPaymentType = paymentType => {
-    setValue('paymentType', paymentType);
-  };
-  const onSelectPaymentTerm = paymentTerm => {
-    setValue('paymentTerm', paymentTerm);
-  };
-  const onSelectPaymentMethod = paymentMethod => {
-    setValue('paymentMethod', paymentMethod);
-  };
-  const isCrypto = watch('paymentMethod') === 'CRYPTO';
-  const isNonPaid = watch('paymentType') === 'VOLUNTEER';
-
-  const preventArrow = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
-      e.preventDefault();
-    }
+  const onSelectValue = (name: 'paymentType' | 'paymentTerm' | 'paymentMethod' | 'currency', value: string) => {
+    setValue(name, value, { shouldValidate: true });
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async ({ paymentMethod, total, description, hours }) => {
+  const onSubmit: SubmitHandler<Form> = async ({ paymentMethod, total, description, hours }) => {
     let netTotal = total || 0;
 
     if (isNonPaid) {
       netTotal = 0;
     }
 
-    if (!isNonPaid && !selected) {
+    if (!isNonPaid && !currency) {
       setError('total', {
         message: 'Offer currency is required',
       });
       return;
     }
 
-    if (!isNonPaid && paymentMethod === ('FIAT' as 'STRIPE') && netTotal < 22) {
-      setError('total', {
-        message: 'Offer amount on Fiat should have a minimum value of 22',
-      });
-      return;
-    }
-
-    if (isCrypto && selected && ['USD', 'JPY'].includes(selected)) {
+    if (isCrypto && currency && ['USD', 'JPY'].includes(currency)) {
       setError('total', {
         message: 'Offer currency is incorrect',
       });
       return;
     }
 
-    if (!isCrypto && selected && !['USD', 'JPY'].includes(selected)) {
+    if (!isCrypto && currency && !['USD', 'JPY'].includes(currency)) {
       setError('total', {
         message: 'Offer currency is incorrect',
       });
@@ -141,8 +138,8 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
       assignment_total: netTotal.toString(),
       offer_message: description,
       total_hours: hours.toString(),
-      crypto_currency_address: isCrypto ? selected : undefined,
-      currency: isCrypto ? undefined : selected,
+      crypto_currency_address: isCrypto ? currency : undefined,
+      currency: isCrypto ? undefined : currency,
     };
 
     await offerByApplicant(applicant.id, removeValuesFromObject(payload, [undefined]));
@@ -150,26 +147,16 @@ export const useOrgOffer = (applicant: Applicant, onClose: () => void, onSuccess
     onClose();
   };
 
-  const paymentMethodOptions = isCrypto
-    ? tokens
-    : [
-        { label: 'USD', value: 'USD' },
-        { label: 'JPY', value: 'JPY' },
-      ];
   return {
     register,
     handleSubmit,
     errors,
     onSubmit,
-    setValue,
-    onSelectPaymentType,
-    onSelectPaymentTerm,
-    onSelectPaymentMethod,
+    onSelectValue,
     isCrypto,
     isNonPaid,
     paymentMethodOptions,
-    setSelected,
-    preventArrow,
-    Web3Connect,
+    currency,
+    disabled: !isFiat && !connected,
   };
 };

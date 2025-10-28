@@ -13,7 +13,8 @@ export const useConnections = () => {
     { label: translate('connect-title'), content: <ConnectionTab /> },
     { label: translate('connect-followings'), content: <FollowingTab /> },
     { label: translate('connect-followers'), content: <FollowerTab /> },
-    { label: translate('connect-requests'), content: <RequestTab /> },
+    { label: translate('connect-received-requests'), content: <RequestTab requestType="REQUESTED" /> },
+    { label: translate('connect-sent-requests'), content: <RequestTab requestType="REQUESTER" /> },
     { label: translate('connect-blocked'), content: <BlockedTab /> },
   ];
 

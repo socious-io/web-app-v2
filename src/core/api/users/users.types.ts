@@ -39,7 +39,9 @@ export interface UpdateProfileReq {
 }
 
 export interface UpdateWalletReq {
-  wallet_address: string;
+  address: string;
+  network: string;
+  testnet: boolean;
 }
 
 export interface LanguageReq {
@@ -91,6 +93,15 @@ export interface UsersRes extends PaginateRes {
   items: User[];
 }
 
+export interface Wallet {
+  id: string;
+  address: string;
+  network: string;
+  testnet: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface User {
   id: string;
   username: string;
@@ -129,6 +140,7 @@ export interface User {
   name?: string;
   events?: Event[] | null;
   rate: number;
+  wallets?: Wallet[] | null;
 }
 
 export interface UserProfile extends User {
